@@ -1,0 +1,23 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: client
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: client
+    spec:
+      containers:
+      - name: client
+        image: alexellis2/inlets-pro:0.3
+        imagePullPolicy: Always
+        command: ["inlets-pro"]
+        args:
+        - "client"
+        - "--connect=wss://gateway.example.com:8123/connect"
+        - "--tcp-ports=80,443"
+        - "--id=foo"
+        - "--license=LICENSE_JWT_HERE"
+
