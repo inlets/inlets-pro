@@ -16,6 +16,14 @@ You can get incoming networking (ingress) to any:
 
 For example, rather than terminating TLS at the edge of the tunnel, inlets-pro can forward the TLS traffic on port `443` directly to your host, where you can run a reverse proxy inside your network. At any time you can disconnect and reconnect the tunnel or even delete the remote VM without loosing your TLS certificate since it's stored locally.
 
+* What can I run? Give me a use-case.
+
+    You could run a Docker registry complete with TLS served completely within your local network. This guide could be followed on a KinD, Minikube or bare-metal cluster behind a firewall and still work the same because the tunnel provides TCP ingress.
+    
+    Once the tunnel is established with the instructions in this repo, you could run the following tutorial on your laptop or local network.
+
+    Example tutorial: [Set Up a Private Docker Registry With TLS on Kubernetes](https://www.civo.com/learn/set-up-a-private-docker-registry-with-tls-on-kubernetes)
+
 ## Installation
 
 In this example we will forward ports 80 and 443 from the exit-node to the IngressController running within the cluster. We could forward anything that can be transported over TCP i.e. TLS, MongoDB, SSH, Redis, or whatever you want.
