@@ -4,7 +4,17 @@ Inlets Pro
 
 ## What is this?
 
-Inlets Pro is an L4 TCP load-balancer which can be used to forward TCP traffic over a websocket. It is well suited to forward traffic from a VM on the Internet to a private or development Kubernetes cluster.
+Inlets Pro is an L4 TCP load-balancer which can be used to forward TCP traffic over a websocket.
+
+It is well suited to forward traffic from a VM on the Internet to a private or development Kubernetes cluster.
+
+You can get incoming networking (ingress) to any:
+
+* machine running Linux, Windows or MacOS
+* Kubernetes cluster
+* VM or Docker container
+
+For example, rather than terminating TLS at the edge of the tunnel, inlets-pro can forward the TLS traffic on port `443` directly to your host, where you can run a reverse proxy inside your network. At any time you can disconnect and reconnect the tunnel or even delete the remote VM without loosing your TLS certificate since it's stored locally.
 
 ## Installation
 
