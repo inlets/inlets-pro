@@ -41,7 +41,12 @@ In this example we will forward ports 80 and 443 from the exit-node to the Ingre
         --auto-tls \
         --common-name EXIT_NODE_IP \
         --remote-tcp nginxingress-nginx-ingress-controller
+        --token AUTHTOKEN
     ```
+    
+    Make sure you update the `--remote-tcp`, `--token`, and `--common-name` arguments.
+
+   An auth token can be generated with: `head -c 32 /dev/urandom | shasum -a 512`
 
 * Setup the client Pod
 
@@ -58,12 +63,13 @@ In this example we will forward ports 80 and 443 from the exit-node to the Ingre
     ```yaml
         - "--connect=wss://EXIT_NODE_IP:8123/connect"
         - "--tcp-ports=80,443"
-        - "--id=foo"
+        - "--token=AUTHTOKENHERE"
         - "--license=LICENSE_JWT_HERE"
     ```
 
     Edit `--license` with your license for Inlets Pro
     Edit `--connect` with the IP of your exit node
+    Edit `--token` with the shared authentication token
 
 * Get a TLS certificate
 
@@ -84,7 +90,7 @@ Both the client and server are contained within the same binary.
 * The server (exit-node)
 
     ```sh
-    curl -SLsf https://github.com/alexellis/inlets-pro-pkg/releases/download/0.1.0/inlets-pro-linux > inlets-pro-linux
+    curl -SLsf https://github.com/alexellis/inlets-pro-pkg/releases/download/0.4.0/inlets-pro-linux > inlets-pro-linux
     chmod +x ./inlets-pro-linux
     ```
 
