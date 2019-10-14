@@ -36,6 +36,8 @@ You may have a preferred setup or approach or local Kubernetes, but I would reco
 curl -s https://raw.githubusercontent.com/rancher/k3d/master/install.sh | bash
 ```
 
+Set the context for your Kubernetes cluster:
+
 ```sh
 k3d create
 export KUBECONFIG="$(k3d get-kubeconfig --name='k3s-default')"
@@ -88,7 +90,7 @@ Now run `tmux`, so that the binary stays running when you disconnect.
 Now we will be proxying `nginxingress-nginx-ingress-controller` from within our Kubernetes cluster, so configure as follows:
 
 ```sh
-./inlets-pro-linux server \
+sudo ./inlets-pro-linux server \
     --auto-tls \
     --common-name EXIT_NODE_IP \
     --remote-tcp nginxingress-nginx-ingress-controller
@@ -99,11 +101,17 @@ Make sure you update the `--remote-tcp`, `--token`, and `--common-name` argument
 
 An auth token can be generated with: `export AUTHTOKEN=$(head -c 32 /dev/urandom | shasum -a 512)` for instance.
 
-### Setup the client Pod
+The server process runs as `root` so that it can open any privileged ports the client may request, these are normally `80` and `443` for an IngressController.
 
-Within the cluster:
+### Setup the client `Deployment`
 
-Update `artifacts/client.yaml`
+Get the client `Deployment` manifest and edit it:
+
+```sh
+curl -SLs https://raw.githubusercontent.com/alexellis/inlets-pro-pkg/master/artifacts/client.yaml > client.yaml
+```
+
+Update `client.yaml`:
 
 ```yaml
     - "--connect=wss://EXIT_NODE_IP:8123/connect"
@@ -116,25 +124,35 @@ Edit `--license` with your license for Inlets Pro
 Edit `--connect` with the IP of your exit node
 Edit `--token` with the shared authentication token
 
+Now apply the YAML file to start the tunnel from within the cluster: `kubectl apply -f artifacts/client.yaml`.
+
 ### Test the connectivity
 
 You should now be able to access port 80 and 443 on your exit-node's IP.
 
 The logs will show up in the Nginx pod found with `kubectl get pod -A`
 
-### Deploy your favourite application
+If you visit the IP address of the public IP on port 80 or 443, you should see the normal 404 page. Next you need to create a DNS entry mapping to this IP and create a Kubernetes `Ingress` resource.
 
-Deploy an application and expose it with type "Ingress" instead of LoadBalancer or NodePort.
+### Use-cases for the tunnel
 
-You could follow this guide for example: [OpenFaaS with SSL](https://docs.openfaas.com/reference/ssl/kubernetes-with-cert-manager/)
+You now have an Nginx IngressController running inside your cluster with inlets-pro tunnelling both of its ports: 80 & 443 to the VM's public IP.
 
-### Get a TLS certificate
+* Deploy your favourite application and create an "Ingress" manifest for it
 
-Rather than doing edge termination on the exit-node, we can terminate TLS within the cluster.
+* Simple [Ingress example from Nginx](https://github.com/nginxinc/kubernetes-ingress/tree/master/examples/complete-example)
 
-Just install cert-manager using helm, setup an Ingress definition and an Issuer.
+* Deploy [OpenFaaS with SSL](https://docs.openfaas.com/reference/ssl/kubernetes-with-cert-manager/)
 
-You'll see LetsEncrypt issue you a TLS certificate which will be served from within your cluster for any clients that connect.
+* Deploy a [Set Up a Private Docker Registry With TLS on Kubernetes](https://www.civo.com/learn/set-up-a-private-docker-registry-with-tls-on-kubernetes)
+
+* Get a TLS certificate
+
+    Rather than doing edge termination on the exit-node, we can terminate TLS within the cluster.
+
+    Just install cert-manager using helm, setup an Ingress definition and an Issuer.
+
+    You'll see LetsEncrypt issue you a TLS certificate which will be served from within your cluster for any clients that connect.
 
 ## Getting the binaries
 
@@ -151,6 +169,12 @@ Both the client and server are contained within the same binary.
     chmod +x ./inlets-pro-linux
     ```
 
-## Getting a license
+## License
 
-Contact Alex Ellis for a key.
+[inlets](https://inlets.dev) is a free, L7 HTTP tunnel and OSS software under the MIT license.
+
+inlets-pro is a L4 TCP tunnel and load-balancer distributed under a commercial license.
+
+### Getting a license key
+
+Contact [Alex Ellis](mailto:alex@openfaas.com) for your free license key.
