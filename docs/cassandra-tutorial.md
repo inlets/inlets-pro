@@ -11,9 +11,9 @@ Provision a VM on DigitalOcean or another IaaS provider.
 Log in with ssh and obtain the binary:
 
 ```sh
-    curl -SLsf https://github.com/alexellis/inlets-pro-pkg/releases/download/0.4.0/inlets-pro-linux > inlets-pro-linux
-    chmod +x ./inlets-pro-linux
-    mv ./inlets-pro-linux /usr/bin/inlets-pro
+curl -SLsf https://github.com/alexellis/inlets-pro-pkg/releases/download/0.4.0/inlets-pro-linux > inlets-pro-linux
+chmod +x ./inlets-pro-linux
+mv ./inlets-pro-linux /usr/bin/inlets-pro
 ```
 
 Find your public IP:
@@ -28,6 +28,8 @@ Get an auth token and save it for later to use with the client
 
 ```sh
 export TOKEN="$(head -c 16 /dev/urandom |shasum|cut -d'-' -f1)"
+
+echo $TOKEN
 ```
 
 Start the server:
@@ -45,7 +47,7 @@ sudo inlets-pro server \
 Using Docker you can run Cassandra.
 
 ```sh
-docker run --name cassandra -ti -p 9042:9042 -p cassandra:latest
+docker run --name cassandra  -p 9042:9042 -ti cassandra:latest
 ```
 
 The client port is `9042` which will become available on the public IP
@@ -55,17 +57,17 @@ Now run the inlets client on the other side:
 For a Linux client
 
 ```sh
-    curl -SLsf https://github.com/alexellis/inlets-pro-pkg/releases/download/0.4.0/inlets-pro-linux > inlets-pro-linux
-    chmod +x ./inlets-pro-linux
-    mv ./inlets-pro-linux /usr/bin/inlets-pro
+curl -SLsf https://github.com/alexellis/inlets-pro-pkg/releases/download/0.4.0/inlets-pro-linux > inlets-pro-linux
+chmod +x ./inlets-pro-linux
+mv ./inlets-pro-linux /usr/bin/inlets-pro
 ```
 
 For a MacOS client
 
 ```sh
-    curl -SLsf https://github.com/alexellis/inlets-pro-pkg/releases/download/0.4.0/inlets-pro > inlets-pro
-    chmod +x ./inlets-pro
-    mv ./inlets-pro /usr/bin/inlets-pro
+curl -SLsf https://github.com/alexellis/inlets-pro-pkg/releases/download/0.4.0/inlets-pro > inlets-pro
+chmod +x ./inlets-pro
+sudo mv ./inlets-pro /usr/bin/inlets-pro
 ```
 
 Run the inlets-pro client:
@@ -73,10 +75,13 @@ Run the inlets-pro client:
 ```sh
 export IP=""        # take this from the exit node
 export TOKEN=""     # take this from the server earlier
-sudo inlets-pro client \
-  --connect wss://$IP \
+export LICENSE=""   # your license
+
+sudo -E inlets-pro client \
+  --connect wss://$IP:8123/connect \
   --tcp-ports 9042 \
-  --token $TOKEN
+  --token $TOKEN \
+  --license $LICENSE
 ```
 
 ## Connect to Cassandra on your exit node
@@ -87,15 +92,29 @@ On your laptop or another computer use the Cassandra client `cqlsh` to connect a
 export IP=""    # Exit-node IP
 docker run \
   -e CQLSH_HOST=$IP \
-  -e CQLSH_PORT= 9042 \
+  -e CQLSH_PORT=9042 \
   -it --rm cassandra cqlsh
 ```
 
 Now you're connected.
 
+```sh
+Connected to Test Cluster at 185.136.232.127:9042.
+[cqlsh 5.0.1 | Cassandra 3.11.4 | CQL spec 3.4.4 | Native protocol v4]
+Use HELP for help.
+cqlsh> 
+```
+
 Try a query:
 
-```
-SELECT cluster_name, listen_address FROM system.local;
+```sh
+cqlsh> SELECT cluster_name, listen_address FROM system.local;
+
+ cluster_name | listen_address
+--------------+----------------
+ Test Cluster |     172.17.0.2
+
+(1 rows)
+cqlsh> 
 ```
 
