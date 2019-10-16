@@ -59,7 +59,7 @@ Any VM is suitable, even a 5 USD DigitalOcean VM
 Download the `inlets-pro` binary on your VM.
 
 ```sh
-curl -SLsf https://github.com/alexellis/inlets-pro-pkg/releases/download/0.4.0/inlets-pro-linux > inlets-pro-linux
+curl -SLsf https://github.com/inlets/inlets-pro-pkg/releases/download/0.4.0/inlets-pro-linux > inlets-pro-linux
 chmod +x ./inlets-pro-linux
 ```
 
@@ -86,7 +86,7 @@ The server process runs as `root` so that it can open any privileged ports the c
 Get the client `Deployment` manifest and edit it:
 
 ```sh
-curl -SLs https://raw.githubusercontent.com/alexellis/inlets-pro-pkg/master/artifacts/client.yaml > client.yaml
+curl -SLs https://raw.githubusercontent.com/inlets/inlets-pro-pkg/master/artifacts/client.yaml > client.yaml
 ```
 
 Update `client.yaml`:
