@@ -175,6 +175,10 @@ Both the client and server are contained within the same binary.
 
 inlets-pro is a L4 TCP tunnel and load-balancer distributed under a commercial license.
 
-### Getting a license key
+### Getting a license key / more info
 
-Contact [Alex Ellis](mailto:alex@openfaas.com) for your free license key.
+* See the [EULA](EULA.md)
+
+* [Start a 14-day trial today](https://docs.google.com/forms/d/e/1FAIpQLScfNQr1o_Ctu_6vbMoTJ0xwZKZ3Hszu9C-8GJGWw1Fnebzz-g/viewform?usp=sf_link)
+
+Contact [Alex Ellis](mailto:alex@openfaas.com) for more information.
