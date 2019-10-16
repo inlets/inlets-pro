@@ -1,0 +1,101 @@
+# Tutorial
+
+TCP tunnel for Apache Cassandra running on your local machine, out to another network
+
+Scenario: You're running Apache Cassandra, which uses TCP and which cannot be forwarded easily by Ngrok or Inlets OSS. Inlets Pro provides a solution for you.
+
+## Setup your exit node
+
+Provision a VM on DigitalOcean or another IaaS provider.
+
+Log in with ssh and obtain the binary:
+
+```sh
+    curl -SLsf https://github.com/alexellis/inlets-pro-pkg/releases/download/0.4.0/inlets-pro-linux > inlets-pro-linux
+    chmod +x ./inlets-pro-linux
+    mv ./inlets-pro-linux /usr/bin/inlets-pro
+```
+
+Find your public IP:
+
+```
+export IP=$(curl -s ifconfig.co)
+```
+
+Confirm the IP with `echo $IP` and save it, you need it for the client
+
+Get an auth token and save it for later to use with the client
+
+```sh
+export TOKEN="$(head -c 16 /dev/urandom |shasum|cut -d'-' -f1)"
+```
+
+Start the server:
+
+```sh
+sudo inlets-pro server \
+  --auto-tls \
+  --common-name $IP \
+  --remote-tcp 127.0.0.1 \
+  --token $TOKEN
+```
+
+## Get Cassandra on your laptop
+
+Using Docker you can run Cassandra.
+
+```sh
+docker run --name cassandra -ti -p 9042:9042 -p cassandra:latest
+```
+
+The client port is `9042` which will become available on the public IP
+
+Now run the inlets client on the other side:
+
+For a Linux client
+
+```sh
+    curl -SLsf https://github.com/alexellis/inlets-pro-pkg/releases/download/0.4.0/inlets-pro-linux > inlets-pro-linux
+    chmod +x ./inlets-pro-linux
+    mv ./inlets-pro-linux /usr/bin/inlets-pro
+```
+
+For a MacOS client
+
+```sh
+    curl -SLsf https://github.com/alexellis/inlets-pro-pkg/releases/download/0.4.0/inlets-pro > inlets-pro
+    chmod +x ./inlets-pro
+    mv ./inlets-pro /usr/bin/inlets-pro
+```
+
+Run the inlets-pro client:
+
+```sh
+export IP=""        # take this from the exit node
+export TOKEN=""     # take this from the server earlier
+sudo inlets-pro client \
+  --connect wss://$IP \
+  --tcp-ports 9042 \
+  --token $TOKEN
+```
+
+## Connect to Cassandra on your exit node
+
+On your laptop or another computer use the Cassandra client `cqlsh` to connect and verify the tunnel is operational.
+
+```sh
+export IP=""    # Exit-node IP
+docker run \
+  -e CQLSH_HOST=$IP \
+  -e CQLSH_PORT= 9042 \
+  -it --rm cassandra cqlsh
+```
+
+Now you're connected.
+
+Try a query:
+
+```
+SELECT cluster_name, listen_address FROM system.local;
+```
+
