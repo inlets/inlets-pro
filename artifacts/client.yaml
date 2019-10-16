@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: client
-        image: inlets2/inlets-pro:0.4
+        image: alexellis/inlets-pro:0.4
         imagePullPolicy: Always
         command: ["inlets-pro"]
         args:
