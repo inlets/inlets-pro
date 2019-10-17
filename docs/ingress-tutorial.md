@@ -71,7 +71,7 @@ Now we will be proxying `nginxingress-nginx-ingress-controller` from within our 
 sudo ./inlets-pro-linux server \
     --auto-tls \
     --common-name EXIT_NODE_IP \
-    --remote-tcp nginxingress-nginx-ingress-controller
+    --remote-tcp nginxingress-nginx-ingress-controller \
     --token $AUTHTOKEN
 ```
 
