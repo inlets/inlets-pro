@@ -26,6 +26,7 @@ In this example we will forward ports 80 and 443 from the exit-node to the Ingre
 
 * [TCP tunnel for your IngressController Kubernetes cluster with port 80 HTTP and 443 TLS](docs/ingress-tutorial.md)
 * [TCP tunnel for Apache Cassandra running on your local machine, out to another network](docs/cassandra-tutorial.md)
+* [TCP tunnel for Caddy - get a TLS cert directly for your local machine](docs/caddy-tutorial.md)
 
 ## Getting the binaries
 
