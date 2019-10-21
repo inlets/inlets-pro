@@ -73,6 +73,10 @@ cd /tmp/shared/
 
 echo "Hello world" > WELCOME.txt
 
+# If Python version is 3.x
+python3 -m http.server
+
+# Or use this for 2.x
 python -m SimpleHTTPServer
 ```
 
