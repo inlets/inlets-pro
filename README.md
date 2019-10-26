@@ -1,6 +1,17 @@
 # inlets-pro
 
-inlets-pro is an L4 TCP load-balancer which can be used to forward TCP traffic over a websocket.
+inlets-pro is an L4 TCP load-balancer.
+
+## Features
+
+inlets-pro forwards TCP traffic over an encrypted websocket secured with TLS.
+
+* Support for any TCP protocol
+* Automatic TLS encryption for tunnel and control-port
+* Pass-through L4 proxy
+* Automatic port detection, as announced by client
+* `systemd` support and automatic retries
+* Kubernetes compatible
 
 ## Use-case
  
