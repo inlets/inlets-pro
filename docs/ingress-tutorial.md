@@ -85,8 +85,14 @@ The server process runs as `root` so that it can open any privileged ports the c
 
 Get the client `Deployment` manifest and edit it:
 
+for kubernetes =< v1.15
 ```sh
 curl -SLs https://raw.githubusercontent.com/inlets/inlets-pro-pkg/master/artifacts/client.yaml > client.yaml
+```
+
+for kubernetes >= v1.16
+```sh
+curl -SLs https://raw.githubusercontent.com/inlets/inlets-pro-pkg/master/artifacts/client-1.16.yaml > client.yaml
 ```
 
 Update `client.yaml`:
@@ -102,7 +108,7 @@ Edit `--license` with your license for Inlets Pro
 Edit `--connect` with the IP of your exit node
 Edit `--token` with the shared authentication token
 
-Now apply the YAML file to start the tunnel from within the cluster: `kubectl apply -f artifacts/client.yaml`.
+Now apply the YAML file to start the tunnel from within the cluster: `kubectl apply -f client.yaml`.
 
 ## Test the connectivity
 

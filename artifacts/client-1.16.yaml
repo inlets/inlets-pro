@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      labels:
+        app: client
+    spec:
+      containers:
+      - name: client
+        image: alexellis2/inlets-pro:0.4
+        imagePullPolicy: Always
+        command: ["inlets-pro"]
+        args:
+        - "client"
+        - "--connect=wss://EXIT_NODE_IP:8123/connect"
+        - "--tcp-ports=80,443"
+        - "--token=AUTHTOKENHERE"
+        - "--license=LICENSE_JWT_HERE"
+
