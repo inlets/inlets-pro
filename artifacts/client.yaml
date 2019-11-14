@@ -4,6 +4,9 @@ metadata:
   name: client
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: client
   template:
     metadata:
       labels:
