@@ -11,7 +11,7 @@ Provision a VM on DigitalOcean or another IaaS provider.
 Log in with ssh and obtain the binary:
 
 ```sh
-curl -SLsf https://github.com/inlets/inlets-pro-pkg/releases/download/0.4.0/inlets-pro-linux > inlets-pro-linux
+curl -SLsf https://github.com/inlets/inlets-pro-pkg/releases/download/0.4.2/inlets-pro-linux > inlets-pro-linux
 chmod +x ./inlets-pro-linux
 mv ./inlets-pro-linux /usr/bin/inlets-pro
 ```
@@ -57,7 +57,7 @@ Now run the inlets client on the other side:
 For a Linux client
 
 ```sh
-curl -SLsf https://github.com/inlets/inlets-pro-pkg/releases/download/0.4.0/inlets-pro-linux > inlets-pro-linux
+curl -SLsf https://github.com/inlets/inlets-pro-pkg/releases/download/0.4.2/inlets-pro-linux > inlets-pro-linux
 chmod +x ./inlets-pro-linux
 mv ./inlets-pro-linux /usr/bin/inlets-pro
 ```
@@ -65,7 +65,7 @@ mv ./inlets-pro-linux /usr/bin/inlets-pro
 For a MacOS client
 
 ```sh
-curl -SLsf https://github.com/inlets/inlets-pro-pkg/releases/download/0.4.0/inlets-pro > inlets-pro
+curl -SLsf https://github.com/inlets/inlets-pro-pkg/releases/download/0.4.2/inlets-pro > inlets-pro
 chmod +x ./inlets-pro
 sudo mv ./inlets-pro /usr/bin/inlets-pro
 ```

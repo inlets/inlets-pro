@@ -59,7 +59,7 @@ Any VM is suitable, even a 5 USD DigitalOcean VM
 Download the `inlets-pro` binary on your VM.
 
 ```sh
-curl -SLsf https://github.com/inlets/inlets-pro-pkg/releases/download/0.4.0/inlets-pro-linux > inlets-pro-linux
+curl -SLsf https://github.com/inlets/inlets-pro-pkg/releases/download/0.4.2/inlets-pro-linux > inlets-pro-linux
 chmod +x ./inlets-pro-linux
 ```
 
