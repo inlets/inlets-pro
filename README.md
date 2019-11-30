@@ -50,7 +50,7 @@ Both the client and server are contained within the same binary.
 * The server (exit-node)
 
     ```sh
-    curl -SLsf https://github.com/inlets/inlets-pro-pkg/releases/download/0.4.2/inlets-pro-linux > inlets-pro-linux
+    curl -SLsf https://github.com/inlets/inlets-pro-pkg/releases/download/0.4.3/inlets-pro-linux > inlets-pro-linux
     chmod +x ./inlets-pro-linux
     ```
 
