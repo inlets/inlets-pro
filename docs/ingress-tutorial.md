@@ -59,8 +59,8 @@ Any VM is suitable, even a 5 USD DigitalOcean VM
 Download the `inlets-pro` binary on your VM.
 
 ```sh
-curl -SLsf https://github.com/inlets/inlets-pro-pkg/releases/download/0.4.3/inlets-pro-linux > inlets-pro-linux
-chmod +x ./inlets-pro-linux
+curl -SLsf https://github.com/inlets/inlets-pro-pkg/releases/download/0.4.3/inlets-pro > inlets-pro
+chmod +x ./inlets-pro
 ```
 
 Now run `tmux`, so that the binary stays running when you disconnect.
@@ -68,7 +68,7 @@ Now run `tmux`, so that the binary stays running when you disconnect.
 Now we will be proxying `nginxingress-nginx-ingress-controller` from within our Kubernetes cluster, so configure as follows:
 
 ```sh
-sudo ./inlets-pro-linux server \
+sudo ./inlets-pro server \
     --auto-tls \
     --common-name EXIT_NODE_IP \
     --remote-tcp nginxingress-nginx-ingress-controller \
