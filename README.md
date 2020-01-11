@@ -46,9 +46,11 @@ You can follow one of the tutorials above, or use inlets-pro in one of three way
 
 In this example we will forward ports 80 and 443 from the exit-node to the IngressController running within the cluster. We could forward anything that can be transported over TCP i.e. TLS, MongoDB, SSH, Redis, or whatever you want.
 
-* [TCP tunnel for your IngressController Kubernetes cluster with port 80 HTTP and 443 TLS](docs/ingress-tutorial.md)
-* [TCP tunnel for Apache Cassandra running on your local machine, out to another network](docs/cassandra-tutorial.md)
-* [TCP tunnel for Caddy - get a TLS cert directly for your local machine](docs/caddy-tutorial.md)
+* [Tunnel your IngressController Kubernetes cluster with port 80 HTTP and 443 TLS](docs/ingress-tutorial.md)
+* [Tunnel Apache Cassandra running on your local machine, out to another network](docs/cassandra-tutorial.md)
+* [Tunnel Caddy - get a TLS cert directly for your local machine](docs/caddy-tutorial.md)
+
+* [Expose your local Kubernetes API server to the Internet](https://gist.github.com/alexellis/368798641182f92721eab9007045cf89)
 
 ### Get the binary
 
