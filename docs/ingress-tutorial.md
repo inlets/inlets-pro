@@ -68,9 +68,13 @@ Now run `tmux`, so that the binary stays running when you disconnect.
 Now we will be proxying `nginxingress-nginx-ingress-controller` from within our Kubernetes cluster, so configure as follows:
 
 ```sh
-sudo ./inlets-pro server \
+
+export EXIT_NODE_IP="" # Set to the public IP
+export AUTHTOKEN=""    # Set to the auth token which you'll also use with the client
+
+sudo -E ./inlets-pro server \
     --auto-tls \
-    --common-name EXIT_NODE_IP \
+    --common-name $EXIT_NODE_IP \
     --remote-tcp nginxingress-nginx-ingress-controller \
     --token $AUTHTOKEN
 ```
