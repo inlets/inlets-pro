@@ -1,6 +1,6 @@
 # Tutorial
 
-Create a reverse proxy to allow SSH access to a computer
+Access your computer behind NAT or a firewall, remotely via SSH.
 
 Scenario: You want to allow SSH access to a computer that doesn't have a public IP, is inside a private network or behind
 a firewall. A common scenario is connecting to a Raspberry Pi on a home network.
