@@ -9,11 +9,16 @@ You can use it to tunnel out any TCP traffic from an internal network to another
 inlets-pro forwards TCP traffic over an encrypted websocket secured with TLS.
 
 * Support for any TCP protocol
-* Automatic TLS encryption for tunnel and control-port
 * Pass-through L4 proxy
-* Automatic port detection, as announced by client
-* `systemd` support and automatic retries
-* Kubernetes compatible
+* Automatic TLS encryption for tunnel and control-port
+* Automatic port-detection, announced by client
+
+Deployment options:
+
+* single static binary is available for MacOS, Windows, and Linux on armhf and ARM64
+* `systemd` support with automatic restarts
+* Native `docker` image available
+* Kubernetes integration via `inlets-operator` or YAML
 
 ## Use-case
  
@@ -21,7 +26,8 @@ It is well suited to forward traffic from a VM on the Internet to a private or d
 
 You can get incoming networking (ingress) to any:
 
-* SSH access to a Raspberry Pi
+* Command & control of Point of Sale / IoT devices
+* SSH access to home-lab or Raspberry Pi
 * TCP services running on Linux, Windows or MacOS
 * The API of your Kubernetes cluster
 * A VM or Docker container
@@ -73,10 +79,11 @@ Both the client and server are contained within the same binary.
 
 inlets-pro is a L4 TCP tunnel, service proxy, and load-balancer distributed under a commercial license.
 
-### Getting a license key / more info
+### Getting a license key
 
-* [Start a 14-day trial today](https://docs.google.com/forms/d/e/1FAIpQLScfNQr1o_Ctu_6vbMoTJ0xwZKZ3Hszu9C-8GJGWw1Fnebzz-g/viewform?usp=sf_link)
+1) Accept the [End User License Agreement - EULA](EULA.md)
+2) [Start a 14-day trial today](https://docs.google.com/forms/d/e/1FAIpQLScfNQr1o_Ctu_6vbMoTJ0xwZKZ3Hszu9C-8GJGWw1Fnebzz-g/viewform?usp=sf_link)
+2) Receive your license via email from OpenFaaS Ltd
+3) Use community support if required via [OpenFaaS Slack](https://slack.openfaas.io/) in the #inlets channel
 
-* See the [End User License Agreement - EULA](EULA.md)
-
-After completing your trial, please contact [sales@openfaas.com](mailto:sales@openfaas.com) for a quote and to purchase.
+**After completing your trial**, please contact [sales@openfaas.com](mailto:sales@openfaas.com) for to purchase a commercial-license.
