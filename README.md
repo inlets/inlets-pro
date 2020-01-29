@@ -20,9 +20,9 @@ Deployment options:
 * Native `docker` image available
 * Kubernetes integration via `inlets-operator` or YAML
 
-## Use-case
- 
-It is well suited to forward traffic from a VM on the Internet to a private or development Kubernetes cluster.
+## Reference architecture
+
+inlets-pro can be used to provide a Public VirtualIP to private, edge and on-premises services and Kubernetes clusters. Once you have set up one or more VMs or cloud hosts on public cloud, you can utilize their IP addresses with inlets-pro.
 
 You can get incoming networking (ingress) to any:
 
@@ -34,11 +34,23 @@ You can get incoming networking (ingress) to any:
 
 For example, rather than terminating TLS at the edge of the tunnel, inlets-pro can forward the TLS traffic on port `443` directly to your host, where you can run a reverse proxy inside your network. At any time you can disconnect and reconnect the tunnel or even delete the remote VM without loosing your TLS certificate since it's stored locally.
 
-* What can I run? Give me a use-case.
+### Single private service with Public VirtualIP
 
-    You could run a Docker registry complete with TLS served completely within your local network. This guide could be followed on a KinD, Minikube or bare-metal cluster behind a firewall and still work the same because the tunnel provides TCP ingress.
-    
-    Once the tunnel is established with the instructions in this repo, you could run the following tutorial on your laptop or local network.
+![Diagram](docs/images/inlets-pro-vip.png)
+
+For a single private on-premises Java API service, one exit-server is provisioned on public cloud, its Public IP is the VirtualIP for the private cluster. Ports 80 and 443 are forwarded to the Java API, which can serve its own TLS certificate.
+
+### Single private service with Highly-available, multi-zone Public VirtualIP and DNS
+
+![Diagram](docs/images/inlets-pro-vip-ha.png)
+
+For a single private on-premises Java API service, two exit-servers are provisioned on public cloud, each with a Public VirtualIP. DNS is used to provide high-availability and fail-over. Ports 80 and 443 are forwarded to the Java API, which can serve its own TLS certificate.
+
+### Private Kubernetes Cluster, High-available Pod, public VirtualIP
+
+![Diagram](docs/images/inlets-pro-vip-k8s.png)
+
+Example: A private or on-premises Kubernetes cluster serving traffic from a Node.js Pod on port 3000. An IngressController performs TLS termination and stores a certificate within the private cluster. The certificate can be obtained from LetsEncrypt using standard tooling such as [cert-manager](https://cert-manager.io/docs/).
 
 ## Get started
 
