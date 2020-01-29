@@ -2,6 +2,8 @@
 
 Inlets Pro is an L4 TCP Tunnel and Service Proxy
 
+<img src="https://raw.githubusercontent.com/inlets/media/master/assets/inlets-monochrome.png" width="100px">
+
 You can use it to tunnel out any TCP traffic from an internal network to another network. This could be green-to-green, or green-to-red, i.e. from internal/private to the Internet. It differs from [Inlets OSS](https://inlets.dev/) in that it works at the L4 layer, with TCP and has automatic TLS built-in.
 
 ## Features
