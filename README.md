@@ -83,15 +83,15 @@ Both the client and server are contained within the same binary.
 * The server (exit-node)
 
     ```sh
-    curl -SLsf https://github.com/inlets/inlets-pro-pkg/releases/download/0.4.3/inlets-pro > inlets-pro
+    curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.4.3/inlets-pro > inlets-pro
     chmod +x ./inlets-pro
     ```
 
 ## License
 
-[inlets](https://inlets.dev) is a free, L7 HTTP tunnel and OSS software under the MIT license.
+[inlets OSS](https://inlets.dev) is a free, L7 HTTP tunnel project available for use under the MIT license.
 
-inlets-pro is a L4 TCP tunnel, service proxy, and load-balancer distributed under a commercial license.
+inlets-pro is a L4 TCP tunnel, service proxy, and load-balancer product distributed under a commercial license.
 
 ### Getting a license key
 
@@ -100,4 +100,4 @@ inlets-pro is a L4 TCP tunnel, service proxy, and load-balancer distributed unde
 2) Receive your license via email from OpenFaaS Ltd
 3) Use community support if required via [OpenFaaS Slack](https://slack.openfaas.io/) in the #inlets channel
 
-**After completing your trial**, please contact [sales@openfaas.com](mailto:sales@openfaas.com) to purchase a commercial-license.
+**After completing your trial**, please contact [sales@openfaas.com](mailto:sales@openfaas.com) for a quote and to purchase a commercial-license.
