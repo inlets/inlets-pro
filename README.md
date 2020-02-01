@@ -101,6 +101,10 @@ Sample Kubernetes manifest:
 
 inlets-pro is a L4 TCP tunnel, service proxy, and load-balancer product distributed under a commercial license.
 
+In order to use inlets-pro, you must accept the [End User License Agreement - EULA](EULA.md). The server component runs without a license key, but the client requires a valid license. A license can be purchased from OpenFaaS Ltd after completing a trial.
+
+Professional services are also available if you would like to conduct a paid proof-of-concept or to obtain a custom reference architecture. Just ask us how we can help.
+
 ### Getting a license key
 
 1) Accept the [End User License Agreement - EULA](EULA.md)
