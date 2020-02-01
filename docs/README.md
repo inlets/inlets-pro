@@ -8,6 +8,6 @@
 
 * [TCP tunnel to access an SSH server](ssh-tutorial.md)
 
-* [Expose your local/private/on-premises Kubernetes API server to the Internet](https://gist.github.com/alexellis/368798641182f92721eab9007045cf89)
+* [Get kubectl access to your private cluster from anywhere](https://blog.alexellis.io/get-private-kubectl-access-anywhere/)
 
 Feel free to submit a PR for a community blog-post on inlets-pro.
