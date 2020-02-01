@@ -80,10 +80,10 @@ The inlets-pro binary can be obtained as a stand-alone executable, or via a Dock
 
 As a binary:
 
-    ```sh
-    curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.4.3/inlets-pro > inlets-pro
-    chmod +x ./inlets-pro
-    ```
+```sh
+curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.4.3/inlets-pro > inlets-pro
+chmod +x ./inlets-pro
+```
     
 Or fetch via `inletsctl download --pro`
 
