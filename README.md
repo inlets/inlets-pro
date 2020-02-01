@@ -56,36 +56,44 @@ Example: A private or on-premises Kubernetes cluster serving traffic from a Node
 
 ## Get started
 
-You can follow one of the tutorials above, or use inlets-pro in one of three ways:
+You can follow one of the tutorials above, or use inlets-pro in three different ways:
 
-* On its own as a stand-alone binary, which you can manage manually, or automate
-* Through `inletsctl` which creates an exit server with `inlets-pro server` running with systemd in one of the cloud / IaaS platforms such as AWS EC2 or DigitalOcean
-* Through `inlets-operator` - the operator runs on Kubernetes and creates an exit server running `inlets-pro server` and a Pod in your cluster running `inlets-pro client`. The lifecycle of the client and server and exit-node are all automated.
+* As a stand-alone binary which you can manage manually, or automate
+* Through [inletsctl](https://github.com/inlets/inletsctl) which creates an exit server with `inlets-pro server` running with systemd in one of the cloud / IaaS platforms such as AWS EC2 or DigitalOcean
+* Through [inlets-operator](https://github.com/inlets/inlets-operator) - the operator runs on Kubernetes and creates an exit server running `inlets-pro server` and a Pod in your cluster running `inlets-pro client`. The lifecycle of the client and server and exit-node are all automated.
 
 ### Tutorials and examples
 
 In this example we will forward ports 80 and 443 from the exit-node to the IngressController running within the cluster. We could forward anything that can be transported over TCP i.e. TLS, MongoDB, SSH, Redis, or whatever you want.
 
-* [Tunnel your IngressController Kubernetes cluster with port 80 HTTP and 443 TLS](docs/ingress-tutorial.md)
-* [Tunnel Apache Cassandra running on your local machine, out to another network](docs/cassandra-tutorial.md)
-* [Tunnel Caddy - get a TLS cert directly for your local machine](docs/caddy-tutorial.md)
-
-* [Expose your local Kubernetes API server to the Internet](https://gist.github.com/alexellis/368798641182f92721eab9007045cf89)
+* [TCP tunnel for your Kubernetes IngressController HTTP/80 and TLS/443](ingress-tutorial.md)
+* [TCP tunnel for Apache Cassandra running on your local machine, out to another network](cassandra-tutorial.md)
+* [TCP tunnel for Caddy - get a TLS cert directly for your local machine](caddy-tutorial.md)
+* [TCP tunnel to access an SSH server](ssh-tutorial.md)
+* [Get kubectl access to your private cluster from anywhere](https://blog.alexellis.io/get-private-kubectl-access-anywhere/)
 
 ### Get the binary
 
-Both the client and server are contained within the same binary.
+Both the client and server are contained within the same binary. It is recommended that you use inletsctl, or inlets-operator to access inlets-pro, but you can also work directly with its binary or Docker image.
 
-* The client
-    
-    The client.yaml file for Kubernetes runs the client and requires a license key, the server component does not.
+The inlets-pro binary can be obtained as a stand-alone executable, or via a Docker image.
 
-* The server (exit-node)
+As a binary:
 
     ```sh
     curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.4.3/inlets-pro > inlets-pro
     chmod +x ./inlets-pro
     ```
+    
+Or fetch via `inletsctl download --pro`
+
+Docker:
+
+* `alexellis2/inlets-pro:0.4.3`
+
+Sample Kubernetes manifest:
+
+* [client.yaml](https://github.com/inlets/inlets-pro/blob/master/artifacts/client.yaml)
 
 ## License
 
