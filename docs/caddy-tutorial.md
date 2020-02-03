@@ -11,7 +11,7 @@ Provision a VM on DigitalOcean or another IaaS provider.
 Log in with ssh and obtain the binary:
 
 ```sh
-curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.4.3/inlets-pro > inlets-pro
+curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.5.1/inlets-pro > inlets-pro
 chmod +x ./inlets-pro
 mv ./inlets-pro /usr/bin/inlets-pro
 ```
@@ -85,7 +85,7 @@ python -m SimpleHTTPServer
 For a Linux client
 
 ```sh
-curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.4.3/inlets-pro > inlets-pro
+curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.5.1/inlets-pro > inlets-pro
 chmod +x ./inlets-pro
 mv ./inlets-pro /usr/bin/inlets-pro
 ```
@@ -93,7 +93,7 @@ mv ./inlets-pro /usr/bin/inlets-pro
 For a MacOS client
 
 ```sh
-curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.4.3/inlets-pro > inlets-pro
+curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.5.1/inlets-pro > inlets-pro
 chmod +x ./inlets-pro
 sudo mv ./inlets-pro /usr/bin/inlets-pro
 ```
