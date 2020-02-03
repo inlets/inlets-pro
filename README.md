@@ -66,6 +66,8 @@ You can follow one of the tutorials above, or use inlets-pro in three different 
 
 In this example we will forward ports 80 and 443 from the exit-node to the IngressController running within the cluster. We could forward anything that can be transported over TCP i.e. TLS, MongoDB, SSH, Redis, or whatever you want.
 
+* [inlets-pro CLI reference](docs/cli-reference.md)
+
 * [TCP tunnel for your Kubernetes IngressController HTTP/80 and TLS/443](ingress-tutorial.md)
 * [TCP tunnel for Apache Cassandra running on your local machine, out to another network](cassandra-tutorial.md)
 * [TCP tunnel for Caddy - get a TLS cert directly for your local machine](caddy-tutorial.md)
@@ -78,22 +80,26 @@ Both the client and server are contained within the same binary. It is recommend
 
 The inlets-pro binary can be obtained as a stand-alone executable, or via a Docker image.
 
-As a binary:
+* As a binary:
 
-```sh
-curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.4.3/inlets-pro > inlets-pro
-chmod +x ./inlets-pro
-```
-    
-Or fetch via `inletsctl download --pro`
+    ```sh
+    curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.4.3/inlets-pro > inlets-pro
+    chmod +x ./inlets-pro
+    ```
+        
+    Or fetch via `inletsctl download --pro`
 
-Docker:
+    Or find a binary for [a different architecture on the releases page](https://github.com/inlets/inlets-pro/releases)
 
-* `alexellis2/inlets-pro:0.4.3`
+* Docker
 
-Sample Kubernetes manifest:
+    A docker image is published at `inlets/inlets-pro:5.0.1`
 
-* [client.yaml](https://github.com/inlets/inlets-pro/blob/master/artifacts/client.yaml)
+* Kubernetes YAML files
+
+    A [client](artifacts/client.yaml) and [server](artifacts/server.yaml) YAML file are also available as samples
+
+    Or you can see the [CLI reference guide](docs/cli-reference.md)
 
 ## License
 

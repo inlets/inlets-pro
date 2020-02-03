@@ -5,8 +5,6 @@ Access your computer behind NAT or a firewall, remotely via SSH.
 Scenario: You want to allow SSH access to a computer that doesn't have a public IP, is inside a private network or behind
 a firewall. A common scenario is connecting to a Raspberry Pi on a home network.
 
-
-
 ## Setup your exit node
 
 #### Using inletsctl
@@ -48,7 +46,7 @@ Provision a VM on DigitalOcean or another IaaS provider.
 Log in with ssh and obtain the binary:
 
 ```sh
-curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.4.3/inlets-pro > inlets-pro
+curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.5.1/inlets-pro > inlets-pro
 chmod +x ./inlets-pro
 mv ./inlets-pro /usr/bin/inlets-pro
 ```
@@ -115,10 +113,11 @@ sudo systemctl reload sshd
 First we need to download the inlets-pro client onto our remote machine 
 
 ```sh
-curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.4.3/inlets-pro > inlets-pro
+curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.5.1/inlets-pro > inlets-pro
 chmod +x ./inlets-pro
 mv ./inlets-pro /usr/bin/inlets-pro
 ```
+
 Use the command we saw earlier to start the client on our server,
 
 ```sh 
