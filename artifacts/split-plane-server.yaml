@@ -21,8 +21,8 @@ spec:
         args:
         - "server"
         - "--auto-tls=true"
-        - "--remote-tcp 127.0.0.1"
-        - "--common-name PUBLIC_IP_GOES_HERE"
+        - "--remote-tcp=127.0.0.1"
+        - "--common-name=PUBLIC_IP_GOES_HERE"
         - "--token=AUTHTOKENHERE"
 ---
 
@@ -45,7 +45,7 @@ spec:
   selector:
     app: inlets-server
 
-# Public LoadBalancer, or Ingress, or NodePort to which the remote service 
+# Public LoadBalancer, or Ingress, or NodePort to which the remote service
 # behind NAT or a firewall will connect
 
 # If we are tunnelling `ssh` for instance on port 22
