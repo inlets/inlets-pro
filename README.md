@@ -95,7 +95,7 @@ The inlets-pro binary can be obtained as a stand-alone executable, or via a Dock
 
 * Docker
 
-    A docker image is published at `inlets/inlets-pro:5.0.1`
+    A docker image is published at `inlets/inlets-pro:0.5.1`
 
 * Kubernetes YAML files
 

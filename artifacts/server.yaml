@@ -19,7 +19,7 @@ spec:
         imagePullPolicy: IfNotPresent
         command: ["inlets-pro"]
         args:
-        - "inlets-server"
+        - "server"
         - "--auto-tls=true"
         - "--remote-tcp 127.0.0.1"
         - "--common-name PUBLIC_IP_GOES_HERE"
