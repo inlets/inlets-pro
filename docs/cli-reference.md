@@ -208,11 +208,11 @@ You can deploy an inlets-server in one of three ways:
 
     This configuration is ideal for command and control. The private network will be able to traverse firewalls and NAT to connect to the remote inlets-pro server, but only internal services within the Kubernetes cluster can connect to the tunnelled service.
 
-    See [split-plane-server.yaml](artifacts/split-plane-server.yaml) as an example.
+    See [split-plane-server.yaml](../artifacts/split-plane-server.yaml) as an example.
 
 ### Pod / Service / Deployment definitions
 
-You can use the sample artifact for the [client.yaml](artifacts/client.yaml) or [server.yaml](artifacts/server.yaml)
+You can use the sample artifact for the [client.yaml](../artifacts/client.yaml) or [server.yaml](../artifacts/server.yaml)
 
 ### Common issues
 
@@ -256,7 +256,7 @@ You can use the sample artifact for the [client.yaml](artifacts/client.yaml) or 
 * Multiple inlets tunnels
 
     You can run as many inlets tunnels as you like, both client and server Pods. Make sure that each is named appropriately.
-    
+
     The server will require its own Service and Deployment.
 
     The client just requires a Deployment.
