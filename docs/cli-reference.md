@@ -2,6 +2,8 @@
 
 There are two components to inlets-pro, the server and the client.
 
+This reference guide is defined for self-service, but customers of OpenFaaS Ltd can request hands-on support and training. Just email sales@openfaas.com for more.
+
 ## Working with MacOS, Linux, and Windows
 
 The examples given in the documentation are valid for all three operating systems and use bash as a syntax.
@@ -239,3 +241,18 @@ You can use the sample artifact for the [client.yaml](artifacts/client.yaml) or 
         name: tmp-cert
     ```
 
+* `apiVersion: apps/v1beta1` vs `apiVersion: apps/v1`
+
+    If you're on a very old version of Kubernetes, then the `apps/v1` apiVersion may need to be changed to `apps/v1beta1`. Feel free to contact technical support for more hands-on help.
+
+* Multiple inlets tunnels
+
+    You can run as many inlets tunnels as you like, both client and server Pods. Make sure that each is named appropriately.
+    
+    The server will require its own Service and Deployment.
+
+    The client just requires a Deployment.
+
+    I.e. replace `inlets-server` with `inlets-server-tunnel1` and so forth.
+
+    If you are managing several tunnels, then feel free to contact OpenFaaS Ltd about an automation solution.
