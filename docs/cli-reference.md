@@ -202,6 +202,14 @@ You can deploy an inlets-server in one of three ways:
 
     Clients will connect to the domain name and your IngressController will be responsible for configuring TLS either via LetsEncrypt or your own certificate store.
 
+* Split-plane with an Ingress definition
+
+    In this configuration, only the inlets-pro control plane is exposed (usually port `8123`) with a publicly accessible address, and the data-plane is not exposed outside the network. This can be achieved through the use of two separate ClusterIP services.
+
+    This configuration is ideal for command and control. The private network will be able to traverse firewalls and NAT to connect to the remote inlets-pro server, but only internal services within the Kubernetes cluster can connect to the tunnelled service.
+
+    See [split-plane-server.yaml](artifacts/split-plane-server.yaml) as an example.
+
 ### Pod / Service / Deployment definitions
 
 You can use the sample artifact for the [client.yaml](artifacts/client.yaml) or [server.yaml](artifacts/server.yaml)

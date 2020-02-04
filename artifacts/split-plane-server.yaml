@@ -1,0 +1,97 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inlets-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inlets-server
+  template:
+    metadata:
+      labels:
+        app: inlets-server
+    spec:
+      containers:
+      - name: inlets-server
+        image: inlets/inlets-pro:0.5.1
+        imagePullPolicy: IfNotPresent
+        command: ["inlets-pro"]
+        args:
+        - "server"
+        - "--auto-tls=true"
+        - "--remote-tcp 127.0.0.1"
+        - "--common-name PUBLIC_IP_GOES_HERE"
+        - "--token=AUTHTOKENHERE"
+---
+
+# Private ClusterIP, to which applications will connect within the cluster
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inlets-control
+  labels:
+    app: inlets-server
+spec:
+  type: LoadBalancer
+  ports:
+    - name: inlets-control
+      port: 8123
+      protocol: TCP
+      targetPort: 8123
+      nodePort: 30023
+  selector:
+    app: inlets-server
+
+# Public LoadBalancer, or Ingress, or NodePort to which the remote service 
+# behind NAT or a firewall will connect
+
+# If we are tunnelling `ssh` for instance on port 22
+# Clients from within the cluster can connect to :
+# tunnel-client-1-ssh.default:22
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tunnel-client-1-ssh
+  labels:
+    app: inlets-server
+spec:
+  type: ClusterIP
+  ports:
+    - name: inlets-ssh-data
+      port: 22
+      protocol: TCP
+      targetPort: 22
+  selector:
+    app: inlets-server
+---
+# Multiple ports can also be exposed via the data-plane
+# In this instance client-1 forwards ports 22 and 27017 for MongoDB:
+
+# mongodb://tunnel-client-1.default:27017
+# ssh -p 22 tunnel-client-1.default
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tunnel-client-1
+  labels:
+    app: inlets-server
+spec:
+  type: ClusterIP
+  ports:
+    - name: inlets-ssh-data
+      port: 22
+      protocol: TCP
+      targetPort: 22
+    - name: inlets-mongofb-data
+      port: 27017
+      protocol: TCP
+      targetPort: 27017
+  selector:
+    app: inlets-server
+---
+
