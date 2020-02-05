@@ -216,20 +216,32 @@ You can use the sample artifact for the [client.yaml](../artifacts/client.yaml) 
 
 ### Common issues
 
-* You have a port permission issue for low ports such as 80
+* You have a port permission issue for low ports `< 1024` such as `80`
 
-    This may be a permission issue with your cluster. Contact your administrator.
+    The reason for this error is that the inlets-pro Docker image is set to run as a non-root user and non-root users are not allowed to bind to ports below 1024.
 
-    Try adding each port to the Kubernetes container spec:
+    There are two ways around this, the first being that you perhaps don't need to bind to that low port. Docker, Kubernetes and inlets-pro all allow for port remapping, so there should be no reason for a you to need to bind directly to port 80 in a service.
+
+    Try adding each port to the Kubernetes container spec with your override:
 
     ```yaml
     ports:
     - name: http
-      containerPort: 80
+      containerPort: 8080
       protocol: TCP
     ```
 
-    You may also need to run the pod as a root user by [editing the security context of the Pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/).
+    The second solution is to change the security context so that your inlets server runs as root. You may also need to run the pod as a root user by [editing the security context of the Pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/).
+
+    Further more, if you are not a Kubernetes user, but using Docker, you can derive a new image from our upstream image and override the user there:
+
+    ```Dockerfile
+    FROM inlets/inlets-pro:TAG
+
+    USER root
+    ```
+
+    For manual use with Docker, you can also set a non-root user via the `--user root` / `--user 0` flag: `docker run --uid 0 --name inlets-pro-root-server -ti inlets/inlets-pro:TAG server`
 
 * The client cannot write the auto-TLS certificate to `/tmp/` due to a read-only filesystem
 
