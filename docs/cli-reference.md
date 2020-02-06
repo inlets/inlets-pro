@@ -2,7 +2,7 @@
 
 There are two components to inlets-pro, the server and the client.
 
-This reference guide is defined for self-service, but customers of OpenFaaS Ltd can request hands-on support and training. Just email sales@openfaas.com for more.
+This reference guide is designed for self-service, but customers of OpenFaaS Ltd can request hands-on support and training. Just email sales@openfaas.com for more.
 
 ## Working with MacOS, Linux, and Windows
 
