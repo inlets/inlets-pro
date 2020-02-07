@@ -10,7 +10,7 @@ The examples given in the documentation are valid for all three operating system
 
 Windows users can use either Windows Subsystem for Linux (WSL) or [Git bash](https://git-scm.com/downloads), this is the simplest way to make all commands compatible.
 
-Both the client and server component can run as:
+The client and server component are packaged in the same `inlets-pro` binary and can be run as:
 
 * A process on MacOS, Linux, Windows on ARM or Intel architecture
 * As a Docker container with docker, or Kubernetes as a Pod on ARM or Intel architecture
@@ -19,7 +19,7 @@ Both the client and server component can run as:
 
 The client component connects to an inlets server and then routes incoming requests to a private service. The client can run on the same host as your private service, or run on another host and act as gateway.
 
-#### Configure the license
+#### Set the license
 
 The license terms of inlets-pro require that both the inlets client and server have a valid license, only the client requires to have the license configured.
 
@@ -58,25 +58,7 @@ You can configure the license in one of two ways:
     export INLETS_LICENSE="LICENSE_KEY_VALUE"
     ```
 
-#### Configure the routing
-
-Each inlets-server and client pair acts as a router. You need to configure the client to tell it where to route incoming TCP requests and which port to use.
-
-##### Remote TCP address `--remote-tcp`
-
-* For a client running on your local computer or a VM
-
-    Set `--remote-tcp` - set to `127.0.0.1` for the local machine
-
-* For a client acting as a gateway, specify the hostname or IP address as seen by the client
-
-    Set `--remote-tcp` - set to `192.168.0.1` if the host running your private service is `192.168.0.1` on the local network
-
-* For a Kubernetes Pod
-
-    Set `--remote-tcp` - set to the name of the destination Kubernetes service such as a ClusterIP `nginx.default`
-
-##### TCP ports `--tcp-ports`
+### Set the TCP ports for the tunnel `--tcp-ports`
 
 The client will advertise which TCP ports it requires the server to open, this is done via the `--tcp-ports` flag
 
@@ -88,7 +70,7 @@ The client will advertise which TCP ports it requires the server to open, this i
 
     `--tcp-ports=80,443`
 
-#### Connect to the remote host with `--connect`
+### Connect to the remote host (server) with `--connect`
 
 inlets-pro uses a websocket for its control plane on port `8123` by default and adds automatic TLS. This is an optional feature.
 
@@ -171,6 +153,24 @@ You can use the public IP address of the inlets-server here, or a DNS record.
 
     In this example `inlets-control-tunnel1.example.com` will resolve to the public IP of `35.1.25.103`
 
+. You need to configure the client to tell it where to route incoming TCP requests and which port to use.
+
+#### Set the remote TCP address `--remote-tcp`
+
+The server needs to be configured with a "remote TCP address" which corresponds to where to direct incoming traffic to. Unlike the `--tcp-ports` which is set on the client, this value is set at the server.
+
+* For a client running on your local computer or a VM
+
+    Set `--remote-tcp` - set to `127.0.0.1` for the local machine
+
+* For a client acting as a gateway, specify the hostname or IP address as seen by the client
+
+    Set `--remote-tcp` - set to `192.168.0.1` if the host running your private service is `192.168.0.1` on the local network
+
+* For a Kubernetes Pod
+
+    Set `--remote-tcp` - set to the name of the destination Kubernetes service such as a ClusterIP `nginx.default`
+
 #### Set the authentication token `--token`
 
 The inlets-pro server requires a token for authentication to make sure that the client is genuine. It is recommended to combine the use of the token with auto-tls or external TLS.
@@ -214,7 +214,7 @@ You can deploy an inlets-server in one of three ways:
 
 You can use the sample artifact for the [client.yaml](../artifacts/client.yaml) or [server.yaml](../artifacts/server.yaml)
 
-### Common issues
+## Troubleshooting
 
 * You have a port permission issue for low ports `< 1024` such as `80`
 
