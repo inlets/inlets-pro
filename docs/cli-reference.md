@@ -4,6 +4,14 @@ There are two components to inlets-pro, the server and the client.
 
 This reference guide is designed for self-service, but customers of OpenFaaS Ltd can request hands-on support and training. Just email sales@openfaas.com for more.
 
+## Contents:
+
+* Working with MacOS, Linux, and Windows
+* Configure the inlets-pro client
+* Configure the inlets-pro server
+* Troubleshooting
+* Working with Kubernetes
+
 ## Working with MacOS, Linux, and Windows
 
 The examples given in the documentation are valid for all three operating systems and use bash as a syntax.
