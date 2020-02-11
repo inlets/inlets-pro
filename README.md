@@ -78,10 +78,10 @@ In this example we will forward ports 80 and 443 from the exit-node to the Ingre
 
 * [inlets-pro CLI reference](docs/cli-reference.md)
 
-* [TCP tunnel for your Kubernetes IngressController HTTP/80 and TLS/443](ingress-tutorial.md)
-* [TCP tunnel for Apache Cassandra running on your local machine, out to another network](cassandra-tutorial.md)
-* [TCP tunnel for Caddy - get a TLS cert directly for your local machine](caddy-tutorial.md)
-* [TCP tunnel to access an SSH server](ssh-tutorial.md)
+* [TCP tunnel for your Kubernetes IngressController HTTP/80 and TLS/443](docs/ingress-tutorial.md)
+* [TCP tunnel for Apache Cassandra running on your local machine, out to another network](docs/cassandra-tutorial.md)
+* [TCP tunnel for Caddy - get a TLS cert directly for your local machine](docs/caddy-tutorial.md)
+* [TCP tunnel to access an SSH server](docs/ssh-tutorial.md)
 * [Get kubectl access to your private cluster from anywhere](https://blog.alexellis.io/get-private-kubectl-access-anywhere/)
 
 ### Get the binary
