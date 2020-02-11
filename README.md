@@ -123,9 +123,13 @@ Professional services are also available if you would like to conduct a paid pro
 
 ### Getting a license key
 
+For commercial, business, corporate, or enterprise use:
+
 1) Accept the [End User License Agreement - EULA](EULA.md)
 2) [Start a 14-day trial today](https://docs.google.com/forms/d/e/1FAIpQLScfNQr1o_Ctu_6vbMoTJ0xwZKZ3Hszu9C-8GJGWw1Fnebzz-g/viewform?usp=sf_link)
 2) Receive your license via email from OpenFaaS Ltd
 3) Use community support if required via [OpenFaaS Slack](https://slack.openfaas.io/) in the #inlets channel
 
 **After completing your trial**, please contact [sales@openfaas.com](mailto:sales@openfaas.com) for a quote and to purchase a commercial-license.
+
+Or [Buy a personal, non-commercial license](https://docs.inlets.dev/#/pricing/)
