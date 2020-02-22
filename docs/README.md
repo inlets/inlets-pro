@@ -16,6 +16,10 @@
 
 * [Get kubectl access to your private cluster from anywhere](https://blog.alexellis.io/get-private-kubectl-access-anywhere/)
 
+* [Get a TLS-enabled Docker registry in 5 minutes](https://blog.alexellis.io/get-a-tls-enabled-docker-registry-in-5-minutes/)
+
+* [Tunnel PostgreSQL or MariaDB with inlets-pro](https://gist.github.com/alexellis/995b518a653d172dda4b0901dcdaa391)
+
 * [Loan a cloud IP to your minikube cluster](https://blog.alexellis.io/loan-an-ip-to-your-minikube-cluster/)
 
 Feel free to submit a PR for a community blog-post on inlets-pro.
