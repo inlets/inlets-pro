@@ -115,11 +115,16 @@ The inlets-pro binary can be obtained as a stand-alone executable, or via a Dock
 
 inlets-pro is a L4 TCP tunnel, service proxy, and load-balancer product distributed under a commercial license.
 
-In order to use inlets-pro, you must accept the [End User License Agreement - EULA](EULA.md). The server component runs without a license key, but the client requires a valid license. A license can be purchased from OpenFaaS Ltd after completing a trial.
+In order to use inlets-pro, you must accept the [End User License Agreement - EULA](EULA.md). The server component runs without a license key, but the client requires a valid license.
 
-Professional services are also available if you would like to conduct a paid proof-of-concept or to obtain a custom reference architecture. Just ask us how we can help.
+* A license for [commercial use can be purchased from OpenFaaS Ltd](https://docs.inlets.dev/#/?id=pricing)
+* For personal, non-commercial use [you can purchase a license on Gumroad.com](https://gumroad.com/openfaas) with a special discount
 
-### Getting a license key
+Online training via Zoom, professional services, reference architectures and support are available to purchase from OpenFaaS Ltd.
+
+### Start your free 14-day trial.
+
+You can claim your free 14-day trial to see if inlets-pro is for you, with no obligation to buy.
 
 For commercial, business, corporate, or enterprise use:
 
