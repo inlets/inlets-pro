@@ -1,107 +1,263 @@
-# Tutorial
+# Expose Your IngressController and get TLS from LetsEncrypt
 
-TCP tunnel for your IngressController Kubernetes cluster with port 80 HTTP and 443 TLS.
+In this quick-start we will configure the inlets-operator to use inlets-pro (a TCP proxy) to expose NginxIngress so that it can receive HTTPS certificates via LetsEncrypt and cert-manager.
 
-Scenario: you have an IngressController running on a local Kubernetes cluster, maybe it's using kubeadm and bare metal. Maybe it's an RPi cluster, or KinD on your laptop. Your IngressController such as Nginx w/ cert-manager, Caddy or Traefik cannot get or serve TLS certificates because you have no public IP.
+> Note: If you don't have a license for inlets-pro, you can get [a 14-day free trial](https://docs.google.com/forms/d/e/1FAIpQLScfNQr1o_Ctu_6vbMoTJ0xwZKZ3Hszu9C-8GJGWw1Fnebzz-g/viewform), or just use the free OSS inlets option, your IngressController will be able to serve plaintext HTTP over port 80, but you won't be able to obtain a TLS certificate.
 
-The Inlets Pro server will give you a public IP and tunnel traffic on ports 80 and 443 to your IngressController.
+## Pre-reqs
 
-## Get the `k3sup` utility
+* A computer or laptop running MacOS or Linux, or Git Bash or WSL on Windows
+* Docker for Mac / Docker Daemon - installed in the normal way, you probably have this already
+* [KinD](https://github.com/kubernetes-sigs/kind) - the "darling" of the Kubernetes community is Kubernetes IN Docker, a small one-shot cluster that can run inside a Docker container
+* [k3sup](https://github.com/alexellis/k3sup) - k3sup is an app installer that takes a helm chart and bundles it behind a simple CLI
 
-The `k3sup` utility makes installing the various parts of this tutorial much easier, than when following manual steps for each component.
+## Create the Kubernetes cluster with KinD
 
-```sh
-curl -sSLf https://get.k3sup.dev | sudo sh
+We're going to use [KinD](https://github.com/kubernetes-sigs/kind), which runs inside a container with Docker for Mac or the Docker daemon. MacOS cannot actually run containers or Kubernetes itself, so projects like Docker for Mac create a small Linux VM and hide it away.
+
+You can use an alternative to KinD if you have a preferred tool.
+
+Get a KinD binary release:
+
+```bash
+curl -Lo ./kind "https://github.com/kubernetes-sigs/kind/releases/download/v0.7.0/kind-$(uname)-amd64"
+chmod +x ./kind
+sudo mv /kind /usr/local/bin
 ```
 
-> Note: that despite the word `k3` in the name `k3sup` works with any Kubernetes cluster, including KinD, minikube and Docker Desktop.
+Now create a cluster:
 
-## Set up Kubernetes on your laptop
+```bash
+ kind create cluster
+Creating cluster "kind" ...
+ ✓ Ensuring node image (kindest/node:v1.17.0) 🖼
+ ✓ Preparing nodes 📦  
+ ✓ Writing configuration 📜 
+ ✓ Starting control-plane 🕹️ 
+ ✓ Installing CNI 🔌 
+ ✓ Installing StorageClass 💾 
+Set kubectl context to "kind-kind"
+You can now use your cluster with:
 
-You may have a preferred setup or approach or local Kubernetes, but I would recommend trying k3d, which runs k3s in a Docker container, setup is < 1m.
+kubectl cluster-info --context kind-kind
 
-By default k3d comes with Traefik, which also works with inlets-pro, but we're going to disable it and use the more common Nginx-ingress.
-
-```sh
-# Get the k3d binary
-curl -s https://raw.githubusercontent.com/rancher/k3d/master/install.sh | bash
-
-# Create the cluster
-k3d create --server-arg "--no-deploy=traefik,svclb"
-
-export KUBECONFIG="$(k3d get-kubeconfig --name='k3s-default')"
+Have a nice day! 👋
 ```
 
-## Get a cloud API token
+We can check that our single node is ready now:
 
-DigitalOcean is the easiest cloud to get started with, but you can also use your own infrastructure with inlets-pro.
+```bash
+kubectl get node -o wide
 
-Head over to your dashboard and create an API key, save it as `~/Downloads/do-access-token`
+NAME                 STATUS     ROLES    AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE       KERNEL-VERSION     CONTAINER-RUNTIME
+kind-control-plane      Ready   master   35s   v1.17.0   172.17.0.2    <none>        Ubuntu 19.10   5.3.0-26-generic   containerd://1.3.2
+```
+
+The above shows one node Ready, so we are ready to move on.
+
+## Install k3sup
+
+You can use k3sup or helm to install the various applications we are going to add to the cluster below. k3sup provides an apps ecosystem that makes things much quicker.
+
+```bash
+# Get k3sup
+curl -sSLf https://get.k3sup.dev/ | sudo sh
+```
 
 ## Install the inlets-operator
 
-Next we need two parts, the client and the server. The client runs inside your cluster as a Pod, and the server runs on a server with a public IP, or an IP in another network that we want to expose our IngressController on.
+Save an access token for your cloud provider as `$HOME/access-token`, in this example we're using DigitalOcean.
 
-Install the inlets-operator which automates the creation of the client Pod and the exit server.
+Make sure you set `LICENSE` with the value of your license.
 
-```sh
-export LICENSE="" # Set your inlets-pro license key here
+```bash
+export LICENSE="INLETS_PRO_LICENSE_JWT"
+export ACCESS_TOKEN=$HOME/access-token
 
 k3sup app install inlets-operator \
-  --provider digitalocean \
-  --region lon1 \
-  --token-file ~/Downloads/do-access-token \
-  --license "${LICENSE}"
+ --helm3 \
+ --provider digitalocean \
+ --region lon1 \
+ --token-file $ACCESS_TOKEN \
+ --license $LICENSE
 ```
 
-See also `k3sup app install inlets-operator --help` for more options.
+> You can run `k3sup app install inlets-operator --help` to see a list of other cloud providers.
 
-## Install Nginx IngressController
+* Set the `--region` flag as required, it's best to have low latency between your current location and where the exit-servers will be provisioned.
+* Use your license in `--license`, or omit this flag if you just want to serve port 80 from your IngressController without any TLS
 
-```sh
+## Install nginx-ingress
+
+This installs nginx-ingress using its Helm chart:
+
+```bash
 k3sup app install nginx-ingress
 ```
 
-## Access your IngressController
+## Install cert-manager
 
-Now look for the LoadBalancer and external IP in your cluster created by the Nginx app:
+Install [cert-manager](https://cert-manager.io/docs/), which can obtain TLS certificates through NginxIngress.
 
-```sh
-kubectl get service/nginx-ingress-controller
-
-NAME                       TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE
-nginx-ingress-controller   LoadBalancer   10.43.148.130   167.172.58.2  80:30077/TCP,443:32437/TCP   15s
+```bash
+k3sup app install cert-manager
 ```
 
-You'll be able to access your IP via `curl`, or in a web-browser:
+## A quick review
+
+Here's what we have so far:
+
+* nginx-ingress
+
+    An IngressController, Traefik or Caddy are also valid options. It comes with a Service of type LoadBalancer that will get a public address via the tunnel
+
+* inlets-operator configured to use inlets-pro
+
+    Provides us with a public VirtualIP for the IngressController service.
+
+* cert-manager
+
+    Provides TLS certificates through the HTTP01 or DNS01 challenges from LetsEncrypt
+
+## Deploy an application and get a TLS certificate
+
+This is the final step that shows everything working end to end.
+
+TLS certificates require a domain name and DNS A or CNAME entry, so let's set that up
+
+Find the External-IP:
 
 ```
-# We have no Ingress or TLS records yet, so the cert will show as invalid
-curl -k -i http://167.172.58.2:443
-
-# And we can access the HTTP endpoint
-curl -i http://167.172.58.2:80
+kubectl get svc
 ```
 
-The above shows both port 80 and 443 being tunnelled to your VM and exposed via its public IP.
+Now create a DNS A record in your admin panel, so for example: `expressjs.example.com`.
 
-You can create a DNS entry and point it at this IP, and even get a TLS certificate with tooling like cert-manager.
+Now when you install a Kubernetes application with an Ingress definition, NginxIngress and cert-manager will work together to provide a TLS certificate.
 
-### Wrapping up
+Create a staging issuer for cert-manager `issuer.yaml`:
 
-You've now created a cluster on your private network, with a local IngressController that has a real public IP. Any traffic that hits port 80 on the IngressController will redirected to your IngressController inside your cluster.
+```yaml
+apiVersion: cert-manager.io/v1alpha2
+kind: Issuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    email: you@example.com
+    privateKeySecretRef:
+      name: letsencrypt-staging
+    solvers:
+    - http01:
+        ingress:
+          class:  nginx
+```
 
-Here's a couple of labs that you could pick up and carry on with. 
+Edit `email`, then run: `kubectl apply -f issuer.yaml`.
 
-* [Get a TLS cert for your application with JetStack's cert-manager](https://github.com/alexellis/tls-with-cert-manager)
+Let's use helm3 to install Alex's example Node.js API [available on GitHub](https://github.com/alexellis/expressjs-k8s)
 
-* [OpenFaaS with a HTTPS certificate with k3sup](https://blog.alexellis.io/tls-the-easy-way-with-openfaas-and-k3sup/), or deploy your own Ingress resource.
+Create a set of helm overrides for the domain-name `custom.yaml`:
 
-Or just deploy your favourite application and create an "Ingress" manifest for it
+```yaml
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/issuer: "letsencrypt-staging"
+  hosts:
+    - host: expressjs.inlets.dev
+      paths: ["/"]
+  tls:
+   - secretName: expressjs-tls
+     hosts:
+       - expressjs.inlets.dev
+```
 
-#### Clean up the resources (optional)
+Now install the helm chart using the version of helm3 downloaded by k3sup:
 
-The operator will delete your exit-node automatically, if you delete the Nginx Service with `kubectl delete service/nginx-ingress-controller`.
+```bash
+export PATH=$PATH:$HOME/.k3sup/bin/helm3/
+helm repo add expressjs-k8s https://alexellis.github.io/expressjs-k8s/
 
-You can then run `k3d delete` and you should be back to where you started.
+# Then they run an update
+helm repo update
 
+# And finally they install
+helm upgrade --install express expressjs-k8s/expressjs-k8s \
+  --values custom.yaml
+```
+
+## Test it out
+
+Now check the certificate has been created and visit the webpage in a browser:
+
+```bash
+kubectl get certificate
+
+NAME            READY   SECRET          AGE
+expressjs-tls   True    expressjs-tls   49s
+```
+
+Open the webpage i.e. https://api.example.com
+
+Here's my example on my own domain:
+
+![The page with TLS](../images/operator-pro-webpage.png)
+
+You can view the certificate the certificate that's being served directly from your local cluster and see that it's valid:
+
+![Green lock](../images/operator-pro-webpage-letsencrypt.png)
+
+## Try something else
+
+Using k3sup you can now install OpenFaaS or a Docker Registry with a couple of commands, and since you have Nginx and cert-manager in place, this will only take a few moments.
+
+### OpenFaaS with TLS
+
+OpenFaaS is a platform for Kubernetes that provides FaaS functionality and microservices. The motto of the project is [Serverless Functions Made Simple](https://www.openfaas.com/) and you can deploy it along with TLS in just a couple of commands:
+
+```bash
+export DOMAIN=gateway.example.com
+k3sup app install openfaas
+k3sup app install openfaas-ingress \
+  --email webmaster@$DOMAIN \
+  --domain $DOMAIN
+```
+
+That's it, you'll now be able to access your gateway at https://$DOMAIN/
+
+For more, see the [OpenFaaS workshop](https://github.com/openfaas/workshop/)
+
+### Docker Registry with TLS
+
+A self-hosted Docker Registry with TLS and private authentication can be hard to set up, but we can now do that with two commands.
+
+```bash
+export DOMAIN=registry.example.com
+k3sup app install docker-registry
+k3sup app install docker-registry-ingress \
+  --email webmaster@$DOMAIN \
+  --domain $DOMAIN
+```
+
+Now try your registry:
+
+```bash
+docker login $DOMAIN
+docker pull alpine:3.11
+docker tag alpine:3.11 $DOMAIN/alpine:3.11
+
+docker push $DOMAIN/alpine:3.11
+```
+
+You can even combine the new private registry with OpenFaaS if you like, [checkout the docs for more](https://docs.openfaas.com/).
+
+## Wrapping up
+
+Through the use of inlets-pro we have an encrypted control-plane for the websocket tunnel, and encryption for the traffic going to our Express.js app using a TLS certificate from LetsEncrypt.
+
+You can now get a green lock and a valid TLS certificate for your local cluster, which also means that this will work with bare-metal Kubernetes, on-premises and with your Raspberry Pi cluster.
+
+> Note if you're just looking for something to use in development, without TLS or encryption, you can install the inlets-operator without the `--license` flag and port 80 will be exposed for you instead. You can still use NginxIngress, but you won't get a certificate and it won't be encrypted e2e.
