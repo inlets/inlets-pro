@@ -6,15 +6,15 @@ Scenario: you have an IngressController running on a local Kubernetes cluster, m
 
 The Inlets Pro server will give you a public IP and tunnel traffic on ports 80 and 443 to your IngressController.
 
-## Get the `k3sup` utility
+## Get the `arkade` utility
 
-The `k3sup` utility makes installing the various parts of this tutorial much easier, than when following manual steps for each component.
+The `arkade` utility makes installing the various parts of this tutorial much easier, than when following manual steps for each component.
 
 ```sh
-curl -sSLf https://get.k3sup.dev | sudo sh
+curl -sSLf https://dl.arkade.dev | sudo sh
 ```
 
-> Note: that despite the word `k3` in the name `k3sup` works with any Kubernetes cluster, including KinD, minikube and Docker Desktop.
+> Note: `arkade` works with any Kubernetes cluster, including KinD, minikube, k3s and Docker Desktop. 
 
 ## Set up Kubernetes on your laptop
 
@@ -47,19 +47,19 @@ Install the inlets-operator which automates the creation of the client Pod and t
 ```sh
 export LICENSE="" # Set your inlets-pro license key here
 
-k3sup app install inlets-operator \
+arkade app install inlets-operator \
   --provider digitalocean \
   --region lon1 \
   --token-file ~/Downloads/do-access-token \
   --license "${LICENSE}"
 ```
 
-See also `k3sup app install inlets-operator --help` for more options.
+See also `arkade app install inlets-operator --help` for more options.
 
 ## Install Nginx IngressController
 
 ```sh
-k3sup app install nginx-ingress
+arkade app install nginx-ingress
 ```
 
 ## Access your IngressController
@@ -95,7 +95,7 @@ Here's a couple of labs that you could pick up and carry on with.
 
 * [Get a TLS cert for your application with JetStack's cert-manager](https://github.com/alexellis/tls-with-cert-manager)
 
-* [OpenFaaS with a HTTPS certificate with k3sup](https://blog.alexellis.io/tls-the-easy-way-with-openfaas-and-k3sup/), or deploy your own Ingress resource.
+* [OpenFaaS with a HTTPS certificate with arkade](https://blog.alexellis.io/tls-the-easy-way-with-openfaas-and-k3sup/), or deploy your own Ingress resource.
 
 Or just deploy your favourite application and create an "Ingress" manifest for it
 
