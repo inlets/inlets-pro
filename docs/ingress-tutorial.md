@@ -9,7 +9,7 @@ In this quick-start we will configure the inlets-operator to use inlets-pro (a T
 * A computer or laptop running MacOS or Linux, or Git Bash or WSL on Windows
 * Docker for Mac / Docker Daemon - installed in the normal way, you probably have this already
 * [KinD](https://github.com/kubernetes-sigs/kind) - the "darling" of the Kubernetes community is Kubernetes IN Docker, a small one-shot cluster that can run inside a Docker container
-* [k3sup](https://github.com/alexellis/k3sup) - k3sup is an app installer that takes a helm chart and bundles it behind a simple CLI
+* [arkade](https://github.com/alexellis/arkade) - arkade is an app installer that takes a helm chart and bundles it behind a simple CLI
 
 ## Create the Kubernetes cluster with KinD
 
@@ -55,13 +55,13 @@ kind-control-plane      Ready   master   35s   v1.17.0   172.17.0.2    <none>   
 
 The above shows one node Ready, so we are ready to move on.
 
-## Install k3sup
+## Install arkade
 
-You can use k3sup or helm to install the various applications we are going to add to the cluster below. k3sup provides an apps ecosystem that makes things much quicker.
+You can use arkade or helm to install the various applications we are going to add to the cluster below. arkade provides an apps ecosystem that makes things much quicker.
 
 ```bash
-# Get k3sup
-curl -sSLf https://get.k3sup.dev/ | sudo sh
+# Get arkade
+curl -sSLf https://dl.get-arkade.dev/ | sudo sh
 ```
 
 ## Install the inlets-operator
@@ -74,7 +74,7 @@ Make sure you set `LICENSE` with the value of your license.
 export LICENSE="INLETS_PRO_LICENSE_JWT"
 export ACCESS_TOKEN=$HOME/access-token
 
-k3sup app install inlets-operator \
+arkade install inlets-operator \
  --helm3 \
  --provider digitalocean \
  --region lon1 \
@@ -82,7 +82,7 @@ k3sup app install inlets-operator \
  --license $LICENSE
 ```
 
-> You can run `k3sup app install inlets-operator --help` to see a list of other cloud providers.
+> You can run `arkade install inlets-operator --help` to see a list of other cloud providers.
 
 * Set the `--region` flag as required, it's best to have low latency between your current location and where the exit-servers will be provisioned.
 * Use your license in `--license`, or omit this flag if you just want to serve port 80 from your IngressController without any TLS
@@ -92,7 +92,7 @@ k3sup app install inlets-operator \
 This installs nginx-ingress using its Helm chart:
 
 ```bash
-k3sup app install nginx-ingress
+arkade install nginx-ingress
 ```
 
 ## Install cert-manager
@@ -100,7 +100,7 @@ k3sup app install nginx-ingress
 Install [cert-manager](https://cert-manager.io/docs/), which can obtain TLS certificates through NginxIngress.
 
 ```bash
-k3sup app install cert-manager
+arkade install cert-manager
 ```
 
 ## A quick review
@@ -175,10 +175,10 @@ ingress:
        - expressjs.inlets.dev
 ```
 
-Now install the helm chart using the version of helm3 downloaded by k3sup:
+Now install the helm chart using the version of helm3 downloaded by arkade:
 
 ```bash
-export PATH=$PATH:$HOME/.k3sup/bin/helm3/
+export PATH=$PATH:$HOME/.arkade/bin/helm3/
 helm repo add expressjs-k8s https://alexellis.github.io/expressjs-k8s/
 
 # Then they run an update
@@ -212,7 +212,7 @@ You can view the certificate the certificate that's being served directly from y
 
 ## Try something else
 
-Using k3sup you can now install OpenFaaS or a Docker Registry with a couple of commands, and since you have Nginx and cert-manager in place, this will only take a few moments.
+Using arkade you can now install OpenFaaS or a Docker Registry with a couple of commands, and since you have Nginx and cert-manager in place, this will only take a few moments.
 
 ### OpenFaaS with TLS
 
@@ -220,8 +220,8 @@ OpenFaaS is a platform for Kubernetes that provides FaaS functionality and micro
 
 ```bash
 export DOMAIN=gateway.example.com
-k3sup app install openfaas
-k3sup app install openfaas-ingress \
+arkade install openfaas
+arkade install openfaas-ingress \
   --email webmaster@$DOMAIN \
   --domain $DOMAIN
 ```
@@ -236,8 +236,8 @@ A self-hosted Docker Registry with TLS and private authentication can be hard to
 
 ```bash
 export DOMAIN=registry.example.com
-k3sup app install docker-registry
-k3sup app install docker-registry-ingress \
+arkade install docker-registry
+arkade install docker-registry-ingress \
   --email webmaster@$DOMAIN \
   --domain $DOMAIN
 ```
