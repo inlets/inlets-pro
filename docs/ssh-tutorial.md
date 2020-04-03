@@ -46,7 +46,7 @@ Provision a VM on DigitalOcean or another IaaS provider.
 Log in with ssh and obtain the binary:
 
 ```sh
-curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.5.1/inlets-pro > inlets-pro
+curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.6.0/inlets-pro > inlets-pro
 chmod +x ./inlets-pro
 mv ./inlets-pro /usr/bin/inlets-pro
 ```
@@ -113,7 +113,7 @@ sudo systemctl reload sshd
 First we need to download the inlets-pro client onto our remote machine 
 
 ```sh
-curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.5.1/inlets-pro > inlets-pro
+curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.6.0/inlets-pro > inlets-pro
 chmod +x ./inlets-pro
 mv ./inlets-pro /usr/bin/inlets-pro
 ```

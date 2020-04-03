@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: inlets-client
-        image: inlets/inlets-pro:0.5.1
+        image: inlets/inlets-pro:0.6.0
         imagePullPolicy: IfNotPresent
         command: ["inlets-pro"]
         args:

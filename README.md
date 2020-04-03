@@ -76,10 +76,10 @@ In this example we will forward ports 80 and 443 from the exit-node to the Ingre
 
 * [inlets-pro CLI reference](docs/cli-reference.md)
 
-* [TCP tunnel for your Kubernetes IngressController HTTP/80 and TLS/443](docs/ingress-tutorial.md)
-* [TCP tunnel for Apache Cassandra running on your local machine, out to another network](docs/cassandra-tutorial.md)
-* [TCP tunnel for Caddy - get a TLS cert directly for your local machine](docs/caddy-tutorial.md)
-* [TCP tunnel to access an SSH server](docs/ssh-tutorial.md)
+* [TCP tunnel for your Kubernetes IngressController HTTP/80 and TLS/443](docs/ingress-tutorial.md) - multiple-ports, reverse proxy within Kubernetes
+* [TCP tunnel for Apache Cassandra running on your local machine, out to another network](docs/cassandra-tutorial.md) - single port, pure TCP
+* [TCP tunnel for Caddy - get a TLS cert directly for your local machine](docs/caddy-tutorial.md) - multiple-ports, TCP to localhost
+* [TCP tunnel to access an SSH server](docs/ssh-tutorial.md) - TCP to localhost or remote machine
 * [Get kubectl access to your private cluster from anywhere](https://blog.alexellis.io/get-private-kubectl-access-anywhere/)
 
 ### Get the binary
@@ -91,7 +91,7 @@ The inlets-pro binary can be obtained as a stand-alone executable, or via a Dock
 * As a binary:
 
     ```sh
-    curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.4.3/inlets-pro > inlets-pro
+    curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.6.0/inlets-pro > inlets-pro
     chmod +x ./inlets-pro
     ```
         
@@ -101,7 +101,7 @@ The inlets-pro binary can be obtained as a stand-alone executable, or via a Dock
 
 * Docker
 
-    A docker image is published at `inlets/inlets-pro:0.5.1`
+    A docker image is published at `inlets/inlets-pro:0.6.0`
 
 * Kubernetes YAML files
 
@@ -118,7 +118,7 @@ inlets-pro is a L4 TCP tunnel, service proxy, and load-balancer product distribu
 In order to use inlets-pro, you must accept the [End User License Agreement - EULA](EULA.md). The server component runs without a license key, but the client requires a valid license.
 
 * A license for [commercial use can be purchased from OpenFaaS Ltd](https://docs.inlets.dev/#/?id=pricing)
-* For personal, non-commercial use [you can purchase a license on Gumroad.com](https://gumroad.com/openfaas) with a special discount
+* For personal, non-commercial use [you can purchase a license here](https://store.openfaas.com/) with a special discount
 
 Online training via Zoom, professional services, reference architectures and support are available to purchase from OpenFaaS Ltd.
 
