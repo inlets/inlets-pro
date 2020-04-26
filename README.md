@@ -30,6 +30,8 @@ inlets-pro can be used to provide a Public VirtualIP to private, edge and on-pre
 
 You can get incoming networking (ingress) to any:
 
+* gRPC services with or without TLS
+* Access unsecured private services like MySQL, but with TLS link-encryption
 * Command & control of Point of Sale / IoT devices
 * SSH access to home-lab or Raspberry Pi
 * TCP services running on Linux, Windows or MacOS
