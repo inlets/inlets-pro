@@ -22,10 +22,12 @@
 
 * [Loan a cloud IP to your minikube cluster](https://blog.alexellis.io/loan-an-ip-to-your-minikube-cluster/)
 
+### Community tutorials:
+
 * [Exporing NAT Transversal and Tunnels with Inlets and Inlets Pro](https://blog.heyal.co.uk/inlets-pro/)
 
 * [Inlets Pro Homelab Awesomeness](https://blog.brewsterops.dev/post/inlets-pro-homelab/)
 
 * [Running Inlets Pro as a Service](https://blog.brewsterops.dev/post/inlets-service/)
 
-Feel free to submit a PR for a community blog-post on inlets-pro.
+Feel free to submit your PR to add your blog post or tutorial.
