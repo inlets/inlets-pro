@@ -24,5 +24,8 @@
 
 * [Exporing NAT Transversal and Tunnels with Inlets and Inlets Pro](https://blog.heyal.co.uk/inlets-pro/)
 
+* [Inlets Pro Homelab Awesomeness](https://blog.brewsterops.dev/post/inlets-pro-homelab/)
+
+* [Running Inlets Pro as a Service](https://blog.brewsterops.dev/post/inlets-service/)
 
 Feel free to submit a PR for a community blog-post on inlets-pro.
