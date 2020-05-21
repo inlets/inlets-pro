@@ -22,4 +22,7 @@
 
 * [Loan a cloud IP to your minikube cluster](https://blog.alexellis.io/loan-an-ip-to-your-minikube-cluster/)
 
+* [Exporing NAT Transversal and Tunnels with Inlets and Inlets Pro](https://blog.heyal.co.uk/inlets-pro/)
+
+
 Feel free to submit a PR for a community blog-post on inlets-pro.
