@@ -123,6 +123,21 @@ echo $TOKEN
 
 Now pass the token via `--token $TOKEN`.
 
+### Generate a systemd unit file for the client
+
+Add "inlets-pro client --generate=systemd" to generate a system unit file for your client along with all the other required parameters.
+
+For example:
+
+```bash
+export TOKEN="auth token"
+inlets-pro client --generate=systemd \
+  --license-file /var/lib/inlets-pro/LICENSE \
+  --tcp-ports "80,443" \
+  --connect "wss://167.99.90.104:8123/connect" \
+  --token $TOKEN
+```
+
 ### Configure the inlets-pro server
 
 The inlets-pro server begins by opening a single TCP port for the control-plane, this is port `8123`, but you can customise it if required.
