@@ -176,7 +176,76 @@ You can use the public IP address of the inlets-server here, or a DNS record.
 
     In this example `inlets-control-tunnel1.example.com` will resolve to the public IP of `35.1.25.103`
 
-. You need to configure the client to tell it where to route incoming TCP requests and which port to use.
+You need to configure the client to tell it where to route incoming TCP requests and which port to use.
+
+#### Use a pre-supplied, or self-signed certificate
+
+You can use a TLS certificate with the inlets PRO server obtained from a third-party tool such as [certbot](https://certbot.eff.org), or your own Public Key Infrastructure (PKI).
+
+The below instructions are for a DNS name on a local network `space-mini.local`, but you can customise the example.
+
+For the server:
+
+```bash
+export AUTH_TOKEN="test-token"
+
+inlets-pro server \
+    --tls-key server.key \
+    --tls-cert server.cert \
+    --auto-tls=false \
+    --token "${AUTH_TOKEN}"
+```
+
+Note that you need to supply a server.key and server.cert file, and that you need to disable `--auto-tls`.
+
+On your client, add the certificate to your trust store, or add its issuer to your trust store, then run:
+
+```bash
+export AUTH_TOKEN="test-token"
+
+inlets-pro client \
+  --tcp-ports 2222 \
+  --license-file ~/LICENSE \
+  --token "${AUTH_TOKEN}" \
+  --connect wss://space-mini.local:8123/connect \
+  --auto-tls=false
+```
+
+Note that you must turn off `--auto-tls`, so that the client does not attempt to download the server's generated CA.
+
+#### Want to generate your own TLS certificate for testing?
+
+Make sure that you set the common-name or TLS SAN name to the hostname that the client will use to connect.
+
+Generate a new key:
+
+```bash
+openssl genrsa -out server.key 2048
+```
+
+Generate a certificate signing request (CSR):
+
+When promoted, do not enter a challenge key. If your hostname is `space-mini.local`, then enter that as the `Common Name`.
+
+```bash
+openssl req -new -key server.key -out server.csr
+```
+
+Obtain the server certificate from the CSR:
+
+```bash
+openssl x509 -req -sha256 -days 365 -in server.csr -signkey server.key -out server.cert
+```
+
+You will receive an error on your client such as:
+
+```
+ERRO[0000] Failed to connect to proxy. Empty dialer response  error="x509: certificate signed by unknown authority"
+```
+
+Therefore, place the server.cert file in your trust store on your client and set the trust policy to "Always trust".
+
+If you are thinking about using self-signed certificates, then the automatic TLS option is already built-in and is easier to use. 
 
 #### Set the remote TCP address `--remote-tcp`
 
