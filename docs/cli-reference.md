@@ -182,6 +182,8 @@ You need to configure the client to tell it where to route incoming TCP requests
 
 You can use a TLS certificate with the inlets PRO server obtained from a third-party tool such as [certbot](https://certbot.eff.org), or your own Public Key Infrastructure (PKI).
 
+If you wanted to use an exit-server with a public IP, you can create a DNS A record for it before configuring certbot or another tool to fetch a TLS certificate for you from LetsEncrypt. If you don't want to set up a separate DNS record, then you can get an automated one from [xip.io](http://xip.io) such as `104.16.182.15.xip.io` or `104.16.182.15.xip.io`, where your public IP is `104.16.182.15`.
+
 The below instructions are for a DNS name on a local network `space-mini.local`, but you can customise the example.
 
 For the server:
