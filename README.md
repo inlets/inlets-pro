@@ -86,24 +86,26 @@ In this example we will forward ports 80 and 443 from the exit-node to the Ingre
 
 ### Get the binary
 
-Both the client and server are contained within the same binary. It is recommended that you use inletsctl, or inlets-operator to access inlets-pro, but you can also work directly with its binary or Docker image.
+Both the client and server are contained within the same binary.
+
+It is recommended that you use [inletsctl](https://github.com/inlets/inletsctl), or inlets-operator to access inlets-pro, but you can also work directly with its binary or Docker image.
 
 The inlets-pro binary can be obtained as a stand-alone executable, or via a Docker image.
 
 * As a binary:
 
     ```sh
-    curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.6.0/inlets-pro > inlets-pro
+    curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.7.0/inlets-pro > inlets-pro
     chmod +x ./inlets-pro
     ```
-        
+
     Or fetch via `inletsctl download --pro`
 
     Or find a binary for [a different architecture on the releases page](https://github.com/inlets/inlets-pro/releases)
 
 * Docker
 
-    A docker image is published at `inlets/inlets-pro:0.6.0`
+    A docker image is published at `inlets/inlets-pro:0.7.0`
 
 * Kubernetes YAML files
 

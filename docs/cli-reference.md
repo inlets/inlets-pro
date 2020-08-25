@@ -66,7 +66,24 @@ You can configure the license in one of two ways:
     export INLETS_LICENSE="LICENSE_KEY_VALUE"
     ```
 
-### Set the TCP ports for the tunnel `--tcp-ports`
+
+### Set the ports for the tunnel `--ports` / `--port` (0.7.0 and newer)
+
+Expose ports on the tunnel server, from the client with one of the following:
+
+```
+--port 80
+-p 80
+--port 80 --port 443
+```
+
+Or
+
+```
+--ports 80,443
+```
+
+### Set the TCP ports for the tunnel `--tcp-ports` (0.6.0 and older)
 
 The client will advertise which TCP ports it requires the server to open, this is done via the `--tcp-ports` flag
 
@@ -78,7 +95,11 @@ The client will advertise which TCP ports it requires the server to open, this i
 
     `--tcp-ports=80,443`
 
-### Connect to the remote host (server) with `--connect`
+### Connect to the remote host (server) with `--url` (0.7.0 and newer)
+
+In 0.7.0 the flag changed to `--url`, but the section below on `--connect` still applies, just with `--url` as the variable.
+
+### Connect to the remote host (server) with `--connect` (0.6.0 and older)
 
 inlets-pro uses a websocket for its control plane on port `8123` by default and adds automatic TLS. This is an optional feature.
 
@@ -249,7 +270,19 @@ Therefore, place the server.cert file in your trust store on your client and set
 
 If you are thinking about using self-signed certificates, then the automatic TLS option is already built-in and is easier to use. 
 
-#### Set the remote TCP address `--remote-tcp`
+#### Set the upstream address (0.7.0 and newer)
+
+You can set an upstream server when running the inlets-pro client:
+
+```bash
+inlets-pro client --upstream 192.168.0.35
+```
+
+Any connections you make to the exit-server will be tunneled to the client, which will then forward them to `192.168.0.35` on its LAN.
+
+The default for `--upstream` is localhost, so that the tunnel server accesses services running directly on the tunnel client.
+
+#### Set the remote TCP address `--remote-tcp` (0.6.0 and older)
 
 The server needs to be configured with a "remote TCP address" which corresponds to where to direct incoming traffic to. Unlike the `--tcp-ports` which is set on the client, this value is set at the server.
 
