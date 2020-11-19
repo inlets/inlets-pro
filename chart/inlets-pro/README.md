@@ -1,8 +1,8 @@
-## inlets-pro chart
+## Use your Kubernetes cluster for exit-servers
 
-Install an inlets PRO server as an exit-server to run within a Pod.
+This chart installs the inlets PRO server as a Pod to run within your Kubernetes cluster.
 
-inlets can be exposed 
+You can use this to avoid creating individual exit-servers, or to connect a number of services into to a public Kubernetes cluster.
 
 ## Getting started
 
