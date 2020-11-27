@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "inlets-pro.fullname" . }}
+  labels:
+    {{- include "inlets-pro.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "inlets-pro.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "inlets-pro.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "inlets-pro.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+           - inlets-pro
+           - client
+           - "--url={{.Values.url}}"
+           - "--upstream={{.Values.upstream}}"
+           - "--ports={{.Values.ports}}"
+           - "--auto-tls={{.Values.autoTLS}}"
+           - "--token-from=/etc/inlets/token"
+           - "--license-file=/etc/inlets-license/license"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: temp-volume
+              mountPath: /tmp            
+            - name: token
+              mountPath: "/etc/inlets"
+              readOnly: true
+            - name: inlets-license
+              mountPath: "/etc/inlets-license"
+              readOnly: true
+      volumes:
+      - name: temp-volume
+        emptyDir: {}         
+      - name: token
+        secret:
+          secretName: {{ .Values.tokenSecretName }}
+      - name: inlets-license
+        secret:
+          secretName: inlets-license
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
