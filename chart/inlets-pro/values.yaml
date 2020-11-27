@@ -12,7 +12,7 @@ controlPlane:
   port: 8123
 
 dataPlane:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
   - targetPort: 9090
     protocol: TCP
