@@ -4,7 +4,7 @@
 
 # Overview
 
-You can use inlets-pro to tunnel out any TCP traffic from an internal network to another network. This could be green-to-green, or green-to-red, i.e. from internal/private to the Internet. It differs from [Inlets OSS](https://inlets.dev/) in that it works at the L4 of the TCP stack and has automatic TLS (auto-tls) encryption built-in.
+You can use inlets-pro to tunnel out any TCP traffic from an internal network to another network. This could be green-to-green, or green-to-red, i.e. from internal/private to the Internet. It differs from the open source version in that it works at the L4 of the TCP stack and has automatic TLS (auto-tls) encryption built-in.
 
 Given the split control- and data-plane, you can also punch out endpoints into a remote cluster, which are kept private from the Internet, for instance when you need Command & Control, or orchestration of on-premises services, from a central cloud cluster.
 
@@ -24,10 +24,7 @@ Deployment options:
 * Native `docker` image available
 * Kubernetes integration via `inlets-operator` or YAML
 
-
 ## License
-
-[inlets OSS](https://inlets.dev) is a free, L7 HTTP tunnel project available for use under the MIT license.
 
 inlets-pro is a L4 TCP tunnel, service proxy, and load-balancer product distributed under a commercial license.
 
@@ -58,44 +55,21 @@ You can get incoming networking (ingress) to any:
 
 For example, rather than terminating TLS at the edge of the tunnel, inlets-pro can forward the TLS traffic on port `443` directly to your host, where you can run a reverse proxy inside your network. At any time you can disconnect and reconnect the tunnel or even delete the remote VM without loosing your TLS certificate since it's stored locally.
 
-### Single private service with Public VirtualIP
-
-![Diagram](docs/images/inlets-pro-vip.png)
-
-For a single private on-premises Java API service, one exit-server is provisioned on public cloud, its Public IP is the VirtualIP for the private cluster. Ports 80 and 443 are forwarded to the Java API, which can serve its own TLS certificate.
-
-### Single private service with Highly-available, multi-zone Public VirtualIP and DNS
-
-![Diagram](docs/images/inlets-pro-vip-ha.png)
-
-For a single private on-premises Java API service, two exit-servers are provisioned on public cloud, each with a Public VirtualIP. DNS is used to provide high-availability and fail-over. Ports 80 and 443 are forwarded to the Java API, which can serve its own TLS certificate.
-
-### Private Kubernetes Cluster, High-available Pod, public VirtualIP
-
-![Diagram](docs/images/inlets-pro-vip-k8s.png)
-
-Example: A private or on-premises Kubernetes cluster serving traffic from a Node.js Pod on port 3000. An IngressController performs TLS termination and stores a certificate within the private cluster. The certificate can be obtained from LetsEncrypt using standard tooling such as [cert-manager](https://cert-manager.io/docs/).
-
-### Remote TCP service running on client site, edge, or on-premises. Command and control from central location
-
-![Diagram](docs/images/inlets-pro-split-plane.png)
-
-Example: You have a remote TCP service such as a PostgreSQL database which is running in a private network such as a client's site, at an edge location, or on-premises. You need to access that database from a public or central cluster. The PostgreSQL database must not be exposed on the Internet, and a split-plane is used where only the control-plane of inlets-pro is public. From within your destination cluster, services can access the database via a private ClusterIP.
+See also: [reference architecture diagrams](/docs/reference.md)
 
 ## Get started
 
-You can follow one of the tutorials above, or use inlets-pro in three different ways:
+You can follow one of the tutorials above, or use inlets PRO in three different ways:
 
-* As a stand-alone binary which you can manage manually, or automate
+* As a stand-alone binary which you can manage manually or automate
 * Through [inletsctl](https://github.com/inlets/inletsctl) which creates an exit server with `inlets-pro server` running with systemd in one of the cloud / IaaS platforms such as AWS EC2 or DigitalOcean
 * Through [inlets-operator](https://github.com/inlets/inlets-operator) - the operator runs on Kubernetes and creates an exit server running `inlets-pro server` and a Pod in your cluster running `inlets-pro client`. The lifecycle of the client and server and exit-node are all automated.
 
 ### Tutorials and examples
 
-* Find the latest tutorials and examples at: [docs.inlets.dev](https://docs.inlets.dev)
-* Read news and about use-cases [inlets.dev/blog](https://inlets.dev/blog)
-
-See also: [inlets-pro CLI reference](docs/cli-reference.md)
+* [News and use-cases on the blog](https://inlets.dev/blog)
+* [Reference documentation](https://docs.inlets.dev)
+* [inlets PRO CLI reference guide](docs/cli-reference.md)
 
 ### Get the binary
 
