@@ -90,12 +90,14 @@ The inlets-pro binary can be obtained as a stand-alone executable, or via a Dock
 
     Or find a binary for [a different architecture on the releases page](https://github.com/inlets/inlets-pro/releases)
 
-* Docker
+    See also [CLI reference guide](docs/cli-reference.md)
 
-    A docker image is published at `inlets/inlets-pro:0.7.0`
+* Docker image
+
+    A docker image is published at `ghcr.io/inlets/inlets-pro:0.7.2`
+    
+    See the image on [GitHub Container Registry](https://github.com/orgs/inlets/packages/container/package/inlets-pro)
 
 * Kubernetes YAML files
 
     A [client](artifacts/client.yaml) and [server](artifacts/server.yaml) YAML file are also available as samples
-
-    Or you can see the [CLI reference guide](docs/cli-reference.md)
