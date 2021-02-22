@@ -15,13 +15,14 @@ spec:
     spec:
       containers:
       - name: inlets-client
-        image: inlets/inlets-pro:0.7.0
+        image: ghcr.io/inlets/inlets-pro:0.8.1
         imagePullPolicy: IfNotPresent
         command: ["inlets-pro"]
         args:
         - "client"
         - "--url=wss://EXIT_NODE_IP:8123/connect"
         - "--ports=80,443"
-        - "--token=AUTHTOKENHERE"
+        - "--token=AUTH_TOKEN_HERE"
         - "--license=LICENSE_JWT_HERE"
+        - "--upstream=SERVICE_NAME_HERE"
 ---
