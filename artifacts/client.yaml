@@ -24,4 +24,5 @@ spec:
         - "--ports=80,443"
         - "--token=AUTHTOKENHERE"
         - "--license=LICENSE_JWT_HERE"
+        - "--upstream=UPSTREAM_SERVICE_HERE"
 ---
