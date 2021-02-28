@@ -14,4 +14,6 @@ There is no need for your data plane to be exposed on the Internet, you can bind
 
 * [Run an inlets PRO client in your Kubernetes cluster](https://github.com/inlets/inlets-pro/tree/master/chart/inlets-pro-client)
 
-See also: [inlets-operator](https://github.com/inlets/inlets-operator) which automates both parts of the above for a set number of supported clouds.
+### Automate Service LoadBalancers for your cluster
+
+See also: [inlets-operator](https://github.com/inlets/inlets-operator) which automates both parts of the above for a set number of supported clouds, and integrates through Kubernetes services of type LoadBalancer.
