@@ -1,10 +1,10 @@
-# inlets-pro is a Cloud Native Tunnel for L4 TCP traffic
+# inlets-pro is a Cloud Native Tunnel for HTTP and TCP traffic
 
 <img src="docs/images/inlets-pro-sm.png" width="150px">
 
 # Overview
 
-You can use inlets-pro to tunnel out any TCP traffic from an internal network to another network. This could be green-to-green, or green-to-red, i.e. from internal/private to the Internet. It differs from the open source version in that it works at the L4 of the TCP stack and has automatic TLS (auto-tls) encryption built-in.
+You can use inlets-pro to tunnel out any HTTP or TCP traffic from an internal network to another network. This could be green-to-green, or green-to-red, i.e. from internal/private to the Internet. It differs from the open source version in that it works at the L4 or L7 level of the TCP stack and has automatic TLS (auto-tls) encryption built-in.
 
 Given the split control- and data-plane, you can also punch out endpoints into a remote cluster, which are kept private from the Internet, for instance when you need Command & Control, or orchestration of on-premises services, from a central cloud cluster.
 
@@ -13,7 +13,8 @@ Given the split control- and data-plane, you can also punch out endpoints into a
 inlets-pro forwards TCP traffic over an encrypted websocket secured with TLS.
 
 * Support for any TCP protocol
-* Pass-through L4 proxy
+* Pass-through for L4 proxy
+* Automatic Let's Encrypt when used as an L7 proxy
 * Automatic TLS encryption for tunnel and control-port
 * Automatic port-detection, announced by client
 
