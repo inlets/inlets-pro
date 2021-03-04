@@ -15,13 +15,11 @@ spec:
     spec:
       containers:
       - name: inlets-server
-        image: inlets/inlets-pro:0.6.0
+        image: ghcr.io/inlets/inlets-pro:0.8.1
         imagePullPolicy: IfNotPresent
         command: ["inlets-pro"]
         args:
         - "server"
         - "--auto-tls=true"
-        - "--remote-tcp=127.0.0.1"
-        - "--common-name=PUBLIC_IP_GOES_HERE"
-        - "--token=AUTHTOKENHERE"
----
+        - "--common-name=PUBLIC_IP"
+        - "--token=TOKEN"

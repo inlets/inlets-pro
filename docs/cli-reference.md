@@ -7,8 +7,10 @@ This reference guide is designed for self-service, but customers of OpenFaaS Ltd
 ## Contents:
 
 * Working with MacOS, Linux, and Windows
-* Configure the inlets-pro client
-* Configure the inlets-pro server
+* Configure the inlets-pro tcp client
+* Configure the inlets-pro tcp server
+* Configure the inlets-pro http client
+* Configure the inlets-pro http server
 * Troubleshooting
 * Working with Kubernetes
 
@@ -23,7 +25,7 @@ The client and server component are packaged in the same `inlets-pro` binary and
 * A process on MacOS, Linux, Windows on ARM or Intel architecture
 * As a Docker container with docker, or Kubernetes as a Pod on ARM or Intel architecture
 
-### Configure the inlets-pro client
+### Configure the inlets-pro tcp client
 
 The client component connects to an inlets server and then routes incoming requests to a private service. The client can run on the same host as your private service, or run on another host and act as gateway.
 
@@ -37,22 +39,22 @@ You can configure the license in one of two ways:
 
     ```sh
     # Assume a file of `pro-license.txt` with the license key, no new lines or whitespace
-    inlets-pro client \
-    --license-file=pro-license.txt
+    inlets-pro tcp client \
+    --license-file $HOME/.inlets/LICENSE
     ```
 
 * literal flag `--license`
 
     ```sh
-    inlets-pro client \
-    --license="LICENSE_KEY_VALUE"
+    inlets-pro tcp client \
+    --license "VALUE_HERE"
     ```
 
 * literal flag with environment variable
 
     ```sh
     export INLETS_LICENSE="LICENSE_KEY_VALUE"
-    inlets-pro client \
+    inlets-pro tcp client \
     --license="$INLETS_LICENSE"
     ```
 
@@ -66,6 +68,23 @@ You can configure the license in one of two ways:
     export INLETS_LICENSE="LICENSE_KEY_VALUE"
     ```
 
+### Set the upstream
+
+The upstream is where the client should send traffic, when it receives requests on one of the ports from the server.
+
+```sh
+export UPSTREAM="127.0.0.1"
+inlets-pro tcp client \
+  --upstream $UPSTREAM
+```
+
+This can be the local machine, a Kubernetes service, or any reachable hostname:
+
+```sh
+export UPSTREAM="traefik.kube-system"
+inlets-pro tcp client \
+  --upstream $UPSTREAM
+```
 
 ### Set the ports for the tunnel `--ports` / `--port` (0.7.0 and newer)
 
@@ -97,10 +116,6 @@ The client will advertise which TCP ports it requires the server to open, this i
 
 ### Connect to the remote host (server) with `--url` (0.7.0 and newer)
 
-In 0.7.0 the flag changed to `--url`, but the section below on `--connect` still applies, just with `--url` as the variable.
-
-### Connect to the remote host (server) with `--connect` (0.6.0 and older)
-
 inlets-pro uses a websocket for its control plane on port `8123` by default and adds automatic TLS. This is an optional feature.
 
 * Automatic TLS with `auto tls`
@@ -109,7 +124,7 @@ inlets-pro uses a websocket for its control plane on port `8123` by default and 
 
     This is the default option, connect with `wss://` and the IP of the remote machine
 
-    `--connect wss://remote-machine:8123/connect`
+    `--url wss://remote-machine:8123/connect`
 
     The control-port of 8123 is used for auto-tls.
 
@@ -119,7 +134,7 @@ inlets-pro uses a websocket for its control plane on port `8123` by default and 
 
     Turn auto-TLS off, and use port 443 (implicit) for the control-plane.
 
-    `--connect wss://remote-machine/connect`
+    `--url wss://remote-machine/connect`
 
     You must also pass the `--auto-tls=false` flag
 
@@ -127,13 +142,13 @@ inlets-pro uses a websocket for its control plane on port `8123` by default and 
 
     This mode may be useful for testing, but is not recommended for confidential use.
 
-    `--connect ws://remote-machine:8123/connect`
+    `--url ws://remote-machine:8123/connect`
 
     Use port `8123` for the control-plane and `ws://` instead of `wss://`
 
 #### Set the authentication token `--token`
 
-The inlets-pro server requires a token for authentication to make sure that the client is genuine. It is recommended to combine the use of the token with auto-tls or external TLS.
+The `inlets-pro tcp server` requires a token for authentication to make sure that the client is genuine. It is recommended to combine the use of the token with auto-tls or external TLS.
 
 You can create your own token, or generate one with bash:
 
@@ -146,22 +161,26 @@ Now pass the token via `--token $TOKEN`.
 
 ### Generate a systemd unit file for the client
 
-Add "inlets-pro client --generate=systemd" to generate a system unit file for your client along with all the other required parameters.
+Add "inlets-pro tcp client --generate=systemd" to generate a system unit file for your client along with all the other required parameters.
 
 For example:
 
 ```bash
 export TOKEN="auth token"
-inlets-pro client --generate=systemd \
+export UPSTREAM="127.0.0.1"
+
+inlets-pro tcp client \
+  --upstream $UPSTREAM \
   --license-file /var/lib/inlets-pro/LICENSE \
   --tcp-ports "80,443" \
-  --connect "wss://167.99.90.104:8123/connect" \
-  --token $TOKEN
+  --url "wss://167.99.90.104:8123/connect" \
+  --token $TOKEN \
+  --generate=systemd
 ```
 
-### Configure the inlets-pro server
+### Configure the inlets-pro tcp server
 
-The inlets-pro server begins by opening a single TCP port for the control-plane, this is port `8123`, but you can customise it if required.
+The inlets-pro tcp server begins by opening a single TCP port for the control-plane, this is port `8123`, but you can customise it if required.
 
 Additional ports are opened at runtime by the inlets-server for the data-plane. These ports must be advertised by the client via the `--tcp-ports` flag.
 
@@ -212,7 +231,7 @@ For the server:
 ```bash
 export AUTH_TOKEN="test-token"
 
-inlets-pro server \
+inlets-pro tcp server \
     --tls-key server.key \
     --tls-cert server.cert \
     --auto-tls=false \
@@ -226,11 +245,11 @@ On your client, add the certificate to your trust store, or add its issuer to yo
 ```bash
 export AUTH_TOKEN="test-token"
 
-inlets-pro client \
+inlets-pro tcp client \
   --tcp-ports 2222 \
-  --license-file ~/LICENSE \
+  --license-file $HOME/.inlets/LICENSE \
   --token "${AUTH_TOKEN}" \
-  --connect wss://space-mini.local:8123/connect \
+  --url wss://space-mini.local:8123/connect \
   --auto-tls=false
 ```
 
@@ -270,37 +289,9 @@ Therefore, place the server.cert file in your trust store on your client and set
 
 If you are thinking about using self-signed certificates, then the automatic TLS option is already built-in and is easier to use. 
 
-#### Set the upstream address (0.7.0 and newer)
-
-You can set an upstream server when running the inlets-pro client:
-
-```bash
-inlets-pro client --upstream 192.168.0.35
-```
-
-Any connections you make to the exit-server will be tunneled to the client, which will then forward them to `192.168.0.35` on its LAN.
-
-The default for `--upstream` is localhost, so that the tunnel server accesses services running directly on the tunnel client.
-
-#### Set the remote TCP address `--remote-tcp` (0.6.0 and older)
-
-The server needs to be configured with a "remote TCP address" which corresponds to where to direct incoming traffic to. Unlike the `--tcp-ports` which is set on the client, this value is set at the server.
-
-* For a client running on your local computer or a VM
-
-    Set `--remote-tcp` - set to `127.0.0.1` for the local machine
-
-* For a client acting as a gateway, specify the hostname or IP address as seen by the client
-
-    Set `--remote-tcp` - set to `192.168.0.1` if the host running your private service is `192.168.0.1` on the local network
-
-* For a Kubernetes Pod
-
-    Set `--remote-tcp` - set to the name of the destination Kubernetes service such as a ClusterIP `nginx.default`
-
 #### Set the authentication token `--token`
 
-The inlets-pro server requires a token for authentication to make sure that the client is genuine. It is recommended to combine the use of the token with auto-tls or external TLS.
+The inlets-pro tcp server requires a token for authentication to make sure that the client is genuine. It is recommended to combine the use of the token with auto-tls or external TLS.
 
 You can create your own token, or generate one with bash:
 
@@ -310,6 +301,17 @@ echo $TOKEN
 ```
 
 Now pass the token via `--token $TOKEN`.
+
+### Configure the inlets-pro http
+
+The HTTP mode of inlets PRO is suitable for REST / HTTP traffic. Use it when you want to add TLS termination on the exit-server without running a reverse-proxy in the client's network.
+
+It comes with automatic TLS from Let's Encrypt and should take ~ 5 minutes to set up:
+
+Follow a tutorial: [Get a secure HTTPS tunnel with Let's Encrypt](https://inlets.dev/blog/2021/02/11/secure-letsencrypt-tunnel.html)
+
+See also: `inlets-pro http server --help`
+See also: `inlets-pro http client --help`
 
 ## Working with Kubernetes
 
@@ -333,7 +335,7 @@ You can deploy an inlets-server in one of three ways:
 
     In this configuration, only the inlets-pro control plane is exposed (usually port `8123`) with a publicly accessible address, and the data-plane is not exposed outside the network. This can be achieved through the use of two separate ClusterIP services.
 
-    This configuration is ideal for command and control. The private network will be able to traverse firewalls and NAT to connect to the remote inlets-pro server, but only internal services within the Kubernetes cluster can connect to the tunnelled service.
+    This configuration is ideal for command and control. The private network will be able to traverse firewalls and NAT to connect to the remote inlets-pro tcp server, but only internal services within the Kubernetes cluster can connect to the tunnelled service.
 
     See [split-plane-server.yaml](../artifacts/split-plane-server.yaml) as an example.
 
