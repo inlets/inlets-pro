@@ -14,6 +14,7 @@ inlets-pro forwards TCP traffic over an encrypted websocket secured with TLS.
 
 * Support for any TCP protocol
 * Pass-through for L4 proxy
+* Reverse proxy and tunnel for L7 proxy
 * Automatic Let's Encrypt when used as an L7 proxy
 * Automatic TLS encryption for tunnel and control-port
 * Automatic port-detection, announced by client
@@ -25,18 +26,13 @@ Deployment options:
 * Native `docker` image available
 * Kubernetes integration via `inlets-operator` or YAML
 
-## License
+## License & Pricing
 
-inlets-pro is a L4 TCP tunnel, service proxy, and load-balancer product distributed under a commercial license.
+inlets-pro is a L4 and L7 TCP tunnel, service proxy, and load-balancer product distributed under a commercial license.
 
 In order to use inlets-pro, you must accept the [End User License Agreement - EULA](EULA.md). The server component runs without a license key, but the client requires a valid license.
 
-* A license for [commercial use can be purchased from OpenFaaS Ltd](https://docs.inlets.dev/#/?id=pricing)
-* For personal, non-commercial use [you can purchase a license here](https://store.openfaas.com/) with a special discount
-
-Online training via Zoom, professional services, reference architectures and support are available to purchase from OpenFaaS Ltd.
-
-### Pricing
+You can purchase a license for personal or business use on the [inlets website](https://inlets.dev/)
 
 * [Purchase or start a free 14-day trial](https://inlets.dev)
 
@@ -83,7 +79,7 @@ The inlets-pro binary can be obtained as a stand-alone executable, or via a Dock
 * As a binary:
 
     ```sh
-    curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.7.0/inlets-pro > inlets-pro
+    curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.8.1/inlets-pro > inlets-pro
     chmod +x ./inlets-pro
     ```
 
@@ -95,10 +91,26 @@ The inlets-pro binary can be obtained as a stand-alone executable, or via a Dock
 
 * Docker image
 
-    A docker image is published at `ghcr.io/inlets/inlets-pro:0.7.2`
+    A docker image is published at `ghcr.io/inlets/inlets-pro:0.8.1`
     
     See the image on [GitHub Container Registry](https://github.com/orgs/inlets/packages/container/package/inlets-pro)
 
-* Kubernetes YAML files
+### Kubernetes
+
+* Kubernetes LoadBalancer integration
+
+    See also: [inlets-operator](https://github.com/inlets/inlets-operator)
+
+* Kubernetes Helm charts
+
+    Run ad-hoc clients and servers on your Kubernetes clusters
+
+    See [charts](charts) for the inlets-pro TCP client and server
+
+* Sample Kubernetes YAML files
 
     A [client](artifacts/client.yaml) and [server](artifacts/server.yaml) YAML file are also available as samples
+
+## Get in touch
+
+Got questions? Send us an email to [contact@openfaas.com](mailto:contact@openfaas.com).
