@@ -1,4 +1,5 @@
 {{- $fullName := include "inlets-pro.fullname" . -}}
+{{- $tlsSecretName := include "inlets-pro.tlsSecretName" . -}}
 {{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1beta1
 {{- else -}}
@@ -17,7 +18,7 @@ spec:
   tls:
     - hosts:
         - {{ .Values.ingress.domain }}
-      secretName: {{ .Values.ingress.domain }}-tls-secret
+      secretName: {{ $tlsSecretName }}
   rules:
     - host: {{ .Values.ingress.domain }}
       http:
