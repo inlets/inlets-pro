@@ -61,3 +61,14 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Create the name of the tls to use
+*/}}
+{{- define "inlets-pro.tlsSecretName" -}}
+{{- if .Values.ingress.secretName }}
+{{- .Values.ingress.secretName }}
+{{- else }}
+{{- .Values.ingress.domain }}-tls-secret
+{{- end }}
+{{- end }}
