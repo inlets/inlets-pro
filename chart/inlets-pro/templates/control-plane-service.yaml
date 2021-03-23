@@ -11,6 +11,5 @@ spec:
     name: control-plane
     protocol: TCP
     targetPort: {{ .Values.controlPlane.port }}
-
   selector:
     {{- include "inlets-pro.selectorLabels" . | nindent 4 }}

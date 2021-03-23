@@ -1,14 +1,16 @@
 ## Use your Kubernetes cluster for exit-servers
 
-This chart installs the inlets PRO server as a Pod to run within your Kubernetes cluster.
+This chart installs the inlets PRO server in TCP mode. It runs the inlets server process as a Pod within your Kubernetes cluster.
 
-You can use this to avoid creating individual exit-servers, or to connect a number of services into to a public Kubernetes cluster.
+You can use this to avoid creating individual exit-server VMs, or to connect a number of services into to a public Kubernetes cluster. It's up to you to decide whether you want to access any tunneled services from the Internet, or from within the cluster.
 
 ## Getting started
 
-You will need a domain available and two other charts:
+In this tutorial, you'll learn how to set up a tunnel for a Prometheus service running on a private network. It will be tunneled to your Kubernetes cluster through an inlets server running in a Pod. [Prometheus](https://prometheus.io) is a time-series database used for monitoring microservices. It is assumed that you have one or more Prometheus instances that you want to monitor from a cloud Kubernetes cluster.
 
-### Install pre-reqs
+You will need a cloud Kubernetes cluster and access to a sub-domain available and its DNS control-panel.
+
+### Install pre-requisites
 
 You can run this on any Intel or ARM cluster.
 
@@ -16,6 +18,8 @@ Download [arkade](https://get-arkade.dev/), or use helm to install pre-reqs
 
 * Install cert-manager - (`arkade install cert-manager`)
 * Install ingress-nginx - (`arkade install ingress-nginx`)
+
+It is assumed that you installed `kubectl` when you created your Kubernetes cluster.
 
 ### Install an Issuer
 
@@ -51,7 +55,9 @@ Then run:
 kubectl apply -f issuer-prod.yaml
 ```
 
-### Generate a token for your inlets server
+> Note: if you plan to run many tunnels, each with their own certificate, then you may wish to configure the cert-manager Issuer to use a DNS01 challenge. See also: [Configuring DNS01 Challenge Provider ](https://cert-manager.io/docs/configuration/acme/dns01/)
+
+### Generate a token for your inlets-pro server
 
 ```bash
 export TOKEN=$(head -c 16 /dev/random | shasum|cut -d" " -f1)
@@ -63,10 +69,10 @@ echo $TOKEN > token.txt
 
 ### Install the inlets-pro chart
 
-The chart will deploy two services, an Ingress and a deployment for the inlets-pro server.
+The chart will deploy two Kubernetes services, an Ingress record and a Deployment to run the inlets-pro server process.
 
-* `prometheus-tunnel-control-plane` - a service exposed by Ingress, for the websocket of inlets PRO
-* `prometheus-tunnel-data-plane` - a local service to access Prometheus from within the cluster
+* `prometheus-tunnel-control-plane` - a service exposed by Ingress, for the websocket of inlets PRO (usually port 8123)
+* `prometheus-tunnel-data-plane` - a local service to access Prometheus from within the cluster (usually 9090)
 
 Edit `values.yaml`:
 
@@ -84,11 +90,17 @@ helm upgrade --install prometheus-tunnel ./inlets-pro \
 
 ### Now connect your client on your computer.
 
-Run Prometheus locally as a Docker container for testing:
+You can now connect Prometheus from wherever you have it running, whether that's in a container, on your system as a normal process, or within a Kubernetes cluster.
+
+Let's run a Prometheus container with Docker, so that we can connect it to the inlets server quickly.
 
 ```bash
-docker run -p 9090:9090 -ti prom/prometheus:latest
+docker run --name prometheus \
+  -p 9090:9090 \
+  -d prom/prometheus:latest
 ```
+
+> Note: you can remove this container later with `docker rm -f prometheus`
 
 Now connect your inlets-pro client:
 
@@ -103,12 +115,22 @@ inlets-pro client --url wss://$DOMAIN/connect \
   --upstream 127.0.0.1
 ```
 
+We use a value of `--upstream 127.0.0.1` since the Prometheus container was exposed on 127.0.0.1 in the previous `docker run` command. If you were running the inlets client as a Pod, then you would use something like `--upstream prometheus` instead. You can also put an IP address attached to another computer in the upstream field. It just needs to be accessible from the client.
+
 ### Now access the tunnelled Prometheus from the Kubernetes cluster
+
+We haven't exposed the Prometheus service on the Internet for general consumption, so let's access it through its private ClusterIP which was deployed through the helm chart.
+
+Run an Alpine Linux container and install curl.
 
 ```bash
 kubectl run alpine -t -i --image alpine:3.12 /bin/sh
 apk add curl
+```
 
+Now access the tunneled service via curl:
+
+```bash
 curl prometheus-tunnel-inlets-pro-data-plane:9090
 ```
 
@@ -125,7 +147,7 @@ echo Open: http://127.0.0.1:9091
 
 See values.yaml for additional settings.
 
-Expose Grafana instead:
+Tunnel Grafana instead of Prometheus:
 
 ```yaml
 dataPlane:
@@ -137,7 +159,7 @@ dataPlane:
     port: 3000
 ```
 
-Expose two ports instead of one:
+Tunnel two ports instead of just one:
 
 ```yaml
 dataPlane:
@@ -167,6 +189,7 @@ dataPlane:
     port: 9090
 ```
 
-In a few moments, you'll get a public IP for the LoadBalancer for the data-plane.
+In a few moments, you'll get a public IP for the LoadBalancer for the data-plane. If you don't want to pay for individual LoadBalancers, you could consider using a NodePort, with a static port number assignment for each service you want to expose. NodePorts are harder to manage, but usually have no additional cost if your Kubernetes nodes have public IP addresses.
 
-The alternative approach to adding a LoadBalancer to expose the workload from the Kubernetes cluster is to add an Ingress definition for the `prometheus-tunnel-inlets-pro-data-plane` service instead. This way you can save on costs and re-use your existing IngressController.
+The alternative approach to adding a LoadBalancer to expose the workload from the Kubernetes cluster is to add an Ingress definition for the `prometheus-tunnel-inlets-pro-data-plane` service instead. This way you can save on costs by only paying for a single LoadBalancer and IP, and multiplexing the various services through your IngressController.
+

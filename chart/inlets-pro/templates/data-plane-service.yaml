@@ -13,6 +13,5 @@ spec:
     protocol: {{ .protocol | quote }}
     targetPort: {{ .targetPort }}
   {{- end }}
-
   selector:
     {{- include "inlets-pro.selectorLabels" . | nindent 4 }}
