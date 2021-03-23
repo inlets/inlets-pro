@@ -10,7 +10,7 @@ In this tutorial, you'll learn how to set up a tunnel for a Prometheus service r
 
 You will need a cloud Kubernetes cluster and access to a sub-domain available and its DNS control-panel.
 
-### Install pre-requisites
+### Install the prerequisites
 
 You can run this on any Intel or ARM cluster.
 

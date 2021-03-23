@@ -1,9 +1,9 @@
 replicaCount: 1
 
 image:
-  repository: inlets/inlets-pro
+  repository: ghcr.io/inlets/inlets-pro
   pullPolicy: IfNotPresent
-  tag: "0.7.2"
+  tag: "0.8.3"
 
 tokenSecretName: inlets-pro-secret
 

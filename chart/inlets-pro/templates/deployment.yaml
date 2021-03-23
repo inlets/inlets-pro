@@ -33,11 +33,12 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
            - inlets-pro
+           - tcp
            - server
            - "--auto-tls=false"
            - "--token-from=/etc/inlets/token"
           ports:
-            - name: http
+            - name: control-plane
               containerPort: 8123
               protocol: TCP
             {{- range .Values.dataPlane.ports }}

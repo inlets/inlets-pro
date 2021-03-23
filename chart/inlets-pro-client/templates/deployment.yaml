@@ -33,6 +33,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command:
            - inlets-pro
+           - tcp
            - client
            - "--url={{.Values.url}}"
            - "--upstream={{.Values.upstream}}"

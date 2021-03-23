@@ -1,6 +1,6 @@
 apiVersion: v2
 name: inlets-pro
-description: Helm chart for an inlets-pro server
+description: Helm chart for an inlets-pro TCP server
 type: application
-version: 0.1.1
+version: 0.2.0
 appVersion: 1.16.0

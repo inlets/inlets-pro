@@ -4,11 +4,11 @@ An inlets PRO client can be used to tunnel a service from a local cluster to a r
 
 You should decide whether you want to expose the remote service to the world, or to just the local area network of the exit-server.
 
-### Pre-reqs:
+### Prerequisites
 
-* An inlets PRO server set up manually, via inletsctl, or using the inlets-pro (server) chart.
+You will need to set up an inlets PRO TCP server so that the client has an endpoint to connect to. Create a server manually and then configure inlets-pro, or use [inletsctl](https://github.com/inlets/inletsctl) to create a preconfigured cloud VM, or use the helm chart for the inlets-pro server to install the server into a Pod.
 
-You'll need the helm binary, the easiest way to get this is via arkade:
+Then you will need the `helm` binary, the easiest way to get this is via [arkade](https://dl-get-arkade.dev):
 
 ```bash
 curl -sL https://dl-get-arkade.dev | sudo sh
@@ -19,12 +19,15 @@ arkade get helm
 arkade get helm [--version VER]
 ```
 
-### Install a client for a server using auto-tls
+### Install a client for a server using Auto TLS
+
+If your exit server is using Auto TLS, then no additional configuration is required, because the inlets client will default to this mode. Auto TLS is where the server provides its own TLS certificate.
 
 Install OpenFaaS which can be bundled with a Grafana dashboard:
 
 ```bash
 arkade install openfaas
+
 kubectl -n openfaas run \
   --image=stefanprodan/faas-grafana:4.6.3 \
   --port=3000 \
@@ -67,7 +70,9 @@ kubectl logs deploy/grafana-tunnel
 
 If you wish to disable public access to the forwarded ports, look at the reference documentation for inlets PRO for how to bind the data-plane to a local LAN or loopback adapter.
 
-### Install a client for a server using cert-manager for TLS termination
+### Install a client for a server using an IngressController for TLS termination
+
+If you are using an IngressController for TLS termination, then you need to disable the Auto TLS feature of inlets PRO (`--set autoTLS=false`).
 
 Install OpenFaaS which bundles Prometheus:
 
