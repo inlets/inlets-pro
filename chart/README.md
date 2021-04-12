@@ -18,6 +18,14 @@ There is no need for your data plane to be exposed on the Internet, you can bind
 
 * [Quick-start: Expose Your IngressController and get TLS from LetsEncrypt and cert-manager](https://docs.inlets.dev/#/get-started/quickstart-ingresscontroller-cert-manager?id=quick-start-expose-your-ingresscontroller-and-get-tls-from-letsencrypt-and-cert-manager)
 
+### Get kubectl access to your private cluster from anywhere
+
+* [Get kubectl access to your private cluster from anywhere](https://blog.alexellis.io/get-private-kubectl-access-anywhere/)
+
+### Continous Deployment and fleet management with ArgoCD
+
+* [Argo CD for your private Raspberry Pi k3s cluster](https://johansiebens.dev/posts/2020/08/argo-cd-for-your-private-raspberry-pi-k3s-cluster/)
+
 ### Get Public L4 LoadBalancers for your cluster
 
 See also: [inlets-operator](https://github.com/inlets/inlets-operator) which automates both parts of the above for a set number of supported clouds, and integrates through Kubernetes services of type LoadBalancer.
