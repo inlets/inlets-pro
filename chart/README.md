@@ -14,6 +14,10 @@ There is no need for your data plane to be exposed on the Internet, you can bind
 
 * [Run an inlets PRO client in your Kubernetes cluster](https://github.com/inlets/inlets-pro/tree/master/chart/inlets-pro-client)
 
-### Automate Service LoadBalancers for your cluster
+### Setup your preferred IngressController with TLS certs from Let's Encrypt
+
+* [Quick-start: Expose Your IngressController and get TLS from LetsEncrypt and cert-manager](https://docs.inlets.dev/#/get-started/quickstart-ingresscontroller-cert-manager?id=quick-start-expose-your-ingresscontroller-and-get-tls-from-letsencrypt-and-cert-manager)
+
+### Get Public L4 LoadBalancers for your cluster
 
 See also: [inlets-operator](https://github.com/inlets/inlets-operator) which automates both parts of the above for a set number of supported clouds, and integrates through Kubernetes services of type LoadBalancer.
