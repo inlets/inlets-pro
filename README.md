@@ -105,7 +105,7 @@ The inlets-pro binary can be obtained as a stand-alone executable, or via a Dock
 
     Run ad-hoc clients and servers on your Kubernetes clusters
 
-    See [charts](charts) for the inlets-pro TCP client and server
+    See [chart](chart) for the inlets-pro TCP client and server
 
 * Sample Kubernetes YAML files
 
