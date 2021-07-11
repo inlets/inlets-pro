@@ -10,21 +10,29 @@ Given the split control- and data-plane, you can also punch out endpoints into a
 
 ## Features
 
-inlets-pro forwards TCP traffic over an encrypted websocket secured with TLS.
+inlets-pro forwards TCP or HTTP / REST traffic over an encrypted websocket secured with TLS.
 
-* Support for any TCP protocol
-* Pass-through for L4 proxy
-* Reverse proxy and tunnel for L7 proxy
-* Automatic Let's Encrypt when used as an L7 proxy
-* Automatic TLS encryption for tunnel and control-port
-* Automatic port-detection, announced by client
+Whichever type of service is used, inlets-pro supports load-balancing of connections and multiple clients connected to the same server. When automatic TLS is used (default) then all data is encrypted through a TLS connection.
+
+For TCP services:
+
+* Tunnel any L4/TCP protocols - such as databases, remote desktop, gRPC, HTTP/2 and SSH
+* Legacy protocols which do not support TLS are automatically "upgraded" through the encrypted tunnel
+* Pass-through TLS support for reverse proxies, Kubernetes, IngressControllers and TLS
+* Multiple TCP ports are supported and can be updated by the client
+
+For HTTPS/REST services:
+
+* Reverse proxy with support for multiple upstreams through using the `Host` header
+* Automatic Let's Encrypt for exposed using HTTP01 challenge
+* Support for websockets
 
 Deployment options:
 
-* single static binary is available for MacOS, Windows, and Linux on armhf and ARM64
-* `systemd` support with automatic restarts
-* Native `docker` image available
-* Kubernetes integration via `inlets-operator` or YAML
+* A single static binary is available for MacOS, Windows, and Linux. Arm is also supported
+* Sample `systemd` unit files for automatic restarts and logging from `journalctl`
+* Official container image available on public registry
+* Kubernetes integration via `inlets-operator`, YAML or Helm
 
 ## License & Pricing
 
@@ -72,14 +80,14 @@ You can follow one of the tutorials above, or use inlets PRO in three different 
 
 Both the client and server are contained within the same binary.
 
-It is recommended that you use [inletsctl](https://github.com/inlets/inletsctl), or inlets-operator to access inlets-pro, but you can also work directly with its binary or Docker image.
+It is recommended that you use [inletsctl](https://github.com/inlets/inletsctl), or [inlets-operator](https://github.com/inlets/inlets-operator) to create inlets-pro exit serves, but you can also work directly with its binary or Docker image.
 
 The inlets-pro binary can be obtained as a stand-alone executable, or via a Docker image.
 
 * As a binary:
 
     ```sh
-    curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.8.1/inlets-pro > inlets-pro
+    curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.8.5/inlets-pro > inlets-pro
     chmod +x ./inlets-pro
     ```
 
@@ -91,13 +99,13 @@ The inlets-pro binary can be obtained as a stand-alone executable, or via a Dock
 
 * Docker image
 
-    A docker image is published at `ghcr.io/inlets/inlets-pro:0.8.1`
+    A docker image is published at `ghcr.io/inlets/inlets-pro:0.8.5`
     
     See the image on [GitHub Container Registry](https://github.com/orgs/inlets/packages/container/package/inlets-pro)
 
 ### Kubernetes
 
-* Kubernetes LoadBalancer integration
+* Automatic tunnel servers and clients through LoadBalancer/Ingress
 
     See also: [inlets-operator](https://github.com/inlets/inlets-operator)
 
@@ -105,7 +113,13 @@ The inlets-pro binary can be obtained as a stand-alone executable, or via a Dock
 
     Run ad-hoc clients and servers on your Kubernetes clusters
 
-    See [chart](chart) for the inlets-pro TCP client and server
+    See [chart](chart) for the inlets-pro TCP client and server mode
+
+    A separate helm chart is available to inlets-pro customers for the HTTP client and server mode
+
+* Pre-provisioned inlets tunnel servers
+
+    [Read how here](https://inlets.dev/blog/2021/07/08/short-lived-clusters.html)
 
 * Sample Kubernetes YAML files
 
