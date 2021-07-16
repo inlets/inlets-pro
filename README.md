@@ -10,6 +10,9 @@ It's compatible with any HTTP (L7) or TCP (L4) software and can work through the
 
 You can run the tunnel as a process, container or Kubernetes Pod, and it's easy to configure or automate it.
 
+![Example diagram](https://raw.githubusercontent.com/inlets/inlets-pro/master/docs/images/inlets-pro-split-plane.png)
+> Example of inlets PRO with a TCP tunnel for hybrid cloud. Kubernetes is optional
+
 It's up to you whether you want to use inlets PRO as a way of exposing private traffic to the Internet, or whether you just want to make it available privately to your organisation on another network [for hybrid cloud](https://inlets.dev/blog/2021/04/07/simple-hybrid-cloud.html).
 
 ## Use-cases
