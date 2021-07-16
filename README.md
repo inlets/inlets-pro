@@ -1,12 +1,26 @@
-# inlets-pro is a Cloud Native Tunnel for HTTP and TCP traffic
+# inlets PRO - Secure HTTP and TCP tunnels that just work
 
 <img src="docs/images/inlets-pro-sm.png" width="150px">
 
 # Overview
 
-You can use inlets-pro to tunnel out any HTTP or TCP traffic from an internal network to another network. This could be green-to-green, or green-to-red, i.e. from internal/private to the Internet. It differs from the open source version in that it works at the L4 or L7 level of the TCP stack and has automatic TLS (auto-tls) encryption built-in.
+inlets PRO replaces SSH tunnels, VPNs, SaaS tunnels, port-forwarding and dedicated connections.
 
-Given the split control- and data-plane, you can also punch out endpoints into a remote cluster, which are kept private from the Internet, for instance when you need Command & Control, or orchestration of on-premises services, from a central cloud cluster.
+It's compatible with any HTTP (L7) or TCP (L4) software and can work through the most challenging network conditions like captive portals, HTTP proxies, firewalls and NAT to give you access to services.
+
+You can run the tunnel as a process, container or Kubernetes Pod, and it's easy to configure or automate it.
+
+It's up to you whether you want to use inlets PRO as a way of exposing private traffic to the Internet, or whether you just want to make it available privately to your organisation on another network [for hybrid cloud](https://inlets.dev/blog/2021/04/07/simple-hybrid-cloud.html).
+
+## Use-cases
+
+You can learn specific use-cases and problems that inlets PRO can solve for Kubernetes below, or check out how it can be used as a Software Defined Network or VPN replacement [in the docs](https://docs.inlets.dev/)
+
+* [Get Kubernetes LoadBalancers for customer demos or local development](https://inlets.dev/blog/2021/07/08/short-lived-clusters.html)
+* [The Simple Way To Connect Existing Apps to Public Cloud](https://inlets.dev/blog/2021/04/07/simple-hybrid-cloud.html)
+* [Reliable local port-forwarding from Kubernetes](https://inlets.dev/blog/2021/04/13/local-port-forwarding-kubernetes.html)
+* [How we scaled inlets to thousands of tunnels with Kubernetes](https://inlets.dev/blog/2021/03/15/scaling-inlets.html)
+* [Learn how to manage apps across multiple Kubernetes clusters](https://inlets.dev/blog/2021/06/02/argocd-private-clusters.html)
 
 ## Features
 
