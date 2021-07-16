@@ -6,6 +6,8 @@
 
 inlets PRO replaces SSH tunnels, VPNs, SaaS tunnels, port-forwarding and dedicated connections.
 
+Sound like it could be useful? Show your support with a [GitHub Star](https://github.com/inlets/inlets-pro/stargazers) ⭐️
+
 It's compatible with any HTTP (L7) or TCP (L4) software and can work through the most challenging network conditions like captive portals, HTTP proxies, firewalls and NAT to give you access to services.
 
 You can run the tunnel as a process, container or Kubernetes Pod, and it's easy to configure or automate it.
