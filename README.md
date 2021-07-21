@@ -106,7 +106,7 @@ The inlets-pro binary can be obtained as a stand-alone executable, or via a Dock
 * As a binary:
 
     ```sh
-    curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.8.5/inlets-pro > inlets-pro
+    curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.8.6/inlets-pro > inlets-pro
     chmod +x ./inlets-pro
     ```
 
@@ -118,7 +118,7 @@ The inlets-pro binary can be obtained as a stand-alone executable, or via a Dock
 
 * Docker image
 
-    A docker image is published at `ghcr.io/inlets/inlets-pro:0.8.5`
+    A docker image is published at `ghcr.io/inlets/inlets-pro:0.8.6`
     
     See the image on [GitHub Container Registry](https://github.com/orgs/inlets/packages/container/package/inlets-pro)
 
