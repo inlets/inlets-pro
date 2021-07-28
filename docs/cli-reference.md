@@ -2,11 +2,15 @@
 
 There are two components to inlets-pro, the server and the client.
 
-This reference guide is designed for self-service, but customers of OpenFaaS Ltd can request hands-on support and training. Just email sales@openfaas.com for more.
+This reference guide is designed for self-service, but customers of OpenFaaS Ltd can request hands-on support and training. Just email [contact@openfaas.com](mailto:contact@openfaas.com) for more. Business customers are entitled to free support, [find out more](https://inlets.dev/).
+
+Community and personal users can also find help in the [OpenFaaS Slack community](https://slack.openfaas.io/), in the #inlets channel.
 
 ## Contents:
 
 * Working with MacOS, Linux, and Windows
+* Topology
+* HTTP or TCP tunnels?
 * Configure the inlets-pro tcp client
 * Configure the inlets-pro tcp server
 * Configure the inlets-pro http client
@@ -25,48 +29,52 @@ The client and server component are packaged in the same `inlets-pro` binary and
 * A process on MacOS, Linux, Windows on ARM or Intel architecture
 * As a Docker container with docker, or Kubernetes as a Pod on ARM or Intel architecture
 
-### Configure the inlets-pro tcp client
+## Topology
+
+inlets is not about exposing services on the Internet, it's about making one service available within another network. What, where and how accessible that network is, is purely up to you.
+
+Consider a typical example that you may use a SaaS tunnel for:
+
+![Quick HTTP tunnel](https://inlets.dev/images/quick.png)
+> HTTP tunnels
+
+Here, we have a private Node.js server running on localhost and port 3000, we want to expose that on the Internet with a TLS certificate.
+
+### Split-plane configuration
+
+inlets has two TCP ports, both of which can be exposed on various interfaces. By default, both ports are exposed on on all available adapters, i.e. `0.0.0.0` (IPv4) and `::` (IPv6).
+
+The first TCP port is called the Control Plane, the Control Plane is a websocket secured with TLS, that the inlets client connects to, in order to establish the tunnel.
+
+The Data Plane is one or more TCP ports that are exposed on the server, which map back to a private service on the client's end.
+
+To replace the role of a site-to-site VPN or Direct Connect, you can expose the Control Plane publicly on `0.0.0.0`, and the data-plane on either `127.0.0.1` or one of the other internal interfaces i.e. `10.0.0.10`, which is not accessible from the Internet.
+
+### What about High Availability?
+
+It's possible to run multiple inlets client processes and have them connect to the same server. The server will load-balance incoming requests and distribute them between each client.
+
+The server can also be made High Availability, by running more than one copy. You could run two public Virtual Machines (VMs) and then add a VIP/FIP or Load Balancer in front. In this way, the pair of inlets servers work in an active-active configuration, and if one VM locks up or goes down, then the other will continue to serve traffic.
+
+## HTTP or TCP tunnels?
+
+A HTTP tunnel is most useful for HTTP services and APIs. In this mode, a single tunnel can use the HTTP Host header to expose multiple different services using a DNS name and a single port.
+
+A TCP tunnel is a pass-through proxy for any TCP service. Use a TCP tunnel if you want to run a reverse proxy on the client's machine, or if you have traffic that is non-HTTP like a database, RDP, SSH and so on.
+
+Any traffic that is sent over an inlets tunnel is encrypted, even if the underlying protocol does not support encryption. This is because the data is encapsulated and send over a link with TLS enabled.
+
+### Configure a TCP client
 
 The client component connects to an inlets server and then routes incoming requests to a private service. The client can run on the same host as your private service, or run on another host and act as gateway.
 
-#### Set the license
+### Configure the license key
 
 The license terms of inlets-pro require that both the inlets client and server have a valid license, only the client requires to have the license configured.
 
-You can configure the license in one of two ways:
+The default location for a license is `$HOME/.inlets/LICENSE`, you can also override the license with the `--license-file` or `--license` flag to pass a literal value.
 
-* From a file `--license-file`
-
-    ```sh
-    # Assume a file of `pro-license.txt` with the license key, no new lines or whitespace
-    inlets-pro tcp client \
-    --license-file $HOME/.inlets/LICENSE
-    ```
-
-* literal flag `--license`
-
-    ```sh
-    inlets-pro tcp client \
-    --license "VALUE_HERE"
-    ```
-
-* literal flag with environment variable
-
-    ```sh
-    export INLETS_LICENSE="LICENSE_KEY_VALUE"
-    inlets-pro tcp client \
-    --license="$INLETS_LICENSE"
-    ```
-
-* literal flag with environment variable set in your bash profile
-
-    You can also set the INLETS_LICENSE file for each terminal session by editing `$HOME/.bash_profile`
-
-    Add a line for:
-
-    ```sh
-    export INLETS_LICENSE="LICENSE_KEY_VALUE"
-    ```
+## Setup a TCP client
 
 ### Set the upstream
 
@@ -78,7 +86,15 @@ inlets-pro tcp client \
   --upstream $UPSTREAM
 ```
 
-This can be the local machine, a Kubernetes service, or any reachable hostname:
+You can pass the IP address or DNS name of a service available on the local network of the client.
+
+```sh
+export UPSTREAM="192.168.0.101"
+inlets-pro tcp client \
+  --upstream $UPSTREAM
+```
+
+When running inside a Kubernetes cluster as a Pod, the inlets client can use the DNS name of services.
 
 ```sh
 export UPSTREAM="traefik.kube-system"
@@ -86,37 +102,32 @@ inlets-pro tcp client \
   --upstream $UPSTREAM
 ```
 
-### Set the ports for the tunnel `--ports` / `--port` (0.7.0 and newer)
+In TCP mode, all traffic is passed through without inspection or modification, for this reason, only one `--upstream` server is possible for TCP tunnels.
+
+### Set the ports for the tunnel `--ports` / `--port`
 
 Expose ports on the tunnel server, from the client with one of the following:
 
-```
+```sh
 --port 80
 -p 80
+```
+
+Or give the flag multiple times:
+
+```sh
 --port 80 --port 443
 ```
 
-Or
+Or use `--ports` and a comma-separated list:
 
-```
+```sh
 --ports 80,443
 ```
 
-### Set the TCP ports for the tunnel `--tcp-ports` (0.6.0 and older)
+### Connect to the remote host (server) with `--url`
 
-The client will advertise which TCP ports it requires the server to open, this is done via the `--tcp-ports` flag
-
-* A single alternative HTTP port
-
-    `--tcp-ports=8080`
-
-* Nginx, or a HTTP service with TLS
-
-    `--tcp-ports=80,443`
-
-### Connect to the remote host (server) with `--url` (0.7.0 and newer)
-
-inlets-pro uses a websocket for its control plane on port `8123` by default and adds automatic TLS. This is an optional feature.
+inlets-pro uses a websocket for its control plane on port `8123` by default with *automatic TLS* configured.
 
 * Automatic TLS with `auto tls`
 
@@ -124,17 +135,17 @@ inlets-pro uses a websocket for its control plane on port `8123` by default and 
 
     This is the default option, connect with `wss://` and the IP of the remote machine
 
-    `--url wss://remote-machine:8123/connect`
+    `--url wss://remote-machine:8123`
 
     The control-port of 8123 is used for auto-tls.
 
 * External TLS
 
-    In this mode, you are providing your own TLS certificate or termination through a gateway, IngressController, reverse-proxy or some other kind of product.
+    In this mode, you are providing your own TLS certificate or termination through a gateway, Kubernetes Ingress Controller, reverse-proxy or some other kind of product.
 
     Turn auto-TLS off, and use port 443 (implicit) for the control-plane.
 
-    `--url wss://remote-machine/connect`
+    `--url wss://remote-machine`
 
     You must also pass the `--auto-tls=false` flag
 
@@ -142,7 +153,7 @@ inlets-pro uses a websocket for its control plane on port `8123` by default and 
 
     This mode may be useful for testing, but is not recommended for confidential use.
 
-    `--url ws://remote-machine:8123/connect`
+    `--url ws://remote-machine:8123`
 
     Use port `8123` for the control-plane and `ws://` instead of `wss://`
 
@@ -161,26 +172,28 @@ Now pass the token via `--token $TOKEN`.
 
 ### Generate a systemd unit file for the client
 
-Add "inlets-pro tcp client --generate=systemd" to generate a system unit file for your client along with all the other required parameters.
+Add `inlets-pro tcp client --generate=systemd` to generate a system unit file.
+
+You'll need all the parameters that you would use to run the client, so don't leave any off.
 
 For example:
 
 ```bash
-export TOKEN="auth token"
+export TOKEN="TOKEN_HERE"
 export UPSTREAM="127.0.0.1"
 
 inlets-pro tcp client \
   --upstream $UPSTREAM \
   --license-file /var/lib/inlets-pro/LICENSE \
   --tcp-ports "80,443" \
-  --url "wss://167.99.90.104:8123/connect" \
+  --url "wss://167.99.90.104:8123" \
   --token $TOKEN \
   --generate=systemd
 ```
 
-### Configure the inlets-pro tcp server
+### Configure the TCP server
 
-The inlets-pro tcp server begins by opening a single TCP port for the control-plane, this is port `8123`, but you can customise it if required.
+The inlets-pro tcp server begins by opening a single TCP port `8123` for the control-plane, this is port `8123`. The port can be changed if required, by passing the `--control-port` flag.
 
 Additional ports are opened at runtime by the inlets-server for the data-plane. These ports must be advertised by the client via the `--tcp-ports` flag.
 
@@ -194,29 +207,27 @@ You can view it like this:
 curl -k -i http://localhost:8123/.well-known/ca.crt
 ```
 
-A token is also required which must be shared with the client ahead of time.
+An authentication token is also required which must be shared with the client ahead of time.
 
-#### Set the `--common-name`
+#### Set the `--auto-tls-san` name
 
-The `--common-name` is part of the auto-tls configuration and is used to configure the certificate-authority.
+The `--auto-tls-san` sets the subject-alternative-name (SAN) for the TLS certificate that is generated by the server.
 
-You can use the public IP address of the inlets-server here, or a DNS record.
+You can use the public IP address of the inlets-server, or a DNS record.
 
 * Public IP
 
     ```sh
-    --common-name 35.1.25.103
+    --auto-tls-san 35.1.25.103
     ```
 
 * DNS A or CNAME record
 
     ```sh
-    --common-name inlets-control-tunnel1.example.com
+    --auto-tls-san inlets-control-tunnel1.example.com
     ```
 
-    In this example `inlets-control-tunnel1.example.com` will resolve to the public IP of `35.1.25.103`
-
-You need to configure the client to tell it where to route incoming TCP requests and which port to use.
+    In this example `inlets-control-tunnel1.example.com` will resolve to the public IP, i.e. `35.1.25.103`
 
 #### Use a pre-supplied, or self-signed certificate
 
@@ -249,7 +260,7 @@ inlets-pro tcp client \
   --tcp-ports 2222 \
   --license-file $HOME/.inlets/LICENSE \
   --token "${AUTH_TOKEN}" \
-  --url wss://space-mini.local:8123/connect \
+  --url wss://space-mini.local:8123 \
   --auto-tls=false
 ```
 
@@ -257,7 +268,7 @@ Note that you must turn off `--auto-tls`, so that the client does not attempt to
 
 #### Want to generate your own TLS certificate for testing?
 
-Make sure that you set the common-name or TLS SAN name to the hostname that the client will use to connect.
+Make sure that you set the auto-tls-san or TLS SAN name to the hostname that the client will use to connect.
 
 Generate a new key:
 
@@ -302,24 +313,78 @@ echo $TOKEN
 
 Now pass the token via `--token $TOKEN`.
 
-### Configure the inlets-pro http
+### Configure a http tunnel
 
 The HTTP mode of inlets PRO is suitable for REST / HTTP traffic. Use it when you want to add TLS termination on the exit-server without running a reverse-proxy in the client's network.
 
-It comes with automatic TLS from Let's Encrypt and should take ~ 5 minutes to set up:
+Just like a TCP tunnel, a HTTP tunnel has two TCP ports, one for the control-plane and one for the data-plane.
+
+For more information, see the help commands:
+
+* See also: `inlets-pro http server --help`
+* See also: `inlets-pro http client --help`
+
+### Configuring TLS for the HTTP server's data-plane
+
+The control-plane will use Auto-TLS by default, but the data-plane does not.
+
+#### Use Let's Encrypt to obtain a TLS certificate for the data plane
+
+inlets PRO HTTP tunnels are able to obtain TLS certificates from Let's Encrypt for the data-plane. In this mode, you'll find that the server exposes port 80 and 443 in order to process a HTTP01 challenge.
+
+Three additional fields enable the client to obtain a TLS certificate for the data-plane:
+
+```bash
+  --letsencrypt-domain stringArray   obtain TLS certificates from Let's Encrypt for the following domains using a HTTP01 challenge
+  --letsencrypt-email string         email address to be used with Let's Encrypt
+  --letsencrypt-issuer string        obtain TLS certificates from the prod or staging Let's Encrypt issuer (default "prod")
+```
+
+For example, to setup a HTTP tunnel to a LetsEncrypt-enabled exit-server, you can use the following command:
+
+```bash
+export IP=$(curl -sfSL https://checkip.amazonaws.com)
+export TOKEN=""
+
+inlets-pro http server \
+    --auto-tls \
+    --control-port 8123 \
+    --auto-tls-san $IP \
+    --letsencrypt-domain prometheus.example.com \
+    --letsencrypt-email user@example.com \
+    --token TOKEN
+```
+
+Then create a DNS A record mapping `prometheus.example.com` to the public IP of the server.
+
+You can pass the `--letsencrypt-domain` flag multiple times to obtain TLS certificates for multiple domains.
+
+Then on the client side, you will run a command such as:
+
+```bash
+export IP="SERVER_IP"
+export TOKEN=""
+
+inlets-pro http client \
+    --auto-tls \
+    --url wss://$SERVER_IP:8123 \
+    --upstream prometheus.example.com=http://127.0.0.1:9090 \
+    --token TOKEN
+```
+
+The `--upstream` flag can accept multiple DNS name mappings for instance: `prometheus.example.com=http://127.0.0.1:9090,grafana.example.com=http://127.0.0.1:3000`
 
 Follow a tutorial: [Get a secure HTTPS tunnel with Let's Encrypt](https://inlets.dev/blog/2021/02/11/secure-letsencrypt-tunnel.html)
 
-See also: `inlets-pro http server --help`
-See also: `inlets-pro http client --help`
-
 ## Working with Kubernetes
 
-You can deploy an inlets-server in one of three ways:
+You can deploy an inlets server or client as a Pod using the [inlets-pro helm chart](/chart/).
+
+For a server, you can expose its control and / or data plane for external access:
 
 * As a Service type LoadBalancer
 
-    It will gain its own IP address, and you'll pay for one cloud load-balancer per tunnel. This is the easiest option, and has full encryption with auto-TLS and adds 15-20USD / per IP.
+    It will gain its own IP address, and you'll pay for one cloud load-balancer per tunnel.
 
 * As a Service type NodePort
 
@@ -342,6 +407,8 @@ You can deploy an inlets-server in one of three ways:
 ### Pod / Service / Deployment definitions
 
 You can use the sample artifact for the [client.yaml](../artifacts/client.yaml) or [server.yaml](../artifacts/server.yaml)
+
+There is also a [helm chart for the client and server](/chart/).
 
 ## Troubleshooting
 
