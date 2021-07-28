@@ -31,6 +31,10 @@ You can learn specific use-cases and problems that inlets PRO can solve for Kube
 
 inlets-pro forwards TCP or HTTP / REST traffic over an encrypted websocket secured with TLS.
 
+![Quick overview](https://inlets.dev/images/quick.png)
+
+> A quick overview showing a HTTP tunnel to expose a private Node.js service on a private network.
+
 Whichever type of service is used, inlets-pro supports load-balancing of connections and multiple clients connected to the same server. When automatic TLS is used (default) then all data is encrypted through a TLS connection.
 
 For TCP services:
