@@ -6,13 +6,17 @@ When a client wants to expose a service publicly, or privately within a remote n
 
 There is no need for your data plane to be exposed on the Internet, you can bind to a local LAN adapter, or a private ClusterIP. If you do want to expose your tunnelled services to the Internet, you can do with a NodePort, LoadBalancer or through Ingress.
 
-### Deploy an inlets PRO server
+### Deploy an inlets PRO TCP server
 
 * [Use your Kubernetes cluster for exit-servers](https://github.com/inlets/inlets-pro/tree/master/chart/inlets-pro)
 
-### Deploy an inlets PRO client
+### Deploy an inlets PRO TCP client
 
 * [Run an inlets PRO client in your Kubernetes cluster](https://github.com/inlets/inlets-pro/tree/master/chart/inlets-pro-client)
+
+### Deploy an inlets PRO HTTP client or server
+
+To deploy a client or server, request access to the helm chart after your purchase.
 
 ### Setup your preferred IngressController with TLS certs from Let's Encrypt
 
