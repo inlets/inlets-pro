@@ -1,5 +1,12 @@
 # Use your Kubernetes cluster for inlets-pro HTTP exit-servers
 
+Clone the repository:
+
+```bash
+git clone https://github.com/inlets/inlets-pro
+cd inlets-pro/chart/http/inlets-http-server
+```
+
 ## Setup cert-manager, Ingress and a DNS01 certificate
 
 ```bash
@@ -109,10 +116,10 @@ Then install the chart:
 export NAME=client1
 
 helm upgrade --namespace inlets \
-  --install client1 ./chart/inlets-pro-http \
+  --install client1 ./chart/inlets-http-server \
   --set tokenSecretName=inlets-$NAME-token \
-  -f ./chart/inlets-pro-http/values.yaml \
-  -f ./chart/inlets-pro-http/values-live.yaml
+  -f ./chart/inlets-http-server/values.yaml \
+  -f ./chart/inlets-http-server/values-live.yaml
 ```
 
 Now connect a client:
