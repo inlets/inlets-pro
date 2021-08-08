@@ -1,10 +1,16 @@
+# inlets-http-server
+
+This is the helm chart for an inlets PRO HTTP server
+
+Use it to deploy one or more inlets PRO HTTP tunnel servers to your Kubernetes cluster using a wildcard domain.
+
 # Use your Kubernetes cluster for inlets-pro HTTP exit-servers
 
 Clone the repository:
 
 ```bash
 git clone https://github.com/inlets/inlets-pro
-cd inlets-pro/chart/http/inlets-http-server
+cd inlets-pro/chart/inlets-http-server
 ```
 
 ## Setup cert-manager, Ingress and a DNS01 certificate

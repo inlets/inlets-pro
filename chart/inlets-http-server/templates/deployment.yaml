@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "inlets-pro-http.fullname" . }}
+  name: {{ include "inlets-http-server.fullname" . }}
   labels:
-    {{- include "inlets-pro-http.labels" . | nindent 4 }}
+    {{- include "inlets-http-server.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "inlets-pro-http.selectorLabels" . | nindent 6 }}
+      {{- include "inlets-http-server.selectorLabels" . | nindent 6 }}
   template:
     metadata:
     {{- with .Values.podAnnotations }}
@@ -16,13 +16,13 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       labels:
-        {{- include "inlets-pro-http.selectorLabels" . | nindent 8 }}
+        {{- include "inlets-http-server.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "inlets-pro-http.serviceAccountName" . }}
+      serviceAccountName: {{ include "inlets-http-server.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:

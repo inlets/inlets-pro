@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "inlets-pro-http.fullname" . }}
+  name: {{ include "inlets-http-server.fullname" . }}
   labels:
-    {{- include "inlets-pro-http.labels" . | nindent 4 }}
+    {{- include "inlets-http-server.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.serviceType }}
   ports:
@@ -16,4 +16,4 @@ spec:
     protocol: TCP
     targetPort: {{ .Values.dataPlane.port }}
   selector:
-    {{- include "inlets-pro-http.selectorLabels" . | nindent 4 }}
+    {{- include "inlets-http-server.selectorLabels" . | nindent 4 }}
