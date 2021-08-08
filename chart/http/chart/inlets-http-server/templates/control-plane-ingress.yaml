@@ -1,0 +1,28 @@
+{{- $fullName := include "inlets-pro-http.fullname" . -}}
+{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1beta1
+{{- else -}}
+apiVersion: extensions/v1beta1
+{{- end }}
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "inlets-pro-http.labels" . | nindent 4 }}
+  {{- with .Values.controlPlaneIngress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  tls:
+    - hosts:
+        - {{ .Values.controlPlaneIngress.domain }}
+      secretName: {{ .Values.controlPlaneIngress.secretName }}
+  rules:
+    - host: {{ .Values.controlPlaneIngress.domain }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: {{ include "inlets-pro-http.fullname" . }}
+              servicePort: {{ .Values.controlPlane.port }}

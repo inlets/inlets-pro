@@ -1,0 +1,33 @@
+{{- $top := . }}
+
+{{- range $name, $data := .Values.dataPlaneIngresses }}
+{{- $fullName := include "inlets-pro-http.fullname" $top -}}
+{{- if semverCompare ">=1.14-0" $top.Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1beta1
+{{- else -}}
+apiVersion: extensions/v1beta1
+{{- end }}
+kind: Ingress
+metadata:
+  name: {{ $fullName }}-{{ $name }}
+  labels:
+    {{- include "inlets-pro-http.labels" $top | nindent 4 }}
+  {{- with .annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  tls:
+    - hosts:
+        - {{ $data.domain }}
+      secretName: {{ $data.secretName }}
+  rules:
+    - host: {{ $data.domain }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: {{ include "inlets-pro-http.fullname" $top }}
+              servicePort: {{ $top.Values.dataPlane.port }}
+---
+{{- end }}
