@@ -8,4 +8,4 @@ charts:
 	helm package inlets-pro/ && \
 	helm package inlets-pro-client/
 	mv chart/*.tgz docs/charts
-	helm repo index docs/charts --url https://inlets.github.io/inlets-pro/ --merge ./docs/charts/index.yaml
+	helm repo index docs/charts --url https://inlets.github.io/inlets-pro/charts --merge ./docs/charts/index.yaml
