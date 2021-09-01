@@ -14,12 +14,27 @@ You will need a cloud Kubernetes cluster and access to a sub-domain available an
 
 You can run this on any Intel or ARM cluster.
 
-Download [arkade](https://get-arkade.dev/), or use helm to install pre-reqs
+Install [arkade](https://arkade.dev/), which is used in the tutorial to install Kubernetes software.
+
+```bash
+curl -sLS https://dl.arkade.dev | sh        # Move to /usr/local/bin/
+curl -sLS https://dl.arkade.dev | sudo sh   # Moved automatically.
+```
+
+Install helm with `arkade get helm`.
+
+You also need to add the helm chart repository:
+
+```bash
+$ helm repo add inlets-pro https://inlets.github.io/inlets-pro/charts/
+$ helm repo update
+```
 
 * Install cert-manager - (`arkade install cert-manager`)
 * Install ingress-nginx - (`arkade install ingress-nginx`)
+* Install helm with `arkade get helm`
 
-It is assumed that you installed `kubectl` when you created your Kubernetes cluster.
+It is assumed that you installed `kubectl` when you created your Kubernetes cluster, otherwise run `arkade get kubectl`.
 
 ### Install an Issuer
 
@@ -67,7 +82,7 @@ kubectl create secret generic inlets-pro-secret --from-literal token=$TOKEN
 echo $TOKEN > token.txt
 ```
 
-### Install the inlets-pro chart
+### Install the inlets-pro TCP server chart
 
 The chart will deploy two Kubernetes services, an Ingress record and a Deployment to run the inlets-pro server process.
 
@@ -81,10 +96,7 @@ Make any changes you need.
 ```bash
 export DOMAIN="prometheus.example.com"
 
-git clone https://github.com/inlets/inlets-pro
-cd inlets-pro/chart
-
-helm upgrade --install prometheus-tunnel ./inlets-pro \
+helm upgrade --install prometheus-tunnel inlets-pro/inlets-pro \
   --set domain $DOMAIN
 ```
 

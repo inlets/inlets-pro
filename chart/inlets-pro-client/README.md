@@ -8,15 +8,20 @@ You should decide whether you want to expose the remote service to the world, or
 
 You will need to set up an inlets PRO TCP server so that the client has an endpoint to connect to. Create a server manually and then configure inlets-pro, or use [inletsctl](https://github.com/inlets/inletsctl) to create a preconfigured cloud VM, or use the helm chart for the inlets-pro server to install the server into a Pod.
 
-Then you will need the `helm` binary, the easiest way to get this is via [arkade](https://dl-get-arkade.dev):
+Install [arkade](https://arkade.dev/), which is used in the tutorial to install Kubernetes software.
 
 ```bash
-curl -sL https://dl-get-arkade.dev | sudo sh
-chmod +x arkade
-sudo mv arkade /usr/local/bin/
+curl -sLS https://dl.arkade.dev | sh        # Move to /usr/local/bin/
+curl -sLS https://dl.arkade.dev | sudo sh   # Moved automatically.
+```
 
-arkade get helm
-arkade get helm [--version VER]
+Install helm with `arkade get helm`.
+
+You also need to add the helm chart repository:
+
+```bash
+$ helm repo add inlets-pro https://inlets.github.io/inlets-pro/charts/
+$ helm repo update
 ```
 
 ### Install a client for a server using Auto TLS
@@ -52,10 +57,8 @@ kubectl create secret generic -n $NS \
 kubectl create secret generic -n $NS \
   $TOKEN_NAME --from-literal token=$SERVER_TOKEN
 
-git clone https://github.com/inlets/inlets-pro
-cd inlets-pro/chart
 
-helm upgrade --install grafana-tunnel ./inlets-pro-client \
+helm upgrade --install grafana-tunnel inlets-pro/inlets-pro-client \
   --namespace $NS \
   --set tokenSecretName=$TOKEN_NAME \
   --set url=$URL \
@@ -93,10 +96,7 @@ kubectl create secret generic -n default \
 kubectl create secret generic -n default \
   $TOKEN_NAME --from-literal token=$SERVER_TOKEN
 
-git clone https://github.com/inlets/inlets-pro
-cd inlets-pro/chart
-
-helm upgrade --install prometheus-tunnel ./inlets-pro-client \
+helm upgrade --install prometheus-tunnel inlets-pro/inlets-pro-client \
   --namespace openfaas \
   --set tokenSecretName=$TOKEN_NAME \
   --set url=$URL \

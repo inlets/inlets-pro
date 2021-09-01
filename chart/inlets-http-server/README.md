@@ -6,11 +6,20 @@ Use it to deploy one or more inlets PRO HTTP tunnel servers to your Kubernetes c
 
 # Use your Kubernetes cluster for inlets-pro HTTP exit-servers
 
-Clone the repository:
+Install [arkade](https://arkade.dev/), which is used in the tutorial to install Kubernetes software.
 
 ```bash
-git clone https://github.com/inlets/inlets-pro
-cd inlets-pro/chart/inlets-http-server
+curl -sLS https://dl.arkade.dev | sh        # Move to /usr/local/bin/
+curl -sLS https://dl.arkade.dev | sudo sh   # Moved automatically.
+```
+
+Install helm with `arkade get helm`.
+
+You also need to add the helm chart repository:
+
+```bash
+$ helm repo add inlets-pro https://inlets.github.io/inlets-pro/charts/
+$ helm repo update
 ```
 
 ## Setup cert-manager, Ingress and a DNS01 certificate
@@ -114,6 +123,8 @@ dataPlaneIngresses:
 fullnameOverride: ""
 ```
 
+Above: `values-live.yaml`
+
 Since we are using a wildcard TLS record (`wildcard-inlets-router-cert`), this needs to be set as the `secretName`.
 
 Then install the chart:
@@ -122,10 +133,9 @@ Then install the chart:
 export NAME=client1
 
 helm upgrade --namespace inlets \
-  --install client1 ./chart/inlets-http-server \
+  --install client1 inlets-pro/inlets-http-server \
   --set tokenSecretName=inlets-$NAME-token \
-  -f ./chart/inlets-http-server/values.yaml \
-  -f ./chart/inlets-http-server/values-live.yaml
+  -f values-live.yaml
 ```
 
 Now connect a client:
@@ -144,4 +154,3 @@ Access your tunnelled services:
 
 * https://faas.exit.o6s.io
 * https://prometheus.exit.o6s.io
-
