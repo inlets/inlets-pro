@@ -1,33 +1,20 @@
-# inlets-pro use-cases and education
+# inlets-pro docs
 
-## Reference
+Learn more on the [official documentation site](https://docs.inlets.dev/)
 
-* [CLI reference and Kubernetes](/docs/cli-reference.md)
+Read use-cases and tutorials [on the blog](https://blog.inlets.dev)
 
-## Tutorials
+For the helm charts:
 
-* [TCP tunnel for your Kubernetes IngressController HTTP/80 and TLS/443](ingress-tutorial.md)
+```bash
+$ helm repo add inlets-pro https://inlets.github.io/inlets-pro/charts/
+$ helm repo update
 
-* [TCP tunnel for Apache Cassandra running on your local machine, out to another network](cassandra-tutorial.md)
+$ helm search repo inlets-pro
+NAME                            CHART VERSION   APP VERSION     DESCRIPTION                            
+inlets-pro/inlets-pro           0.2.1           1.16.0          Helm chart for an inlets-pro TCP server
+inlets-pro/inlets-pro-client    0.2.1           1.0.0           Helm chart for an inlets-pro TCP client
+inlets-pro/inlets-http-server   0.2.1           1.16.0          Helm chart for an inlets HTTP server  
+```
 
-* [TCP tunnel for Caddy - get a TLS cert directly for your local machine](caddy-tutorial.md)
-
-* [TCP tunnel to access an SSH server](ssh-tutorial.md)
-
-* [Get kubectl access to your private cluster from anywhere](https://blog.alexellis.io/get-private-kubectl-access-anywhere/)
-
-* [Get a TLS-enabled Docker registry in 5 minutes](https://blog.alexellis.io/get-a-tls-enabled-docker-registry-in-5-minutes/)
-
-* [Tunnel PostgreSQL or MariaDB with inlets-pro](https://gist.github.com/alexellis/995b518a653d172dda4b0901dcdaa391)
-
-* [Loan a cloud IP to your minikube cluster](https://blog.alexellis.io/loan-an-ip-to-your-minikube-cluster/)
-
-### Community tutorials:
-
-* [Exporing NAT Transversal and Tunnels with Inlets and Inlets Pro](https://blog.heyal.co.uk/inlets-pro/)
-
-* [Inlets Pro Homelab Awesomeness](https://blog.brewsterops.dev/post/inlets-pro-homelab/)
-
-* [Running Inlets Pro as a Service](https://blog.brewsterops.dev/post/inlets-service/)
-
-Feel free to submit your PR to add your blog post or tutorial.
+Then install with the instructions at: [inlets/inlets-pro/tree/master/chart](https://github.com/inlets/inlets-pro/tree/master/chart)
