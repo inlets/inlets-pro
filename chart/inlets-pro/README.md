@@ -75,11 +75,15 @@ kubectl apply -f issuer-prod.yaml
 ### Generate a token for your inlets-pro server
 
 ```bash
+# Generate a random password
 export TOKEN=$(head -c 16 /dev/random | shasum|cut -d" " -f1)
-kubectl create secret generic inlets-pro-secret --from-literal token=$TOKEN
 
 # Save a copy for later
 echo $TOKEN > token.txt
+
+# Create a secret in the cluster for the tunnel server
+kubectl create secret generic inlets-pro-secret \
+  --from-literal token=$TOKEN
 ```
 
 ### Install the inlets-pro TCP server chart
@@ -97,7 +101,7 @@ Make any changes you need.
 export DOMAIN="prometheus.example.com"
 
 helm upgrade --install prometheus-tunnel inlets-pro/inlets-pro \
-  --set domain $DOMAIN
+  --set domain=$DOMAIN
 ```
 
 ### Now connect your client on your computer.
