@@ -96,8 +96,9 @@ Create a secret:
 ```bash
 export NAME=client1
 
+export TOKEN=$(head -c 16 /dev/random | shasum | cut -d" " -f1)
 kubectl create secret generic -n inlets inlets-$NAME-token \
-  --from-literal token=$(head -c 16 /dev/random | shasum | cut -d" " -f1)
+  --from-literal token=$TOKEN
 ```
 
 Create a `values.yaml` and customise the `controlPlaneIngress` with the domain you want the inlets PRO client to connect to.
@@ -141,8 +142,11 @@ helm upgrade --namespace inlets \
 Now connect a client:
 
 ```bash
+# Query $TOKEN
+# export $TOKEN=$(kubectl get secret  -n inlets inlets-$NAME-token -o jsonpath={.data.token}|base64 --decode)
+
 inlets-pro http client \
-  --token $(kubectl get secret  -n inlets inlets-$NAME-token -o jsonpath={.data.token}|base64 --decode) \
+  --token $TOKEN \
   --upstream faas.exit.o6s.io=http://127.0.0.1:8080 \
   --upstream prometheus.exit.o6s.io=http://127.0.0.1:9090 \
   --url wss://client1.exit.o6s.io \
