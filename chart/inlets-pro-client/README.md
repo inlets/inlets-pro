@@ -112,9 +112,22 @@ kubectl logs -n openfaas deploy/prometheus-tunnel
 
 Let's say that you want to expose an Ingress Controller like Istio, Traefik or ingress-nginx. You can pre-create your exit-server for a stable IP address, and then connect deploy this chart to connect a client to the exit server and expose the Ingress Controller on the Internet.
 
+Create an exit-server in TCP mode:
+
 ```bash
-  export SERVER_TOKEN="token-from-inletsctl"
-  export URL="wss://159.65.51.69:8123"
+inletsctl create \
+  --access-token-file ~/access-token \
+  --region lon1 \
+  --provider digitalocean
+```
+
+Note down the URL, TOKEN and IP address of the exit-server. 
+
+Deploy the chart:
+
+```bash
+  export SERVER_TOKEN="" # Populate from above.
+  export URL="wss://159.65.51.69:8123"  # Populate from above.
   export UPSTREAM="ingress-nginx-controller"
   export TOKEN_NAME="nginx-client-secret"
 
@@ -138,3 +151,5 @@ helm upgrade --install nginx-tunnel \
 The IP will not show within your Kubernetes cluster, but will function as expected. All TCP traffic from ports 80 and 443 will be sent to the IngressController from the exit server.
 
 You can also apply the same technique for Istio or Traefik. Bear in mind that you will need to alter the `--namespace` appropriately.
+
+Create any A or CNAME records that you require with the public IP address of the exit-server, and then you can go ahead and use cert-manager to obtain TLS certificates from Let's Encrypt using a HTTP01 or DNS01 challenge.
