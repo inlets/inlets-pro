@@ -101,10 +101,40 @@ helm upgrade --install prometheus-tunnel inlets-pro/inlets-pro-client \
   --set tokenSecretName=$TOKEN_NAME \
   --set url=$URL \
   --set ports="9090" \
-  --set upstream="prometheus"
+  --set upstream="prometheus" \
   --set autoTLS=false \
   --set fullnameOverride="prometheus-tunnel"
 
 kubectl logs -n openfaas deploy/prometheus-tunnel
 ```
 
+## Create a tunnel to expose an Ingress Controller
+
+Let's say that you want to expose an Ingress Controller like Istio, Traefik or ingress-nginx. You can pre-create your exit-server for a stable IP address, and then connect deploy this chart to connect a client to the exit server and expose the Ingress Controller on the Internet.
+
+```bash
+  export SERVER_TOKEN="token-from-inletsctl"
+  export URL="wss://159.65.51.69:8123"
+  export UPSTREAM="ingress-nginx-controller"
+  export TOKEN_NAME="nginx-client-secret"
+
+kubectl create secret generic -n default \
+  inlets-license --from-file license=$HOME/LICENSE
+
+kubectl create secret generic -n default \
+  $TOKEN_NAME --from-literal token=$SERVER_TOKEN
+
+helm upgrade --install nginx-tunnel \
+  inlets-pro/inlets-pro-client \
+  --namespace default \
+  --set tokenSecretName=$TOKEN_NAME \
+  --set url=$URL \
+  --set ports="80\,443" \
+  --set upstream="$UPSTREAM" \
+  --set autoTLS=true   \
+  --set fullnameOverride="nginx-tunnel"
+```
+
+The IP will not show within your Kubernetes cluster, but will function as expected. All TCP traffic from ports 80 and 443 will be sent to the IngressController from the exit server.
+
+You can also apply the same technique for Istio or Traefik. Bear in mind that you will need to alter the `--namespace` appropriately.
