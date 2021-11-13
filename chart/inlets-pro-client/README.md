@@ -52,7 +52,7 @@ export TOKEN_NAME="grafana-client-secret"
 export SERVER_TOKEN="sTbFquOCHP9wLuAOM5E3jTDkygl9mEFDuWEBljY15EIUNwaB7UtVjOv0h9dGEA3L"
 export NS="default"
 kubectl create secret generic -n $NS \
-  inlets-license --from-file license=$HOME/LICENSE
+  inlets-license --from-file license=$HOME/.inlets/LICENSE
 
 kubectl create secret generic -n $NS \
   $TOKEN_NAME --from-literal token=$SERVER_TOKEN
@@ -91,7 +91,7 @@ export TOKEN_NAME="prometheus-client-secret"
 export SERVER_TOKEN="sqbeua4TKwcNI0xrbGO9j2O3uPUX1t0PewqspESGEyQ5UJInurmzhwoZ"
 
 kubectl create secret generic -n default \
-  inlets-license --from-file license=$HOME/LICENSE
+  inlets-license --from-file license=$HOME/.inlets/LICENSE
 
 kubectl create secret generic -n default \
   $TOKEN_NAME --from-literal token=$SERVER_TOKEN
@@ -119,7 +119,7 @@ Let's say that you want to expose an Ingress Controller like Istio, Traefik or i
   export TOKEN_NAME="nginx-client-secret"
 
 kubectl create secret generic -n default \
-  inlets-license --from-file license=$HOME/LICENSE
+  inlets-license --from-file license=$HOME/.inlets/LICENSE
 
 kubectl create secret generic -n default \
   $TOKEN_NAME --from-literal token=$SERVER_TOKEN
