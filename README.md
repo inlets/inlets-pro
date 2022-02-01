@@ -41,6 +41,8 @@ Inlets is not a VPN, it's for exposing local services on another network or on t
 
 ## Getting started
 
+> A valid license key or Gumroad subscription is required to launch or deploy inlets. By using the software you agree that you have purchased a license and are bound by the terms of the [End User License Agreement (EULA)](/EULA.md)
+
 Find out more:
 
 * [Read the documentation](https://docs.inlets.dev/)
