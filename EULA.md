@@ -1,6 +1,6 @@
 End User License Agreement (EULA)
 
-1. Licensed software. inlets PRO is licensed as commercial software and must not be used without a valid license key from OpenFaaS Ltd.
+1. Licensed software. inlets Pro is licensed as commercial software and must not be used without a valid license key from OpenFaaS Ltd.
 
 1.1 OpenFaaS Ltd. ("Supplier") is a registered company in England & Wales with number: 11076587, registered address: Peterborough UK.
 
@@ -14,7 +14,7 @@ End User License Agreement (EULA)
 
 3. Free Trial
 
-If you either register on the inlets PRO web site for a free trial or otherwise order a free trial version, OpenFaaS Ltd will make certain Licensed Software available to you on a trial basis (the “Trial Version”) free of charge until the end of the free trial period for which you registered or ordered the applicable Licensed Software. The Trial Version may be used only to review, demonstrate and evaluate the Licensed Software and may have limited features. The Trial Version may cease operating after the applicable time period or number of uses based on an internal metering mechanism within the Trial Version itself. Regardless of any such metering, you must stop use at the end of such period or number of uses. Additional trial terms and conditions may appear on the trial registration web page or Order Form. Any such additional terms and conditions are incorporated into this Agreement by reference and are legally binding.
+If you either register on the inlets Pro web site for a free trial or otherwise order a free trial version, OpenFaaS Ltd will make certain Licensed Software available to you on a trial basis (the “Trial Version”) free of charge until the end of the free trial period for which you registered or ordered the applicable Licensed Software. The Trial Version may be used only to review, demonstrate and evaluate the Licensed Software and may have limited features. The Trial Version may cease operating after the applicable time period or number of uses based on an internal metering mechanism within the Trial Version itself. Regardless of any such metering, you must stop use at the end of such period or number of uses. Additional trial terms and conditions may appear on the trial registration web page or Order Form. Any such additional terms and conditions are incorporated into this Agreement by reference and are legally binding.
 
 4. Grant of License; Ownership.
 
@@ -40,14 +40,17 @@ This Agreement is effective from the first date you install the Software. You ma
 
 6.1 Customer Data. In order to use the Products, Customer may need to complete a registration process and provide contact information such as an email address, credentials and other account billing information ("Account Data"). Customer must provide complete and accurate Account Data during the registration process and must keep Customer's Account Data up-to-date. Customer is prohibited from misrepresenting Customer's identity or affiliation with any company or other entity. By providing Account Data, Customer hereby consents that it may receive email or other communications from OpenFaaS Ltd. Such communications may include communications regarding Customer's use of the Products and/or commercial content relating to other OpenFaaS Ltd Products. If you do not wish to receive such communications, a Customer may opt-out by notifying OpenFaaS Ltd at contact@openfaas.com
 
-7. Limitation of Liability.
+7. Co-Marketing
+At the request of Supplier, Customer agrees to participate in other reasonable marketing activities that promote the benefits of the Services to other potential customers and to use of Customer's name and logo on the Supplier's web site and in Supplier's promotional materials. Customer agrees that Supplier may disclose Customer as a customer of the Products.
 
-7.1 Warranty disclaimer. You acknowledge that the Software is provided "as is" without warranty of any kind, express or implied. You use the Software at your own risk and the product is supplied on an "as is" and "as available" basis. You assume all responsibility for selecting the Software to achieve your intended results, and for the installation of, and results obtained from the Software.
+8. Limitation of Liability.
 
-7.2 No Consequential Damages. IN NO EVENT SHALL OpenFaaS Ltd BE LIABLE HEREUNDER FOR SPECIAL, PUNITIVE, INCIDENTAL, INDIRECT OR CONSEQUENTIAL DAMAGES, INCLUDING, BUT NOT LIMITED TO, LOSS OF PROFITS, LOSS OF REVENUE, LOSS OF USE OR LOSS OF DATA, EVEN IF ADVISED OF THE POSSIBILITY THEREOF OR, IF REASONABLY FORESEEABLE, INCURRED BY LICENSEE OR END USERS, OR CLAIMED AGAINST LICENSEE BY ANY OTHER PARTY, INCLUDING END USERS (WHETHER ANY SUCH CLAIMS ARISE UNDER THEORY OF CONTRACT, TORT OR OTHERWISE).
+8.1 Warranty disclaimer. You acknowledge that the Software is provided "as is" without warranty of any kind, express or implied. You use the Software at your own risk and the product is supplied on an "as is" and "as available" basis. You assume all responsibility for selecting the Software to achieve your intended results, and for the installation of, and results obtained from the Software.
 
-7.3 Limitation of Liability. To the extent permitted by applicable law, the liability of OpenFaaS Ltd and its licensors, personnel, subcontractors and suppliers arising out of, in connection with, or resulting from this Agreement and, without limitation, for any and all causes with respect to the Licensed Program Materials, breach of contract, tort, warranty or otherwise, shall in the aggregate not exceed the license fees paid by Licensee hereunder in the twelve (12) months immediately preceding the event giving rise to the claim.
+8.2 No Consequential Damages. IN NO EVENT SHALL OpenFaaS Ltd BE LIABLE HEREUNDER FOR SPECIAL, PUNITIVE, INCIDENTAL, INDIRECT OR CONSEQUENTIAL DAMAGES, INCLUDING, BUT NOT LIMITED TO, LOSS OF PROFITS, LOSS OF REVENUE, LOSS OF USE OR LOSS OF DATA, EVEN IF ADVISED OF THE POSSIBILITY THEREOF OR, IF REASONABLY FORESEEABLE, INCURRED BY LICENSEE OR END USERS, OR CLAIMED AGAINST LICENSEE BY ANY OTHER PARTY, INCLUDING END USERS (WHETHER ANY SUCH CLAIMS ARISE UNDER THEORY OF CONTRACT, TORT OR OTHERWISE).
 
-7.3 Sections 1, 2, 3, 4, 5, 6 and 7 will remain effective after the termination of the Agreement.
+8.3 Limitation of Liability. To the extent permitted by applicable law, the liability of OpenFaaS Ltd and its licensors, personnel, subcontractors and suppliers arising out of, in connection with, or resulting from this Agreement and, without limitation, for any and all causes with respect to the Licensed Program Materials, breach of contract, tort, warranty or otherwise, shall in the aggregate not exceed the license fees paid by Licensee hereunder in the twelve (12) months immediately preceding the event giving rise to the claim.
 
-7.4 If you have any questions about these terms or our Services you may contact us by email at: contact@openfaas.com
+8.3 Sections 1, 2, 3, 4, 5, 6, 7 and 8 will remain effective after the termination of the Agreement.
+
+8.4 If you have any questions about these terms or our Services you may contact us by email at: contact@openfaas.com
