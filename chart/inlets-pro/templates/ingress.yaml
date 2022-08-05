@@ -1,10 +1,6 @@
 {{- $fullName := include "inlets-pro.fullname" . -}}
 {{- $tlsSecretName := include "inlets-pro.tlsSecretName" . -}}
-{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1beta1
-{{- else -}}
-apiVersion: extensions/v1beta1
-{{- end }}
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ $fullName }}
@@ -24,6 +20,9 @@ spec:
       http:
         paths:
           - path: /
+            pathType: Prefix
             backend:
-              serviceName: {{ include "inlets-pro.fullname" . }}-control-plane
-              servicePort: {{ .Values.controlPlane.port }}
+              service:
+                name: {{ include "inlets-pro.fullname" . }}-control-plane
+                port:
+                  number: {{ .Values.controlPlane.port }}
