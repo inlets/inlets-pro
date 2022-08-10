@@ -101,7 +101,7 @@ Make any changes you need.
 export DOMAIN="prometheus.example.com"
 
 helm upgrade --install prometheus-tunnel inlets-pro/inlets-pro \
-  --set domain=$DOMAIN
+  --set ingress.domain=$DOMAIN
 ```
 
 ### Now connect your client on your computer.
