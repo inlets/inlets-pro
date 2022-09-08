@@ -77,7 +77,7 @@ The inlets binary can be obtained as a stand-alone executable, or via a containe
 * As a binary:
 
     ```sh
-    curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.9.5/inlets-pro > inlets-pro
+    curl -SLsf https://github.com/inlets/inlets-pro/releases/download/0.9.9/inlets-pro > inlets-pro
     chmod +x ./inlets-pro
     ```
 

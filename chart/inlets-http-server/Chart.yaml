@@ -2,5 +2,5 @@ apiVersion: v2
 name: inlets-http-server
 description: Helm chart for an inlets HTTP server
 type: application
-version: 0.4.1
+version: 0.4.2
 appVersion: 1.16.0
