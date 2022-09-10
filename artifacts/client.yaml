@@ -19,6 +19,7 @@ spec:
         imagePullPolicy: IfNotPresent
         command: ["inlets-pro"]
         args:
+        - "tcp"
         - "client"
         - "--url=wss://EXIT_NODE_IP:8123/connect"
         - "--ports=80,443"

@@ -37,7 +37,7 @@ Start the server:
 ```sh
 sudo inlets-pro server \
   --auto-tls \
-  --common-name $IP \
+  --auto-tls-name $IP \
   --remote-tcp 127.0.0.1 \
   --token $TOKEN
 ```

@@ -19,7 +19,8 @@ spec:
         imagePullPolicy: IfNotPresent
         command: ["inlets-pro"]
         args:
+        - "tcp"
         - "server"
         - "--auto-tls=true"
-        - "--common-name=PUBLIC_IP"
+        - "--auto-tls-name=PUBLIC_IP"
         - "--token=TOKEN"
