@@ -1,8 +1,8 @@
 # inlets-http-server
 
-This is the helm chart for an inlets PRO HTTP server
+This is the helm chart for an inlets Pro HTTP server
 
-Use it to deploy one or more inlets PRO HTTP tunnel servers to your Kubernetes cluster using a wildcard domain.
+Use it to deploy one or more inlets Pro HTTP tunnel servers to your Kubernetes cluster using a wildcard domain.
 
 # Use your Kubernetes cluster for inlets-pro HTTP exit-servers
 
@@ -101,7 +101,7 @@ kubectl create secret generic -n inlets inlets-$NAME-token \
   --from-literal token=$TOKEN
 ```
 
-Create a `values.yaml` and customise the `controlPlaneIngress` with the domain you want the inlets PRO client to connect to.
+Create a `values.yaml` and customise the `controlPlaneIngress` with the domain you want the inlets Pro client to connect to.
 
 Then update `dataPlaneIngresses` with any services that you want to expose to the Internet from the tunnel. If you don't want to expose anything then change it to: `dataPlaneIngresses: {}`.
 

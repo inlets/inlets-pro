@@ -1,6 +1,0 @@
-apiVersion: v2
-name: inlets-pro-client
-description: Helm chart for an inlets-pro TCP client
-type: application
-version: 0.4.3
-appVersion: 1.0.0

@@ -1,6 +1,6 @@
-## Helm charts for inlets Pro
+## Helm charts for inlets
 
-[inlets](https://inlets.dev/) consists of a client and a server portion.
+[inlets](https://inlets.dev) has both a client and a server, which connect to each other to build a tunnel.
 
 When a client wants to expose a service publicly, or privately within a remote network, it connects to a server using its control-plane (a HTTPS websocket).
 
@@ -8,17 +8,19 @@ There is no need for your data plane to be exposed on the Internet, you can bind
 
 Kubernetes v1.19+ is required for the helm charts provided in this repository, due to the various versions of the Ingress API, the minimum supported version will be `networking.k8s.io/v1`.
 
-### Deploy an inlets Pro TCP server
+### Deploy the inlets tunnel client or server as a Kubernetes Deployment
 
-* [Use your Kubernetes cluster for exit-servers](https://github.com/inlets/inlets-pro/tree/master/chart/inlets-pro)
+* [Deploy an inlets HTTP server](https://github.com/inlets/inlets-pro/tree/master/chart/inlets-http-server)
 
-### Deploy an inlets Pro TCP client
+* [Deploy an inlets TCP client](https://github.com/inlets/inlets-pro/tree/master/chart/inlets-pro-client)
 
-* [Run an inlets PRO client in your Kubernetes cluster](https://github.com/inlets/inlets-pro/tree/master/chart/inlets-pro-client)
+* [Deploy an inlets TCP server](https://github.com/inlets/inlets-pro/tree/master/chart/inlets-tcp-server)
 
-### Deploy an inlets Pro HTTP client or server
+## Other Kubernetes use-cases
 
-To deploy a client or server, request access to the helm chart after your purchase.
+### Get Public L4 Load Balancers for your cluster
+
+See also: [inlets-operator](https://github.com/inlets/inlets-operator) which automates both parts of the above for a set number of supported clouds, and integrates through Kubernetes services of type LoadBalancer.
 
 ### Setup your preferred IngressController with TLS certs from Let's Encrypt
 
@@ -26,12 +28,9 @@ To deploy a client or server, request access to the helm chart after your purcha
 
 ### Get kubectl access to your private cluster from anywhere
 
-* [Get kubectl access to your private cluster from anywhere](https://blog.alexellis.io/get-private-kubectl-access-anywhere/)
+* [Tutorial: Expose a local Kubernetes API Server](https://docs.inlets.dev/tutorial/kubernetes-api-server/)
 
 ### Continous Deployment and fleet management with ArgoCD
 
+* [How To Manage Inlets Tunnels Servers With Argo CD and GitOps](https://inlets.dev/blog/2022/08/10/managing-tunnel-servers-with-argocd.html)
 * [Argo CD for your private Raspberry Pi k3s cluster](https://johansiebens.dev/posts/2020/08/argo-cd-for-your-private-raspberry-pi-k3s-cluster/)
-
-### Get Public L4 LoadBalancers for your cluster
-
-See also: [inlets-operator](https://github.com/inlets/inlets-operator) which automates both parts of the above for a set number of supported clouds, and integrates through Kubernetes services of type LoadBalancer.

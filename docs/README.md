@@ -12,8 +12,8 @@ $ helm repo update
 
 $ helm search repo inlets-pro
 NAME                            CHART VERSION   APP VERSION     DESCRIPTION                            
-inlets-pro/inlets-pro           0.2.1           1.16.0          Helm chart for an inlets-pro TCP server
-inlets-pro/inlets-pro-client    0.2.1           1.0.0           Helm chart for an inlets-pro TCP client
+inlets-pro/inlets-tcp-server           0.2.1           1.16.0          Helm chart for an inlets-pro TCP server
+inlets-pro/inlets-tcp-client    0.2.1           1.0.0           Helm chart for an inlets-pro TCP client
 inlets-pro/inlets-http-server   0.2.1           1.16.0          Helm chart for an inlets HTTP server  
 ```
 

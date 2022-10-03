@@ -1,4 +1,4 @@
-## Reference architecture for inlets PRO
+## Reference architecture for inlets Pro
 
 ### Single private service with Public VirtualIP
 

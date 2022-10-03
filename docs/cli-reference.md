@@ -231,7 +231,7 @@ You can use the public IP address of the inlets-server, or a DNS record.
 
 #### Use a pre-supplied, or self-signed certificate
 
-You can use a TLS certificate with the inlets PRO server obtained from a third-party tool such as [certbot](https://certbot.eff.org), or your own Public Key Infrastructure (PKI).
+You can use a TLS certificate with the inlets Pro server obtained from a third-party tool such as [certbot](https://certbot.eff.org), or your own Public Key Infrastructure (PKI).
 
 If you wanted to use an exit-server with a public IP, you can create a DNS A record for it before configuring certbot or another tool to fetch a TLS certificate for you from LetsEncrypt. If you don't want to set up a separate DNS record, then you can get an automated one from [xip.io](http://xip.io) such as `104.16.182.15.xip.io` or `104.16.182.15.xip.io`, where your public IP is `104.16.182.15`.
 
@@ -315,7 +315,7 @@ Now pass the token via `--token $TOKEN`.
 
 ### Configure a http tunnel
 
-The HTTP mode of inlets PRO is suitable for REST / HTTP traffic. Use it when you want to add TLS termination on the exit-server without running a reverse-proxy in the client's network.
+The HTTP mode of inlets Pro is suitable for REST / HTTP traffic. Use it when you want to add TLS termination on the exit-server without running a reverse-proxy in the client's network.
 
 Just like a TCP tunnel, a HTTP tunnel has two TCP ports, one for the control-plane and one for the data-plane.
 
@@ -330,7 +330,7 @@ The control-plane will use Auto-TLS by default, but the data-plane does not.
 
 #### Use Let's Encrypt to obtain a TLS certificate for the data plane
 
-inlets PRO HTTP tunnels are able to obtain TLS certificates from Let's Encrypt for the data-plane. In this mode, you'll find that the server exposes port 80 and 443 in order to process a HTTP01 challenge.
+inlets Pro HTTP tunnels are able to obtain TLS certificates from Let's Encrypt for the data-plane. In this mode, you'll find that the server exposes port 80 and 443 in order to process a HTTP01 challenge.
 
 Three additional fields enable the client to obtain a TLS certificate for the data-plane:
 

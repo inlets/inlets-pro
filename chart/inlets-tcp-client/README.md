@@ -1,12 +1,12 @@
-## Run an inlets PRO client in your Kubernetes cluster
+## Run an inlets Pro client in your Kubernetes cluster
 
-An inlets PRO client can be used to tunnel a service from a local cluster to a remote network or remote Kubernetes cluster.
+An inlets Pro client can be used to tunnel a service from a local cluster to a remote network or remote Kubernetes cluster.
 
 You should decide whether you want to expose the remote service to the world, or to just the local area network of the exit-server.
 
 ### Prerequisites
 
-You will need to set up an inlets PRO TCP server so that the client has an endpoint to connect to. Create a server manually and then configure inlets-pro, or use [inletsctl](https://github.com/inlets/inletsctl) to create a preconfigured cloud VM, or use the helm chart for the inlets-pro server to install the server into a Pod.
+You will need to set up an inlets Pro TCP server so that the client has an endpoint to connect to. Create a server manually and then configure inlets-pro, or use [inletsctl](https://github.com/inlets/inletsctl) to create a pre-configured cloud VM, or use the helm chart for the inlets-pro server to install the server into a Pod.
 
 Install [arkade](https://arkade.dev/), which is used in the tutorial to install Kubernetes software.
 
@@ -58,7 +58,7 @@ kubectl create secret generic -n $NS \
   $TOKEN_NAME --from-literal token=$SERVER_TOKEN
 
 
-helm upgrade --install grafana-tunnel inlets-pro/inlets-pro-client \
+helm upgrade --install grafana-tunnel inlets-pro/inlets-tcp-client \
   --namespace $NS \
   --set tokenSecretName=$TOKEN_NAME \
   --set url=$URL \
@@ -71,11 +71,11 @@ echo Access Grafana via http://$IP:3000
 kubectl logs deploy/grafana-tunnel
 ```
 
-If you wish to disable public access to the forwarded ports, look at the reference documentation for inlets PRO for how to bind the data-plane to a local LAN or loopback adapter.
+If you wish to disable public access to the forwarded ports, look at the reference documentation for inlets Pro for how to bind the data-plane to a local LAN or loopback adapter.
 
 ### Install a client for a server using an IngressController for TLS termination
 
-If you are using an IngressController for TLS termination, then you need to disable the Auto TLS feature of inlets PRO (`--set autoTLS=false`).
+If you are using an IngressController for TLS termination, then you need to disable the Auto TLS feature of inlets Pro (`--set autoTLS=false`).
 
 Install OpenFaaS which bundles Prometheus:
 
@@ -96,7 +96,7 @@ kubectl create secret generic -n default \
 kubectl create secret generic -n default \
   $TOKEN_NAME --from-literal token=$SERVER_TOKEN
 
-helm upgrade --install prometheus-tunnel inlets-pro/inlets-pro-client \
+helm upgrade --install prometheus-tunnel inlets-pro/inlets-tcp-client \
   --namespace openfaas \
   --set tokenSecretName=$TOKEN_NAME \
   --set url=$URL \
@@ -138,7 +138,7 @@ kubectl create secret generic -n default \
   $TOKEN_NAME --from-literal token=$SERVER_TOKEN
 
 helm upgrade --install nginx-tunnel \
-  inlets-pro/inlets-pro-client \
+  inlets-pro/inlets-tcp-client \
   --namespace default \
   --set tokenSecretName=$TOKEN_NAME \
   --set url=$URL \

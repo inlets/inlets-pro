@@ -1,6 +1,6 @@
 ## Use your Kubernetes cluster for exit-servers
 
-This chart installs the inlets PRO server in TCP mode. It runs the inlets server process as a Pod within your Kubernetes cluster.
+This chart installs the inlets Pro server in TCP mode. It runs the inlets server process as a Pod within your Kubernetes cluster.
 
 You can use this to avoid creating individual exit-server VMs, or to connect a number of services into to a public Kubernetes cluster. It's up to you to decide whether you want to access any tunneled services from the Internet, or from within the cluster.
 
@@ -90,7 +90,7 @@ kubectl create secret generic inlets-pro-secret \
 
 The chart will deploy two Kubernetes services, an Ingress record and a Deployment to run the inlets-pro server process.
 
-* `prometheus-tunnel-control-plane` - a service exposed by Ingress, for the websocket of inlets PRO (usually port 8123)
+* `prometheus-tunnel-control-plane` - a service exposed by Ingress, for the websocket of inlets Pro (usually port 8123)
 * `prometheus-tunnel-data-plane` - a local service to access Prometheus from within the cluster (usually 9090)
 
 Edit `values.yaml`:
@@ -100,7 +100,7 @@ Make any changes you need.
 ```bash
 export DOMAIN="prometheus.example.com"
 
-helm upgrade --install prometheus-tunnel inlets-pro/inlets-pro \
+helm upgrade --install prometheus-tunnel inlets-pro/inlets-tcp-server \
   --set ingress.domain=$DOMAIN
 ```
 

@@ -1,5 +1,5 @@
 [Unit]
-Description=inlets PRO TCP server
+Description=inlets Pro TCP server
 After=network.target
 
 [Service]
