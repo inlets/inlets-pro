@@ -3,9 +3,9 @@ entries:
   inlets-http-server:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-10-03T09:15:23.245918+01:00"
+    created: "2022-11-18T17:30:28.977393954Z"
     description: Deploy an inlets HTTP tunnel server to a cluster
-    digest: acc57685488c75ccc6791bf2fcdb6697cafcaff6f1cbc5dfdd29cfe3ee0879d1
+    digest: 019ba36a7461647292ce9dcdae4af85e382b041cbd2becf81eeb1a5a18ef4a53
     name: inlets-http-server
     type: application
     urls:
@@ -13,7 +13,7 @@ entries:
     version: 0.5.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-10-03T09:15:23.245626+01:00"
+    created: "2022-11-18T17:30:28.977119096Z"
     description: Helm chart for an inlets HTTP server
     digest: 69416d500a12ad1b04a8857f24f748fecea8d67965d5618cc7f259059897af10
     name: inlets-http-server
@@ -23,7 +23,7 @@ entries:
     version: 0.4.3
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-10-03T09:15:23.245353+01:00"
+    created: "2022-11-18T17:30:28.976756274Z"
     description: Helm chart for an inlets HTTP server
     digest: e226d19e14aac943de2e2dfb25535998ae474bb39fe88aaa4f0ce6b7212ee1df
     name: inlets-http-server
@@ -33,7 +33,7 @@ entries:
     version: 0.4.2
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-10-03T09:15:23.245064+01:00"
+    created: "2022-11-18T17:30:28.976362501Z"
     description: Helm chart for an inlets HTTP server
     digest: 83126ada1077e4ab9aeb40babe89cd13539d381c235335f8b637e89b21291dd5
     name: inlets-http-server
@@ -43,7 +43,7 @@ entries:
     version: 0.4.1
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-10-03T09:15:23.244761+01:00"
+    created: "2022-11-18T17:30:28.975963118Z"
     description: Helm chart for an inlets HTTP server
     digest: 2427570cee3593f76b7787a07d81d69a3266f31bec2edcd97b46e8bb6b6e020a
     name: inlets-http-server
@@ -53,7 +53,7 @@ entries:
     version: 0.4.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-10-03T09:15:23.244353+01:00"
+    created: "2022-11-18T17:30:28.975513564Z"
     description: Helm chart for an inlets HTTP server
     digest: f6de8d04eef6af9c26a17005849f885aece0a5b04117e10ebcd054f5235f9f60
     name: inlets-http-server
@@ -63,7 +63,7 @@ entries:
     version: 0.3.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-10-03T09:15:23.241713+01:00"
+    created: "2022-11-18T17:30:28.975106401Z"
     description: Helm chart for an inlets HTTP server
     digest: 9c946af21b3fba2710002fc24409b72b43f7377d4f9768109e02213fffcff82a
     name: inlets-http-server
@@ -74,7 +74,7 @@ entries:
   inlets-pro:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-10-03T09:15:23.247774+01:00"
+    created: "2022-11-18T17:30:28.979056128Z"
     description: Helm chart for an inlets-pro TCP server
     digest: b849b6e9c6c4a0825fdcfa1a59f6a44c816aff2c8768b66e2710c3721187b901
     name: inlets-pro
@@ -84,7 +84,7 @@ entries:
     version: 0.4.3
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-10-03T09:15:23.247471+01:00"
+    created: "2022-11-18T17:30:28.978793029Z"
     description: Helm chart for an inlets-pro TCP server
     digest: 54bfa103641526ce4ab10d5dc2ee3a7420754bfe2f4dce3d569957bf38d78538
     name: inlets-pro
@@ -94,7 +94,7 @@ entries:
     version: 0.4.2
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-10-03T09:15:23.247156+01:00"
+    created: "2022-11-18T17:30:28.9785061Z"
     description: Helm chart for an inlets-pro TCP server
     digest: 4b5b7b8032d40e5d3969399cba1943eb752b15efb28b2fbf77b9566522ecc0bc
     name: inlets-pro
@@ -104,7 +104,7 @@ entries:
     version: 0.4.1
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-10-03T09:15:23.246846+01:00"
+    created: "2022-11-18T17:30:28.978222451Z"
     description: Helm chart for an inlets-pro TCP server
     digest: 898f6551157fb49c0a617eb30f225b9921a4aba60eba804c6307245b1f8e205a
     name: inlets-pro
@@ -114,7 +114,7 @@ entries:
     version: 0.4.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-10-03T09:15:23.246531+01:00"
+    created: "2022-11-18T17:30:28.977926142Z"
     description: Helm chart for an inlets-pro TCP server
     digest: 108eaf1e75fa15ba60316867c6bdc645f177dbe305bf320382b49fa0e40222db
     name: inlets-pro
@@ -124,7 +124,7 @@ entries:
     version: 0.3.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-10-03T09:15:23.246234+01:00"
+    created: "2022-11-18T17:30:28.977667643Z"
     description: Helm chart for an inlets-pro TCP server
     digest: 75c0ca85be33d6461410332b2d3f9438e681e53a326f0b12cb80540a5b8db0f2
     name: inlets-pro
@@ -135,7 +135,7 @@ entries:
   inlets-pro-client:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2022-10-03T09:15:23.249243+01:00"
+    created: "2022-11-18T17:30:28.980297768Z"
     description: Helm chart for an inlets-pro TCP client
     digest: 7db4d044da23c3171b6de57cdb2318f32e10e40445fa0f2009df619852a83a86
     name: inlets-pro-client
@@ -145,7 +145,7 @@ entries:
     version: 0.4.3
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2022-10-03T09:15:23.248999+01:00"
+    created: "2022-11-18T17:30:28.980091121Z"
     description: Helm chart for an inlets-pro TCP client
     digest: 3193fd6292800c0fbc176ba906d4115dd94551e3e1fb21112e0d637d19ecdab4
     name: inlets-pro-client
@@ -155,7 +155,7 @@ entries:
     version: 0.4.2
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2022-10-03T09:15:23.248757+01:00"
+    created: "2022-11-18T17:30:28.979880924Z"
     description: Helm chart for an inlets-pro TCP client
     digest: e52a838e3411b2a2609afcc1ce47471f66497b9c3ffbde631809b7574885a189
     name: inlets-pro-client
@@ -165,7 +165,7 @@ entries:
     version: 0.4.1
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2022-10-03T09:15:23.248523+01:00"
+    created: "2022-11-18T17:30:28.979675748Z"
     description: Helm chart for an inlets-pro TCP client
     digest: b6bfd6f0d4f74ff7bad733ada9c8d2ad426a139925a01346ec15186a2a89f29c
     name: inlets-pro-client
@@ -175,7 +175,7 @@ entries:
     version: 0.4.0
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2022-10-03T09:15:23.248261+01:00"
+    created: "2022-11-18T17:30:28.979460021Z"
     description: Helm chart for an inlets-pro TCP client
     digest: db19167e8659dfca115294b51ca8c8cc3ee53e4b4b692ba6ddf3f61a748cdd00
     name: inlets-pro-client
@@ -185,7 +185,7 @@ entries:
     version: 0.3.0
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2022-10-03T09:15:23.248023+01:00"
+    created: "2022-11-18T17:30:28.979264955Z"
     description: Helm chart for an inlets-pro TCP client
     digest: 627dc96ec83d8dd8cff9421d503bd71488a8e276ddbc6c72ec599aa50fd147c0
     name: inlets-pro-client
@@ -196,9 +196,9 @@ entries:
   inlets-tcp-client:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2022-10-03T09:15:23.25092+01:00"
+    created: "2022-11-18T17:30:28.98098503Z"
     description: Deploy an inlets TCP tunnel client to a cluster
-    digest: dd9b48414beba081d5ae4d3f8c1064d0675b37fe4d4a2b639bdfdbbc648ffbc7
+    digest: 8a05dcd92590a678a61453c1455ed10b20a8fad10d04783bf2e7f169df025227
     name: inlets-tcp-client
     type: application
     urls:
@@ -207,7 +207,17 @@ entries:
   inlets-tcp-server:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-10-03T09:15:23.251268+01:00"
+    created: "2022-11-18T17:30:28.981882339Z"
+    description: Deploy an inlets TCP tunnel server to a cluster
+    digest: b45e178ef25214be9353b300f989137108945943dadb178c3a3fc37862201aab
+    name: inlets-tcp-server
+    type: application
+    urls:
+    - https://inlets.github.io/inlets-pro/charts/inlets-tcp-server-0.6.0.tgz
+    version: 0.6.0
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-11-18T17:30:28.981512307Z"
     description: Deploy an inlets TCP tunnel server to a cluster
     digest: 01dfdb92723407872e4d8321f21e5f5d0c3db38b0d8b28578e3e0a41c2a71609
     name: inlets-tcp-server
@@ -215,4 +225,4 @@ entries:
     urls:
     - https://inlets.github.io/inlets-pro/charts/inlets-tcp-server-0.5.0.tgz
     version: 0.5.0
-generated: "2022-10-03T09:15:23.240371+01:00"
+generated: "2022-11-18T17:30:28.974624675Z"

@@ -309,7 +309,7 @@ dataPlane:
   ports:
   - targetPort: 9090
     protocol: TCP
-    name: prom-http
+    name: prometheus
     port: 9090
 ```
 
