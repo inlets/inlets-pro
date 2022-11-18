@@ -23,6 +23,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ include "inlets-pro.fullname" . }}-control-plane
+                name: {{ include "inlets-pro.fullname" . }}-control
                 port:
                   number: {{ .Values.controlPlane.port }}
