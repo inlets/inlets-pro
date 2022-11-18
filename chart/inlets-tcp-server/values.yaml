@@ -59,4 +59,3 @@ securityContext: {}
   # runAsUser: 1000
 
 nameOverride: ""
-fullnameOverride: ""
