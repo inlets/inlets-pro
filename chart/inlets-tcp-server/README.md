@@ -4,6 +4,8 @@ This chart installs the inlets Pro server in TCP mode. It runs the inlets server
 
 You can use this to avoid creating individual exit-server VMs, or to connect a number of services into to a public Kubernetes cluster. It's up to you to decide whether you want to access any tunneled services from the Internet, or from within the cluster.
 
+> If you are wanting to test inlets Pro TCP tunnel servers in Kubernetes, without a domain and without configuring TLS and Ingress, you can try out: [The hard way to host an inlets TCP tunnel on Kubernetes](../../docs/inlets-tcp-server-hard-way.md)
+
 ## Getting started
 
 In this tutorial, you'll learn how to set up a tunnel for a Prometheus service running on a private network. It will be tunneled to your Kubernetes cluster through an inlets server running in a Pod. [Prometheus](https://prometheus.io) is a time-series database used for monitoring microservices. It is assumed that you have one or more Prometheus instances that you want to monitor from a cloud Kubernetes cluster.
