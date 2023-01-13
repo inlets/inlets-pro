@@ -10,11 +10,11 @@ Kubernetes v1.19+ is required for the helm charts provided in this repository, d
 
 ### Deploy the inlets tunnel client or server as a Kubernetes Deployment
 
-* [Deploy an inlets HTTP server](inlets-http-server)
+* [Deploy an inlets TCP client](inlets-tcp-client) - connect an internal service to a public inlets TCP server
 
-* [Deploy an inlets TCP client](inlets-tcp-client)
+* [Deploy an inlets TCP server](inlets-tcp-server) - host an inlets TCP server in a cluster
 
-* [Deploy an inlets TCP server](inlets-tcp-server)
+* [Deploy an inlets HTTP server](inlets-http-server) - host an inlets HTTP server in a cluster
 
 ## Other Kubernetes use-cases
 
