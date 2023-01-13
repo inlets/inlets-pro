@@ -9,6 +9,9 @@ tokenSecretName: inlets-pro-secret
 
 autoTLS: false
 
+# comma-separated list of TCP ports to forward
+# i.e. for Istio/Nginx/Traefik:
+# ports: 80,443
 ports: 3000
 
 resources:
