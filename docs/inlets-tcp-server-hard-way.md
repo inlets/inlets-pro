@@ -127,7 +127,7 @@ spec:
         - --control-port=8123
         - --auto-tls
         - --auto-tls-san=$AUTO_TLS_IP
-        image: ghcr.io/inlets/inlets-pro:0.9.9
+        image: ghcr.io/inlets/inlets-pro:0.9.17
         imagePullPolicy: IfNotPresent
         name: server
         resources:
