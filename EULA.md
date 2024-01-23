@@ -54,3 +54,7 @@ At the request of Supplier, Customer agrees to participate in other reasonable m
 8.3 Sections 1, 2, 3, 4, 5, 6, 7 and 8 will remain effective after the termination of the Agreement.
 
 8.4 If you have any questions about these terms or our Services you may contact us by email at: contact@openfaas.com
+
+9. Telemetry and data-sharing
+
+The inlets-uplink operator product may send telemetry data to OpenFaaS Ltd. This data includes non-confidential, non-identifiable metrics used for calculating accurate usage metrics for billing purposes. The data is not shared with any third-party and is not used for marketing purposes.
