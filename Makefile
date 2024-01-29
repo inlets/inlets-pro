@@ -1,6 +1,20 @@
 .PHONY: charts all
 
-all: charts
+VERBOSE?=false
+
+all: verify-charts charts
+
+verify-charts:
+	@echo Verifying helm charts images in remote registries && \
+	arkade chart verify --verbose=$(VERBOSE) -f ./chart/inlets-http-server/values.yaml && \
+	arkade chart verify --verbose=$(VERBOSE) -f ./chart/inlets-tcp-client/values.yaml && \
+	arkade chart verify --verbose=$(VERBOSE) -f ./chart/inlets-tcp-server/values.yaml
+
+upgrade-charts:
+	@echo Upgrading images for all helm charts && \
+	arkade chart upgrade --verbose=$(VERBOSE) -w -f ./chart/inlets-http-server/values.yaml && \
+	arkade chart upgrade --verbose=$(VERBOSE) -w -f ./chart/inlets-tcp-client/values.yaml && \
+	arkade chart upgrade --verbose=$(VERBOSE) -w -f ./chart/inlets-tcp-server/values.yaml
 
 charts:
 	cd chart && \
