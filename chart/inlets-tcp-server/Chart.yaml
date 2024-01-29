@@ -2,5 +2,5 @@ apiVersion: v2
 name: inlets-tcp-server
 description: Deploy an inlets TCP tunnel server to a cluster
 type: application
-version: 0.6.1
+version: 0.6.2
 appVersion: 1.16.0
